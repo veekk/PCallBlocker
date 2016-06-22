@@ -29,6 +29,9 @@
             </intent-filter>
         </receiver>
 
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="b89cd5b36e9b5de2c8eb5caf33a6a5d0350ac7b5" />
     </application>
 
     <uses-permission android:name="android.permission.CALL_PHONE" />
@@ -36,4 +39,5 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
 
+    <uses-permission android:name="android.permission.INTERNET" />
 </manifest>

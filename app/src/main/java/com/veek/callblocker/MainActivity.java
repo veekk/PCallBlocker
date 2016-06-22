@@ -17,9 +17,11 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.crashlytics.android.Crashlytics;
 import com.veek.callblocker.DB.BlacklistDAO;
 import com.veek.callblocker.Model.Blacklist;
 
+import io.fabric.sdk.android.Fabric;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,6 +42,7 @@ public class MainActivity extends AppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Fabric.with(this, new Crashlytics());
         setContentView(R.layout.activity_main);
 
         fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -78,13 +81,20 @@ public class MainActivity extends AppCompatActivity{
                                             @Override
                                             public void onClick(DialogInterface dialog, int which) {
                                                 EditText etNumber = (EditText) view.findViewById(R.id.etNumber);
-                                                if (etNumber.getText().toString().equals("")) {
+                                                final Blacklist phone = new Blacklist();
+                                                phone.phoneNumber = etNumber.getText().toString();
+                                                phone.phoneNumber = phone.phoneNumber.replace(" ", "");
+                                                phone.phoneNumber = phone.phoneNumber.replace("-", "");
+                                                phone.phoneNumber = phone.phoneNumber.replace("(", "");
+                                                phone.phoneNumber = phone.phoneNumber.replace(")", "");
+                                                phone.phoneNumber = phone.phoneNumber.replace("+", "");
+                                                phone.phoneNumber = phone.phoneNumber.replace(".", "");
+                                                phone.phoneNumber = "+"+phone.phoneNumber;
+                                                if (phone.phoneNumber.equals("")) {
                                                     Toast.makeText(MainActivity.this, "entered number is empty", Toast.LENGTH_LONG).show();
-                                                } else if(MainActivity.blockList.contains(new Blacklist(etNumber.getText().toString()))) {
+                                                } else if(MainActivity.blockList.contains(new Blacklist(phone.phoneNumber))) {
                                                     Toast.makeText(MainActivity.this, "this number is already blocked", Toast.LENGTH_LONG).show();
                                                 } else {
-                                                    final Blacklist phone = new Blacklist();
-                                                    phone.phoneNumber = etNumber.getText().toString();
                                                     blackListDao.create(phone);
                                                     blockList.add(new Blacklist(phone.phoneNumber));
                                                     BlacklistFragment fragment = (BlacklistFragment) adapter.getItem(viewPager.getCurrentItem());

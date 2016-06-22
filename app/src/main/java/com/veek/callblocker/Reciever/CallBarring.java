@@ -31,6 +31,13 @@ public class CallBarring extends BroadcastReceiver
         {
             // Fetch the number of incoming call
             number = intent.getStringExtra(TelephonyManager.EXTRA_INCOMING_NUMBER);
+            number = number.replace(" ", "");
+            number = number.replace("-", "");
+            number = number.replace("+", "");
+            number = number.replace(")", "");
+            number = number.replace("(", "");
+            number = number.replace(".", "");
+            number = "+"+number;
 
             // Check, whether this is a member of "Black listed" phone numbers stored in the database
             if(MainActivity.blockList.contains(new Blacklist(number)))

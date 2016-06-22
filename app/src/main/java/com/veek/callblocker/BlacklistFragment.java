@@ -51,5 +51,6 @@ public class BlacklistFragment extends Fragment{
     @Override
     public void onResume() {
         super.onResume();
+        adapter.notifyItemInserted(MainActivity.blockList.size()-1);
     }
 }
