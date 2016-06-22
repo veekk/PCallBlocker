@@ -1,0 +1,67 @@
+package com.veek.callblocker.Util;
+
+import android.support.v7.widget.CardView;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import com.veek.callblocker.DB.BlacklistDAO;
+import com.veek.callblocker.MainActivity;
+import com.veek.callblocker.Model.Blacklist;
+import com.veek.callblocker.R;
+
+import java.util.List;
+
+/**
+ * Crafted by veek on 21.06.16 with love ♥
+ */
+public class BlacklistAdapter extends RecyclerView.Adapter<BlacklistAdapter.BlacklistViewHolder> {
+
+
+
+    public List<Blacklist> blacklist;
+    BlacklistDAO blackListDao;
+
+    @Override
+    public BlacklistViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item, parent, false);
+        BlacklistViewHolder blacklistViewHolder = new BlacklistViewHolder(v);
+        return blacklistViewHolder;
+    }
+
+    @Override
+    public void onBindViewHolder(BlacklistViewHolder holder, final int position) {
+        holder.tvNumber.setText(blacklist.get(position).phoneNumber);
+        holder.cardView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                MainActivity.blackListDao.delete(MainActivity.blockList.get(position));
+                MainActivity.blockList.remove(position);
+                notifyDataSetChanged();
+                return false;
+            }
+        });
+    }
+
+    public static class BlacklistViewHolder extends RecyclerView.ViewHolder{
+        TextView tvNumber;
+        CardView cardView;
+        public BlacklistViewHolder(View itemView) {
+            super(itemView);
+            cardView = (CardView) itemView.findViewById(R.id.card_view);
+            tvNumber = (TextView) itemView.findViewById(R.id.tvNumber);
+        }
+    }
+
+    public BlacklistAdapter(List<Blacklist> blacklist){
+        this.blacklist = blacklist;
+    }
+
+    @Override
+    public int getItemCount() {
+        return blacklist.size();
+    }
+}

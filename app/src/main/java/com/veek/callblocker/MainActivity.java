@@ -1,78 +1,152 @@
 package com.veek.callblocker;
 
-import android.app.Activity;
-import android.content.Intent;
+
+import android.content.res.ColorStateList;
 import android.os.Bundle;
-import android.view.Menu;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Button;
-import android.widget.TextView;
 
-import com.veek.callblocker.Service.CallDetectService;
+import com.veek.callblocker.DB.BlacklistDAO;
+import com.veek.callblocker.Model.Blacklist;
 
-/**
- * Main activity, with button to toggle phone calls detection on and off.
- * @author Moskvichev Andrey V.
- *
- */
-public class MainActivity extends Activity {
+import java.util.ArrayList;
+import java.util.List;
 
-    private boolean detectEnabled;
 
-    private TextView textViewDetectState;
-    private Button buttonToggleDetect;
-    private Button buttonExit;
+public class MainActivity extends AppCompatActivity{
+
+    private Toolbar toolbar;
+    private TabLayout tabLayout;
+    private ViewPager viewPager;
+    private FloatingActionButton fab;
+    ViewPagerAdapter adapter;
+
+
+    public static BlacklistDAO blackListDao;
+    public static List<Blacklist> blockList;
+
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        textViewDetectState = (TextView) findViewById(R.id.textViewDetectState);
+        fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.hide();
 
-        buttonToggleDetect = (Button) findViewById(R.id.buttonDetectToggle);
-        buttonToggleDetect.setOnClickListener(new OnClickListener() {
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        viewPager = (ViewPager) findViewById(R.id.viewpager);
+        setupViewPager(viewPager);
+
+        tabLayout = (TabLayout) findViewById(R.id.tabs);
+        tabLayout.setupWithViewPager(viewPager);
+        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
-            public void onClick(View v) {
-                setDetectEnabled(!detectEnabled);
+            public void onTabSelected(TabLayout.Tab tab) {
+                viewPager.setCurrentItem(tab.getPosition());
+                if(tab.getPosition()==0) fab.hide(); else fab.show();
+                switch (tab.getPosition()) {
+                    case 0:
+                        fab.hide();
+                        break;
+                    case 1:
+                        fab.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(android.R.color.holo_blue_dark)));
+                        fab.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                final Blacklist phone = new Blacklist();
+                                phone.phoneNumber = "+380508275807";
+                                blackListDao.create(phone);
+                                blockList.add(new Blacklist(phone.phoneNumber));
+                                BlacklistFragment fragment = (BlacklistFragment) adapter.getItem(viewPager.getCurrentItem());
+                                if (fragment instanceof BlacklistFragment){
+                                fragment.setChanged();
+                                }
+                            }
+                        });
+                        fab.show();
+                        break;
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
             }
         });
+        setupTabIcons();
+    }
 
-        buttonExit = (Button) findViewById(R.id.buttonExit);
-        buttonExit.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setDetectEnabled(false);
-                MainActivity.this.finish();
-            }
-        });
+    private void setupTabIcons() {
+        int[] tabIcons = {
+                R.drawable.phone_missed,
+                R.drawable.phone_locked,
+        };
+
+        tabLayout.getTabAt(0).setIcon(tabIcons[0]);
+        tabLayout.getTabAt(1).setIcon(tabIcons[1]);
+    }
+
+    private void setupViewPager(ViewPager viewPager) {
+        adapter = new ViewPagerAdapter(getSupportFragmentManager());
+        adapter.addFrag(new RejectedFragment(),"ONE");
+        adapter.addFrag(new BlacklistFragment(), "TWO");
+        viewPager.setAdapter(adapter);
+    }
+
+
+
+    class ViewPagerAdapter extends FragmentPagerAdapter {
+        private final List<Fragment> mFragmentList = new ArrayList<>();
+        private final List<String> mFragmentTitleList = new ArrayList<>();
+
+        public ViewPagerAdapter(FragmentManager manager) {
+            super(manager);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return mFragmentList.get(position);
+        }
+
+        @Override
+        public int getCount() {
+            return mFragmentList.size();
+        }
+
+        public void addFrag(Fragment fragment, String title) {
+            mFragmentList.add(fragment);
+            mFragmentTitleList.add(title);
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+
+            return null;
+        }
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.activity_main, menu);
-        return true;
+    protected void onResume() {
+        super.onResume();
+        blackListDao = new BlacklistDAO(this);
+        blockList = blackListDao.getAllBlacklist();
+
     }
 
-    private void setDetectEnabled(boolean enable) {
-        detectEnabled = enable;
-
-        Intent intent = new Intent(this, CallDetectService.class);
-        if (enable) {
-            // start detect service
-            startService(intent);
-
-            buttonToggleDetect.setText("Turn off");
-            textViewDetectState.setText("Detecting");
-        }
-        else {
-            // stop detect service
-            stopService(intent);
-
-            buttonToggleDetect.setText("Turn on");
-            textViewDetectState.setText("Not detecting");
-        }
-    }
 
 }
