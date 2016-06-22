@@ -1,5 +1,8 @@
 package com.veek.callblocker.Util;
 
+import android.content.Context;
+import android.content.DialogInterface;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -24,6 +27,7 @@ public class BlacklistAdapter extends RecyclerView.Adapter<BlacklistAdapter.Blac
 
     public List<Blacklist> blacklist;
     BlacklistDAO blackListDao;
+    Context context;
 
     @Override
     public BlacklistViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -38,10 +42,26 @@ public class BlacklistAdapter extends RecyclerView.Adapter<BlacklistAdapter.Blac
         holder.cardView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                MainActivity.blackListDao.delete(MainActivity.blockList.get(position));
-                MainActivity.blockList.remove(position);
-                notifyDataSetChanged();
-                return false;
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setTitle("Delete entry?")
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                MainActivity.blackListDao.delete(MainActivity.blockList.get(position));
+                                MainActivity.blockList.remove(position);
+                                notifyItemRemoved(position);
+                            }
+                        })
+                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                            }
+                        })
+                        .setCancelable(true);
+                AlertDialog alert = builder.create();
+                alert.show();
+                return true;
             }
         });
     }
@@ -56,8 +76,9 @@ public class BlacklistAdapter extends RecyclerView.Adapter<BlacklistAdapter.Blac
         }
     }
 
-    public BlacklistAdapter(List<Blacklist> blacklist){
+    public BlacklistAdapter(List<Blacklist> blacklist, Context context){
         this.blacklist = blacklist;
+        this.context = context;
     }
 
     @Override

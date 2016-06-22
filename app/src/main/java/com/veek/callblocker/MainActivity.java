@@ -1,6 +1,7 @@
 package com.veek.callblocker;
 
 
+import android.content.DialogInterface;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -9,9 +10,12 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import com.veek.callblocker.DB.BlacklistDAO;
 import com.veek.callblocker.Model.Blacklist;
@@ -43,6 +47,7 @@ public class MainActivity extends AppCompatActivity{
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setShowHideAnimationEnabled(false);
 
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         setupViewPager(viewPager);
@@ -63,14 +68,35 @@ public class MainActivity extends AppCompatActivity{
                         fab.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                final Blacklist phone = new Blacklist();
-                                phone.phoneNumber = "+380508275807";
-                                blackListDao.create(phone);
-                                blockList.add(new Blacklist(phone.phoneNumber));
-                                BlacklistFragment fragment = (BlacklistFragment) adapter.getItem(viewPager.getCurrentItem());
-                                if (fragment instanceof BlacklistFragment){
-                                fragment.setChanged();
-                                }
+
+
+                                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                                builder.setTitle("Enter number in full format. Example: +380666666666");
+                                final View view = (View) getLayoutInflater().inflate(R.layout.dialog_add, null);
+                                builder.setView(view)
+                                        .setPositiveButton("Add", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                EditText etNumber = (EditText) view.findViewById(R.id.etNumber);
+                                                if (etNumber.getText().toString().equals("")) {
+                                                    Toast.makeText(MainActivity.this, "entered number is empty", Toast.LENGTH_LONG).show();
+                                                } else if(MainActivity.blockList.contains(new Blacklist(etNumber.getText().toString()))) {
+                                                    Toast.makeText(MainActivity.this, "this number is already blocked", Toast.LENGTH_LONG).show();
+                                                } else {
+                                                    final Blacklist phone = new Blacklist();
+                                                    phone.phoneNumber = etNumber.getText().toString();
+                                                    blackListDao.create(phone);
+                                                    blockList.add(new Blacklist(phone.phoneNumber));
+                                                    BlacklistFragment fragment = (BlacklistFragment) adapter.getItem(viewPager.getCurrentItem());
+                                                    if (fragment instanceof BlacklistFragment) {
+                                                        fragment.setChanged();
+                                                    }
+                                                }
+                                            }
+                                        });
+                                        //.setCancelable(true);
+                                AlertDialog alert = builder.create();
+                                alert.show();
                             }
                         });
                         fab.show();

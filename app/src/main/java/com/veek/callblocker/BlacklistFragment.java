@@ -38,19 +38,18 @@ public class BlacklistFragment extends Fragment{
         rvBlacklist = (RecyclerView) rootView.findViewById(R.id.rvBlacklist);
         LinearLayoutManager llm = new LinearLayoutManager(getActivity());
         rvBlacklist.setLayoutManager(llm);
-        adapter = new BlacklistAdapter(MainActivity.blockList);
+        adapter = new BlacklistAdapter(MainActivity.blockList, getActivity());
         rvBlacklist.setAdapter(adapter);
         return rootView;
     }
 
 
     void setChanged(){
-        adapter.notifyDataSetChanged();
+        adapter.notifyItemInserted(MainActivity.blockList.size()-1);
     }
 
     @Override
     public void onResume() {
-        adapter.notifyDataSetChanged();
         super.onResume();
     }
 }
