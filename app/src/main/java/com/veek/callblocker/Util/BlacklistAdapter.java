@@ -34,6 +34,9 @@ public class BlacklistAdapter extends RecyclerView.Adapter<BlacklistAdapter.Blac
 
 
     public List<Blacklist> blacklist;
+    static public AlertDialog alert;
+    static public AlertDialog alertEdit;
+    static public AlertDialog alertDelete;
     BlacklistDAO blackListDao;
     Context context;
 
@@ -65,9 +68,9 @@ public class BlacklistAdapter extends RecyclerView.Adapter<BlacklistAdapter.Blac
                 etNumber.setText(MainActivity.blockList.get(position).phoneNumber);
                 etName.setText(MainActivity.blockList.get(position).phoneName);
                 etNumber.setEnabled(false);
-                AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                builder.setTitle(R.string.edit_title);
-                builder.setView(view)
+                AlertDialog.Builder builderEdit = new AlertDialog.Builder(context);
+                builderEdit.setTitle(R.string.edit_title)
+                        .setView(view)
                         .setPositiveButton(R.string.save, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
@@ -78,12 +81,12 @@ public class BlacklistAdapter extends RecyclerView.Adapter<BlacklistAdapter.Blac
 
                         });
                 //.setCancelable(true);
-                AlertDialog alert = builder.create();
-                alert.show();
+                alertEdit = builderEdit.create();
+                alertEdit.show();
                                 break;
                             case 1:
-                                AlertDialog.Builder builder1 = new AlertDialog.Builder(context);
-                                builder1.setTitle(R.string.delete_q)
+                                AlertDialog.Builder builderDelete = new AlertDialog.Builder(context);
+                                builderDelete.setTitle(R.string.delete_q)
                                         .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                                             @Override
                                             public void onClick(DialogInterface dialog, int which) {
@@ -100,13 +103,13 @@ public class BlacklistAdapter extends RecyclerView.Adapter<BlacklistAdapter.Blac
                                             }
                                         })
                                         .setCancelable(true);
-                                AlertDialog alert1 = builder1.create();
-                                alert1.show();
+                                alertDelete = builderDelete.create();
+                                alertDelete.show();
                                 break;
                         }
                     }
                 });
-                AlertDialog alert = builder.create();
+                alert = builder.create();
                 alert.show();
 
 

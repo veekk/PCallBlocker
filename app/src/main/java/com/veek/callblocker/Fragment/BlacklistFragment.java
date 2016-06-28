@@ -59,7 +59,17 @@ public class BlacklistFragment extends Fragment{
     @Override
     public void onResume() {
         super.onResume();
+        rvBlacklist = (RecyclerView) rootView.findViewById(R.id.rvBlacklist);
+        LinearLayoutManager llm = new LinearLayoutManager(getActivity());
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        rvBlacklist.setLayoutParams(lp);
+        rvBlacklist.setLayoutManager(llm);
+        adapter = new BlacklistAdapter(MainActivity.blockList, getActivity());
         rvBlacklist.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
     }
 }

@@ -27,6 +27,7 @@ import com.veek.callblocker.DB.BlacklistDAO;
 import com.veek.callblocker.Fragment.BlacklistFragment;
 import com.veek.callblocker.Fragment.RejectedFragment;
 import com.veek.callblocker.Model.Blacklist;
+import com.veek.callblocker.Util.BlacklistAdapter;
 
 import io.fabric.sdk.android.Fabric;
 import java.util.ArrayList;
@@ -41,6 +42,7 @@ public class MainActivity extends AppCompatActivity{
     private FloatingActionButton fab;
     ViewPagerAdapter adapter;
 
+    public static AlertDialog alertDialog;
 
     public static BlacklistDAO blackListDao;
     public static List<Blacklist> blockList;
@@ -74,7 +76,7 @@ public class MainActivity extends AppCompatActivity{
                         fab.hide();
                         break;
                     case 1:
-                        fab.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(android.R.color.holo_blue_dark)));
+                        fab.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorPrimary)));
                         fab.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
@@ -108,8 +110,8 @@ public class MainActivity extends AppCompatActivity{
 
                                         });
                                         //.setCancelable(true);
-                                AlertDialog alert = builder.create();
-                                alert.show();
+                                alertDialog = builder.create();
+                                alertDialog.show();
                             }
                         });
                         fab.show();
@@ -187,5 +189,14 @@ public class MainActivity extends AppCompatActivity{
 
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
 
+        if (!(alertDialog == null)) alertDialog.dismiss();
+        if (!(BlacklistAdapter.alert == null)) BlacklistAdapter.alert.dismiss();
+        if (!(BlacklistAdapter.alertEdit == null)) BlacklistAdapter.alertEdit.dismiss();
+        if (!(BlacklistAdapter.alertDelete == null)) BlacklistAdapter.alertDelete.dismiss();
+
+    }
 }
