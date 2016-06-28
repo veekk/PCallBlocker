@@ -53,7 +53,7 @@ public class BlacklistFragment extends Fragment{
 
 
     public void setChanged(){
-        adapter.notifyDataSetChanged();
+        if (!(adapter == null)) adapter.notifyDataSetChanged();
     }
 
     @Override
