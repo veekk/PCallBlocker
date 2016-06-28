@@ -24,6 +24,8 @@ import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
 import com.veek.callblocker.DB.BlacklistDAO;
+import com.veek.callblocker.Fragment.BlacklistFragment;
+import com.veek.callblocker.Fragment.RejectedFragment;
 import com.veek.callblocker.Model.Blacklist;
 
 import io.fabric.sdk.android.Fabric;
@@ -76,30 +78,24 @@ public class MainActivity extends AppCompatActivity{
                         fab.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-
-
-                                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                                builder.setTitle("Enter number in full format. Example: +380666666666");
                                 final View view = (View) getLayoutInflater().inflate(R.layout.dialog_add, null);
+                                final EditText etNumber = (EditText) view.findViewById(R.id.etNumber);
+                                final EditText etName = (EditText) view.findViewById(R.id.etName);
+                                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                                builder.setTitle(R.string.add_entry);
                                 builder.setView(view)
-                                        .setPositiveButton("Add", new DialogInterface.OnClickListener() {
-                                            @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+                                        .setPositiveButton(R.string.add, new DialogInterface.OnClickListener() {
                                             @Override
                                             public void onClick(DialogInterface dialog, int which) {
-                                                EditText etNumber = (EditText) view.findViewById(R.id.etNumber);
-                                                EditText etName = (EditText) view.findViewById(R.id.etName);
                                                 final Blacklist phone = new Blacklist();
                                                 phone.phoneNumber = etNumber.getText().toString();
                                                 phone.phoneName = etName.getText().toString();
                                                 TelephonyManager tm = (TelephonyManager) getSystemService(Service.TELEPHONY_SERVICE);
-                                                PhoneNumberUtils.formatNumber(phone.phoneNumber, tm.getSimCountryIso());
                                                 if (phone.phoneNumber.equals("")) {
-                                                    Toast.makeText(MainActivity.this, "entered number is empty", Toast.LENGTH_LONG).show();
-                                                } else for (int i = 0; i < MainActivity.blockList.size(); i++){
-                                                    if (PhoneNumberUtils.compare(getApplication(), MainActivity.blockList.get(i).phoneNumber, phone.phoneNumber)){
-                                                        Toast.makeText(MainActivity.this, "this number is already blocked", Toast.LENGTH_LONG).show();
-                                                        break;
-                                                    }
+                                                    Toast.makeText(MainActivity.this, R.string.empty_nmb, Toast.LENGTH_LONG).show();
+                                                } else  if (MainActivity.blockList.contains(new Blacklist(phone.phoneNumber, phone.phoneName))){
+                                                        Toast.makeText(MainActivity.this, R.string.alr_blocked, Toast.LENGTH_LONG).show();
+                                                }
                                                     else {
                                                         blackListDao.create(phone);
                                                         blockList.add(new Blacklist(phone.phoneNumber, phone.phoneName));
@@ -110,8 +106,6 @@ public class MainActivity extends AppCompatActivity{
                                                     }
                                                 }
 
-
-                                            }
                                         });
                                         //.setCancelable(true);
                                 AlertDialog alert = builder.create();

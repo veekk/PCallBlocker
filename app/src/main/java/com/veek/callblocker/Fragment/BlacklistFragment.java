@@ -1,4 +1,4 @@
-package com.veek.callblocker;
+package com.veek.callblocker.Fragment;
 
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
@@ -12,6 +12,8 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.veek.callblocker.DB.BlacklistDAO;
+import com.veek.callblocker.MainActivity;
+import com.veek.callblocker.R;
 import com.veek.callblocker.Util.BlacklistAdapter;
 
 
@@ -50,7 +52,7 @@ public class BlacklistFragment extends Fragment{
 
 
 
-    void setChanged(){
+    public void setChanged(){
         adapter.notifyDataSetChanged();
     }
 

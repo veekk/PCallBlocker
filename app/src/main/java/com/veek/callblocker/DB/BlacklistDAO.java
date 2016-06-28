@@ -56,6 +56,14 @@ public class BlacklistDAO {
         return blackList;
     }
 
+    public void update (final Blacklist blacklistNew){
+        final ContentValues values = new ContentValues();
+        values.put("phone_number", blacklistNew.phoneNumber);
+        values.put("phone_name", blacklistNew.phoneName);
+        database.update(DatabaseHelper.TABLE_BLACKLIST, values, "id = ?", new String[] {String.valueOf(blacklistNew.id)});
+
+    }
+
     public void delete(final Blacklist blackList) {
 
         // Way to delete a record from database

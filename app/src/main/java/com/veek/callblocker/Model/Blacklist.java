@@ -1,5 +1,7 @@
 package com.veek.callblocker.Model;
 
+import android.telephony.PhoneNumberUtils;
+
 /**
  * Crafted by veek on 18.06.16 with love ♥
  */
@@ -16,9 +18,9 @@ public class Blacklist {
     }
 
     // To easily create Blacklist object, an alternative constructor
-    public Blacklist(final String phoneMumber, final String phoneName) {
+    public Blacklist(final String phoneNumber, final String phoneName) {
         this.phoneName = phoneName;
-        this.phoneNumber = phoneMumber;
+        this.phoneNumber = phoneNumber;
     }
 
     // Overriding the default method to compare between the two objects bu phone number
@@ -32,7 +34,7 @@ public class Blacklist {
             final Blacklist bl = (Blacklist) obj;
 
             // Compare whether the phone numbers are same, if yes, it defines the objects are equal
-            if(bl.phoneNumber.equalsIgnoreCase(this.phoneNumber))
+            if(PhoneNumberUtils.compare(bl.phoneNumber, this.phoneNumber))
                 return true;
         }
         return false;

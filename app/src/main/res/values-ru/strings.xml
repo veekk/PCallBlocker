@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Call Blocker</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Настройки</string>
+    <string name="yes">Да</string>
+    <string name="no">Нет</string>
+    <string name="phone_number">Номер телефона</string>
+    <string name="phone_name">Имя контакта(необязательно)</string>
+    <string name="delete_q">Удалить запись?</string>
+    <string name="add_entry">Добавить запись</string>
+    <string name="edit">Редактировать</string>
+    <string name="delete">Удалить</string>
+    <string name="save">Сохранить</string>
+    <string name="edit_title">Редактировать запись</string>
+    <string name="alr_blocked">Данный номер уже заблокирован</string>
+    <string name="empty_nmb">Введён пустой номер</string>
+    <string name="add">Добавить</string>
+    <string-array name="items_de">
+        <item>Редактировать</item>
+        <item>Удалить</item>
+    </string-array>
+
+</resources>

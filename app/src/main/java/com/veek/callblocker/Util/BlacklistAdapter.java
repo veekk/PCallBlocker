@@ -1,17 +1,25 @@
 package com.veek.callblocker.Util;
 
+import android.annotation.TargetApi;
+import android.app.Service;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.os.Build;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.telephony.PhoneNumberUtils;
+import android.telephony.TelephonyManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.veek.callblocker.DB.BlacklistDAO;
+import com.veek.callblocker.Fragment.BlacklistFragment;
 import com.veek.callblocker.MainActivity;
 import com.veek.callblocker.Model.Blacklist;
 import com.veek.callblocker.R;
@@ -41,31 +49,95 @@ public class BlacklistAdapter extends RecyclerView.Adapter<BlacklistAdapter.Blac
         holder.tvNumber.setText(blacklist.get(position).phoneNumber);
         if (blacklist.get(position).phoneName.equals("")) holder.tvName.setText(blacklist.get(position).phoneNumber);
         else holder.tvName.setText(blacklist.get(position).phoneName);
-        holder.cardView.setOnLongClickListener(new View.OnLongClickListener() {
+        holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onLongClick(View v) {
+            public void onClick(View v) {
+               // final CharSequence[] items = {"Edit", "Delete"};
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                builder.setTitle("Delete entry?")
-                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                builder.setItems(context.getResources().getStringArray(R.array.items_de), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        switch (which){
+                            case 0:
+                                final View view = LayoutInflater.from(context).inflate(R.layout.dialog_add, null);
+                final EditText etNumber = (EditText) view.findViewById(R.id.etNumber);
+                final EditText etName = (EditText) view.findViewById(R.id.etName);
+                etNumber.setText(MainActivity.blockList.get(position).phoneNumber);
+                etName.setText(MainActivity.blockList.get(position).phoneName);
+                etNumber.setEnabled(false);
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setTitle(R.string.edit_title);
+                builder.setView(view)
+                        .setPositiveButton(R.string.save, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                MainActivity.blackListDao.delete(MainActivity.blockList.get(position));
-                                MainActivity.blockList.remove(position);
-                                notifyItemRemoved(position);
+                                MainActivity.blockList.get(position).phoneName = etName.getText().toString();
+                                MainActivity.blackListDao.update(MainActivity.blockList.get(position));
                                 notifyDataSetChanged();
                             }
-                        })
-                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
 
-                            }
-                        })
-                        .setCancelable(true);
+                        });
+                //.setCancelable(true);
                 AlertDialog alert = builder.create();
                 alert.show();
-                return true;
+                                break;
+                            case 1:
+                                AlertDialog.Builder builder1 = new AlertDialog.Builder(context);
+                                builder1.setTitle(R.string.delete_q)
+                                        .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                MainActivity.blackListDao.delete(MainActivity.blockList.get(position));
+                                                MainActivity.blockList.remove(position);
+                                                notifyItemRemoved(position);
+                                                notifyDataSetChanged();
+                                            }
+                                        })
+                                        .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+
+                                            }
+                                        })
+                                        .setCancelable(true);
+                                AlertDialog alert1 = builder1.create();
+                                alert1.show();
+                                break;
+                        }
+                    }
+                });
+                AlertDialog alert = builder.create();
+                alert.show();
+
+
             }
+//            @Override
+//            public void onClick(View v) {
+//                final View view = LayoutInflater.from(context).inflate(R.layout.dialog_add, null);
+//                final EditText etNumber = (EditText) view.findViewById(R.id.etNumber);
+//                final EditText etName = (EditText) view.findViewById(R.id.etName);
+//                etNumber.setText(MainActivity.blockList.get(position).phoneNumber);
+//                etName.setText(MainActivity.blockList.get(position).phoneName);
+//                etNumber.setEnabled(false);
+//                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+//                builder.setTitle("Edit entry: ");
+//                builder.setView(view)
+//                        .setPositiveButton("Save", new DialogInterface.OnClickListener() {
+//                            @Override
+//                            public void onClick(DialogInterface dialog, int which) {
+//                                MainActivity.blackListDao.delete(MainActivity.blockList.get(position));
+//                                MainActivity.blockList.get(position).phoneName = etName.getText().toString();
+//                                MainActivity.blackListDao.create(MainActivity.blockList.get(position));
+//                                notifyDataSetChanged();
+//                            }
+//
+//                        });
+//                //.setCancelable(true);
+//                AlertDialog alert = builder.create();
+//                alert.show();
+//            }
+
+
         });
     }
 
