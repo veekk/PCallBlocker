@@ -8,6 +8,7 @@ public class Blacklist {
     // Two mapping fields for the database table blacklist
     public long id;
     public String phoneNumber;
+    public String phoneName;
 
     // Default constructor
     public Blacklist() {
@@ -15,7 +16,8 @@ public class Blacklist {
     }
 
     // To easily create Blacklist object, an alternative constructor
-    public Blacklist(final String phoneMumber) {
+    public Blacklist(final String phoneMumber, final String phoneName) {
+        this.phoneName = phoneName;
         this.phoneNumber = phoneMumber;
     }
 

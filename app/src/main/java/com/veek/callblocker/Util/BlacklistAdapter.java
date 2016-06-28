@@ -39,6 +39,8 @@ public class BlacklistAdapter extends RecyclerView.Adapter<BlacklistAdapter.Blac
     @Override
     public void onBindViewHolder(BlacklistViewHolder holder, final int position) {
         holder.tvNumber.setText(blacklist.get(position).phoneNumber);
+        if (blacklist.get(position).phoneName.equals("")) holder.tvName.setText(blacklist.get(position).phoneNumber);
+        else holder.tvName.setText(blacklist.get(position).phoneName);
         holder.cardView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
@@ -50,6 +52,7 @@ public class BlacklistAdapter extends RecyclerView.Adapter<BlacklistAdapter.Blac
                                 MainActivity.blackListDao.delete(MainActivity.blockList.get(position));
                                 MainActivity.blockList.remove(position);
                                 notifyItemRemoved(position);
+                                notifyDataSetChanged();
                             }
                         })
                         .setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -68,11 +71,13 @@ public class BlacklistAdapter extends RecyclerView.Adapter<BlacklistAdapter.Blac
 
     public static class BlacklistViewHolder extends RecyclerView.ViewHolder{
         TextView tvNumber;
+        TextView tvName;
         CardView cardView;
         public BlacklistViewHolder(View itemView) {
             super(itemView);
             cardView = (CardView) itemView.findViewById(R.id.card_view);
             tvNumber = (TextView) itemView.findViewById(R.id.tvNumber);
+            tvName = (TextView) itemView.findViewById(R.id.tvName);
         }
     }
 

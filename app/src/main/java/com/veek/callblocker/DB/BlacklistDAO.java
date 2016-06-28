@@ -46,6 +46,7 @@ public class BlacklistDAO {
 
         // second, put the key-value pair into it
         values.put("phone_number", blackList.phoneNumber);
+        values.put("phone_name", blackList.phoneName);
 
         // thirst. insert the object into the database
         final long id = database.insert(DatabaseHelper.TABLE_BLACKLIST , null, values);
@@ -68,7 +69,7 @@ public class BlacklistDAO {
         final List<Blacklist> blacklistNumbers = new ArrayList<Blacklist>();
 
         // second, Query the database and set the result into Cursor
-        final Cursor cursor = database.query(DatabaseHelper.TABLE_BLACKLIST, new String[]{"id","phone_number"}, null, null, null, null, null);
+        final Cursor cursor = database.query(DatabaseHelper.TABLE_BLACKLIST, new String[]{"id","phone_number", "phone_name"}, null, null, null, null, null);
 
         // Move the Cursor pointer to the first
         cursor.moveToFirst();
@@ -80,6 +81,7 @@ public class BlacklistDAO {
             // Fetch the desired value from the Cursor by column index
             number.id = cursor.getLong(0);
             number.phoneNumber = cursor.getString(1);
+            number.phoneName = cursor.getString(2);
 
             // Add the object filled with appropriate data into the list
             blacklistNumbers.add(number);

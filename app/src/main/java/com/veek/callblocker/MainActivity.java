@@ -1,8 +1,11 @@
 package com.veek.callblocker;
 
 
+import android.annotation.TargetApi;
+import android.app.Service;
 import android.content.DialogInterface;
 import android.content.res.ColorStateList;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
@@ -13,6 +16,8 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.telephony.PhoneNumberUtils;
+import android.telephony.TelephonyManager;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -78,30 +83,34 @@ public class MainActivity extends AppCompatActivity{
                                 final View view = (View) getLayoutInflater().inflate(R.layout.dialog_add, null);
                                 builder.setView(view)
                                         .setPositiveButton("Add", new DialogInterface.OnClickListener() {
+                                            @TargetApi(Build.VERSION_CODES.LOLLIPOP)
                                             @Override
                                             public void onClick(DialogInterface dialog, int which) {
                                                 EditText etNumber = (EditText) view.findViewById(R.id.etNumber);
+                                                EditText etName = (EditText) view.findViewById(R.id.etName);
                                                 final Blacklist phone = new Blacklist();
                                                 phone.phoneNumber = etNumber.getText().toString();
-                                                phone.phoneNumber = phone.phoneNumber.replace(" ", "");
-                                                phone.phoneNumber = phone.phoneNumber.replace("-", "");
-                                                phone.phoneNumber = phone.phoneNumber.replace("(", "");
-                                                phone.phoneNumber = phone.phoneNumber.replace(")", "");
-                                                phone.phoneNumber = phone.phoneNumber.replace("+", "");
-                                                phone.phoneNumber = phone.phoneNumber.replace(".", "");
-                                                phone.phoneNumber = "+"+phone.phoneNumber;
+                                                phone.phoneName = etName.getText().toString();
+                                                TelephonyManager tm = (TelephonyManager) getSystemService(Service.TELEPHONY_SERVICE);
+                                                PhoneNumberUtils.formatNumber(phone.phoneNumber, tm.getSimCountryIso());
                                                 if (phone.phoneNumber.equals("")) {
                                                     Toast.makeText(MainActivity.this, "entered number is empty", Toast.LENGTH_LONG).show();
-                                                } else if(MainActivity.blockList.contains(new Blacklist(phone.phoneNumber))) {
-                                                    Toast.makeText(MainActivity.this, "this number is already blocked", Toast.LENGTH_LONG).show();
-                                                } else {
-                                                    blackListDao.create(phone);
-                                                    blockList.add(new Blacklist(phone.phoneNumber));
-                                                    BlacklistFragment fragment = (BlacklistFragment) adapter.getItem(viewPager.getCurrentItem());
-                                                    if (fragment instanceof BlacklistFragment) {
-                                                        fragment.setChanged();
+                                                } else for (int i = 0; i < MainActivity.blockList.size(); i++){
+                                                    if (PhoneNumberUtils.compare(getApplication(), MainActivity.blockList.get(i).phoneNumber, phone.phoneNumber)){
+                                                        Toast.makeText(MainActivity.this, "this number is already blocked", Toast.LENGTH_LONG).show();
+                                                        break;
+                                                    }
+                                                    else {
+                                                        blackListDao.create(phone);
+                                                        blockList.add(new Blacklist(phone.phoneNumber, phone.phoneName));
+                                                        BlacklistFragment fragment = (BlacklistFragment) adapter.getItem(viewPager.getCurrentItem());
+                                                        if (fragment instanceof BlacklistFragment) {
+                                                            fragment.setChanged();
+                                                        }
                                                     }
                                                 }
+
+
                                             }
                                         });
                                         //.setCancelable(true);

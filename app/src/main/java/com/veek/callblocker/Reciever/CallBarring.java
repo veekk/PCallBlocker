@@ -1,8 +1,12 @@
 package com.veek.callblocker.Reciever;
 
+import android.annotation.TargetApi;
+import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
+import android.telephony.PhoneNumberUtils;
 import android.telephony.TelephonyManager;
 
 import com.android.internal.telephony.ITelephony;
@@ -30,21 +34,23 @@ public class CallBarring extends BroadcastReceiver
         else
         {
             // Fetch the number of incoming call
-            number = intent.getStringExtra(TelephonyManager.EXTRA_INCOMING_NUMBER);
-            number = number.replace(" ", "");
-            number = number.replace("-", "");
-            number = number.replace("+", "");
-            number = number.replace(")", "");
-            number = number.replace("(", "");
-            number = number.replace(".", "");
-            number = "+"+number;
+            TelephonyManager tm =
 
-            // Check, whether this is a member of "Black listed" phone numbers stored in the database
-            if(MainActivity.blockList.contains(new Blacklist(number)))
-            {
-                // If yes, invoke the method
-                disconnectPhoneItelephony(context);
-                return;
+                    (TelephonyManager)context.getSystemService(Service.TELEPHONY_SERVICE);
+
+
+            switch (tm.getCallState()) {
+                case TelephonyManager.CALL_STATE_RINGING:
+                    number = intent.getStringExtra(TelephonyManager.EXTRA_INCOMING_NUMBER);
+
+                    //PhoneNumberUtils.formatNumber(number, tm.getSimCountryIso());
+                    //if (MainActivity.blockList.contains(new Blacklist(number))) {
+                    for (int i = 0; i < MainActivity.blockList.size(); i++){
+                    // Check, whether this is a member of "Black listed" phone numbers stored in the database
+                        if (PhoneNumberUtils.compare(context, MainActivity.blockList.get(i).phoneNumber, number)){
+                        disconnectPhoneItelephony(context);}
+                    }
+                    break;
             }
         }
     }
