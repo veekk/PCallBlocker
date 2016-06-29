@@ -21,5 +21,7 @@
         <item>Edit</item>
         <item>Delete</item>
     </string-array>
+    <string name="rejected_calls">Rejected calls:</string>
+    <string name="last_call">Last call:</string>
 
 </resources>

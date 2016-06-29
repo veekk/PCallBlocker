@@ -17,9 +17,15 @@
     <string name="alr_blocked">Данный номер уже заблокирован</string>
     <string name="empty_nmb">Введён пустой номер</string>
     <string name="add">Добавить</string>
-    <string-array name="items_de">
+    <string-array name="items_menu">
         <item>Редактировать</item>
         <item>Удалить</item>
     </string-array>
+    <string-array name="rejected_menu">
+        <item>Перезвонить</item>
+        <item>Удалить</item>
+    </string-array>
+    <string name="rejected_calls">Пропущенные вызовы:</string>
+    <string name="last_call">Последний звонок:</string>
 
 </resources>

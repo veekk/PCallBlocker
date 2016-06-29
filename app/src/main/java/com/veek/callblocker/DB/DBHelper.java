@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 /**
  * Crafted by veek on 18.06.16 with love ♥
  */
-public class DatabaseHelper  extends SQLiteOpenHelper {
+public class DBHelper extends SQLiteOpenHelper {
 
     // Define the SQLite database name
     private static final String DATABASE_NAME = "call_blocker.db";
@@ -22,7 +22,14 @@ public class DatabaseHelper  extends SQLiteOpenHelper {
     private static final String TABLE_CREATE = "create table "  + TABLE_BLACKLIST + "( id "
             + " integer primary key autoincrement, phone_number  text not null, " + "phone_name text);";
 
-    public DatabaseHelper(Context context) {
+    // Define the SQLite Table name to create
+    public static final String TABLE_REJECTED_CALLS = "rejected_calls";
+
+    // Table creation SQL statement
+    private static final String TABLE_CREATE_REJECTED = "create table "  + TABLE_REJECTED_CALLS + "( id "
+            + " integer primary key autoincrement, phone_number  text not null, " + "phone_name text, " + "amount_calls integer," + "time string);";
+
+    public DBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
@@ -31,6 +38,7 @@ public class DatabaseHelper  extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(TABLE_CREATE);
+        db.execSQL(TABLE_CREATE_REJECTED);
     }
 
     @Override

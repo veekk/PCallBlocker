@@ -23,7 +23,6 @@ public class BlacklistFragment extends Fragment{
 
     public RecyclerView rvBlacklist;
     public BlacklistAdapter adapter;
-    BlacklistDAO blacklistDAO;
     View rootView;
 
     public BlacklistFragment() {
@@ -39,10 +38,10 @@ public class BlacklistFragment extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_blacklist, null);
         rvBlacklist = (RecyclerView) rootView.findViewById(R.id.rvBlacklist);
-        LinearLayoutManager llm = new LinearLayoutManager(getActivity());
-        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-        rvBlacklist.setLayoutParams(lp);
-        rvBlacklist.setLayoutManager(llm);
+//        LinearLayoutManager llm = new LinearLayoutManager(getActivity());
+//        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+//        rvBlacklist.setLayoutParams(lp);
+//        rvBlacklist.setLayoutManager(llm);
         adapter = new BlacklistAdapter(MainActivity.blockList, getActivity());
         rvBlacklist.setAdapter(adapter);
         return rootView;
@@ -51,7 +50,7 @@ public class BlacklistFragment extends Fragment{
 
 
     public void setChanged(){
-        if (!(adapter == null)) adapter.notifyDataSetChanged();
+        if (!(adapter == null)) adapter.notifyItemInserted(adapter.getItemCount());
     }
 
     @Override

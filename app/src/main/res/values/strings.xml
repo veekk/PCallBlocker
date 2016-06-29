@@ -17,8 +17,14 @@
     <string name="alr_blocked">This number is already blocked</string>
     <string name="empty_nmb">Entered number is empty</string>
     <string name="add">Add</string>
-    <string-array name="items_de">
+    <string name="last_call">Last call:</string>
+    <string name="rejected_calls">Rejected calls: </string>
+    <string-array name="items_menu">
         <item>Edit</item>
+        <item>Delete</item>
+    </string-array>
+    <string-array name="rejected_menu">
+        <item>Call</item>
         <item>Delete</item>
     </string-array>
 

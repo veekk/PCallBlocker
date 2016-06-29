@@ -18,11 +18,11 @@ public class BlacklistDAO {
 
     // SQLiteDatabase and DatabaseHelper objects  to access SQLite database
     private SQLiteDatabase database;
-    private DatabaseHelper dbHelper;
+    private DBHelper dbHelper;
 
     // Constructor initiates the DatabaseHelper to make sure, database creation is done
     public BlacklistDAO(Context context) {
-        dbHelper = new DatabaseHelper(context);
+        dbHelper = new DBHelper(context);
         open();
     }
 
@@ -49,7 +49,7 @@ public class BlacklistDAO {
         values.put("phone_name", blackList.phoneName);
 
         // thirst. insert the object into the database
-        final long id = database.insert(DatabaseHelper.TABLE_BLACKLIST , null, values);
+        final long id = database.insert(DBHelper.TABLE_BLACKLIST , null, values);
 
         // set the primary key to object and return back
         blackList.id = id;
@@ -60,14 +60,14 @@ public class BlacklistDAO {
         final ContentValues values = new ContentValues();
         values.put("phone_number", blacklistNew.phoneNumber);
         values.put("phone_name", blacklistNew.phoneName);
-        database.update(DatabaseHelper.TABLE_BLACKLIST, values, "id = ?", new String[] {String.valueOf(blacklistNew.id)});
+        database.update(DBHelper.TABLE_BLACKLIST, values, "id = ?", new String[] {String.valueOf(blacklistNew.id)});
 
     }
 
     public void delete(final Blacklist blackList) {
 
         // Way to delete a record from database
-        database.delete(DatabaseHelper.TABLE_BLACKLIST, "phone_number = '" + blackList.phoneNumber + "'", null);
+        database.delete(DBHelper.TABLE_BLACKLIST, "phone_number = '" + blackList.phoneNumber + "'", null);
     }
 
     public List<Blacklist> getAllBlacklist() {
@@ -77,7 +77,7 @@ public class BlacklistDAO {
         final List<Blacklist> blacklistNumbers = new ArrayList<Blacklist>();
 
         // second, Query the database and set the result into Cursor
-        final Cursor cursor = database.query(DatabaseHelper.TABLE_BLACKLIST, new String[]{"id","phone_number", "phone_name"}, null, null, null, null, null);
+        final Cursor cursor = database.query(DBHelper.TABLE_BLACKLIST, new String[]{"id","phone_number", "phone_name"}, null, null, null, null, null);
 
         // Move the Cursor pointer to the first
         cursor.moveToFirst();

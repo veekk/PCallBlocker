@@ -1,11 +1,9 @@
 package com.veek.callblocker;
 
 
-import android.annotation.TargetApi;
 import android.app.Service;
 import android.content.DialogInterface;
 import android.content.res.ColorStateList;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
@@ -16,19 +14,18 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.telephony.PhoneNumberUtils;
 import android.telephony.TelephonyManager;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import com.crashlytics.android.Crashlytics;
 import com.veek.callblocker.DB.BlacklistDAO;
+import com.veek.callblocker.DB.RejectedCallsDAO;
 import com.veek.callblocker.Fragment.BlacklistFragment;
 import com.veek.callblocker.Fragment.RejectedFragment;
 import com.veek.callblocker.Model.Blacklist;
+import com.veek.callblocker.Model.RejectedCall;
 import com.veek.callblocker.Util.BlacklistAdapter;
-
 import io.fabric.sdk.android.Fabric;
 import java.util.ArrayList;
 import java.util.List;
@@ -38,14 +35,17 @@ public class MainActivity extends AppCompatActivity{
 
     private Toolbar toolbar;
     private TabLayout tabLayout;
-    private ViewPager viewPager;
+    public static ViewPager viewPager;
     private FloatingActionButton fab;
-    ViewPagerAdapter adapter;
+    public static ViewPagerAdapter adapter;
 
     public static AlertDialog alertDialog;
 
     public static BlacklistDAO blackListDao;
     public static List<Blacklist> blockList;
+
+    public static RejectedCallsDAO rejectedCallsDAO;
+    public static List<RejectedCall> rejectedCalls;
 
 
     @Override
@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity{
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 viewPager.setCurrentItem(tab.getPosition());
-                if(tab.getPosition()==0) fab.hide(); else fab.show();
+                if(tab.getPosition() == 0) fab.hide(); else fab.show();
                 switch (tab.getPosition()) {
                     case 0:
                         fab.hide();
@@ -108,8 +108,8 @@ public class MainActivity extends AppCompatActivity{
                                                     }
                                                 }
 
-                                        });
-                                        //.setCancelable(true);
+                                        })
+                                        .setCancelable(true);
                                 alertDialog = builder.create();
                                 alertDialog.show();
                             }
@@ -140,6 +140,11 @@ public class MainActivity extends AppCompatActivity{
 
         tabLayout.getTabAt(0).setIcon(tabIcons[0]);
         tabLayout.getTabAt(1).setIcon(tabIcons[1]);
+    }
+
+    public void updateRejectedFragment(){
+        RejectedFragment fragment = (RejectedFragment) adapter.getItem(viewPager.getCurrentItem());
+        fragment.setChanged();
     }
 
     private void setupViewPager(ViewPager viewPager) {
@@ -187,16 +192,20 @@ public class MainActivity extends AppCompatActivity{
         blackListDao = new BlacklistDAO(this);
         blockList = blackListDao.getAllBlacklist();
 
+        rejectedCallsDAO = new RejectedCallsDAO(this);
+        rejectedCalls = rejectedCallsDAO.getAllRejectedCalls();
+
+//        rejectedCalls.add(new RejectedCall("666", "Ez"));
+     //   rejectedCalls.get(0).amountCalls = 3;
+
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-
-        if (!(alertDialog == null)) alertDialog.dismiss();
-        if (!(BlacklistAdapter.alert == null)) BlacklistAdapter.alert.dismiss();
-        if (!(BlacklistAdapter.alertEdit == null)) BlacklistAdapter.alertEdit.dismiss();
-        if (!(BlacklistAdapter.alertDelete == null)) BlacklistAdapter.alertDelete.dismiss();
-
+        if (alertDialog != null) if (alertDialog.isShowing()) alertDialog.dismiss();
+        if (BlacklistAdapter.alert != null) if (BlacklistAdapter.alert.isShowing()) BlacklistAdapter.alert.dismiss();
+        if (BlacklistAdapter.alertEdit != null) if (BlacklistAdapter.alertEdit.isShowing()) BlacklistAdapter.alertEdit.dismiss();
+        if (BlacklistAdapter.alertDelete != null) if (BlacklistAdapter.alertDelete.isShowing()) BlacklistAdapter.alertDelete.dismiss();
     }
 }
