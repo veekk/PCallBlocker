@@ -27,7 +27,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     // Table creation SQL statement
     private static final String TABLE_CREATE_REJECTED = "create table "  + TABLE_REJECTED_CALLS + "( id "
-            + " integer primary key autoincrement, phone_number  text not null, " + "phone_name text, " + "amount_calls integer," + "time string);";
+            + " integer primary key autoincrement, phone_number  text not null, " + "phone_name text, " + "amount_calls integer," + "time integer);";
 
     public DBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);

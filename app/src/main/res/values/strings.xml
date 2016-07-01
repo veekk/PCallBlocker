@@ -9,14 +9,12 @@
     <string name="phone_number">Phone number</string>
     <string name="phone_name">Contact name(optional)</string>
     <string name="delete_q">Delete entry?</string>
-    <string name="add_entry">Add entry</string>
     <string name="edit">Edit</string>
     <string name="delete">Delete</string>
     <string name="save">Save</string>
     <string name="edit_title">Edit entry</string>
     <string name="alr_blocked">This number is already blocked</string>
     <string name="empty_nmb">Entered number is empty</string>
-    <string name="add">Add</string>
     <string name="last_call">Last call:</string>
     <string name="rejected_calls">Rejected calls: </string>
     <string-array name="items_menu">
@@ -27,5 +25,14 @@
         <item>Call</item>
         <item>Delete</item>
     </string-array>
+    <string name="missed_call">Missed call</string>
+    <string name="outgoing_call">Outgoing call</string>
+    <string name="incoming_call">Incoming call</string>
+    <string-array name="add_from">
+        <item>Manual</item>
+        <item>From call log</item>
+        <item>From contacts list</item>
+    </string-array>
+    <string name="add">Add</string>
 
 </resources>

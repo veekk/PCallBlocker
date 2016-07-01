@@ -16,7 +16,11 @@ import com.veek.callblocker.Util.BlacklistAdapter;
 import com.veek.callblocker.Util.RejectedCallsAdapter;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+
+import me.everything.providers.android.contacts.Contact;
 
 /**
  * Crafted by veek on 21.06.16 with love ♥
@@ -47,10 +51,6 @@ public class RejectedFragment extends Fragment {
         adapter = new RejectedCallsAdapter(getActivity(), MainActivity.rejectedCalls);
         rvRejectedCalls.setAdapter(adapter);
         return rootView;
-    }
-
-    public void setChanged(){
-        if (!(adapter == null)) adapter.notifyDataSetChanged();
     }
 
     @Override

@@ -95,7 +95,7 @@ public class RejectedCallsDAO {
             rejectedCall.phoneNumber = cursor.getString(1);
             rejectedCall.phoneName = cursor.getString(2);
             rejectedCall.amountCalls = cursor.getLong(3);
-            rejectedCall.time = cursor.getString(4);
+            rejectedCall.time = cursor.getLong(4);
 
             // Add the object filled with appropriate data into the list
             rejectedCalls.add(rejectedCall);

@@ -4,6 +4,7 @@ import android.telephony.PhoneNumberUtils;
 
 import java.sql.Time;
 import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Crafted by veek on 29.06.16 with love ♥
@@ -14,7 +15,8 @@ public class RejectedCall {
     public String phoneName;
     public long amountCalls;
     Calendar c = Calendar.getInstance();
-    public String time;
+    Date date = new Date();
+    public Long time;
 
     // Default constructor
     public RejectedCall() {
@@ -25,7 +27,7 @@ public class RejectedCall {
     public RejectedCall(final String phoneNumber, final String phoneName) {
         this.phoneName = phoneName;
         this.phoneNumber = phoneNumber;
-        this.time = Integer.toString(c.get(Calendar.HOUR_OF_DAY)) + ":" + Integer.toString(c.get(Calendar.MINUTE));
+        this.time = date.getTime();
         this.amountCalls = 1;
 
     }
@@ -34,7 +36,7 @@ public class RejectedCall {
         amountCalls++;
     }
 
-    public void updTime (String time){
+    public void updTime (Long time){
         this.time = time;
     }
 

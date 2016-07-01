@@ -3,6 +3,7 @@ package com.veek.callblocker;
 
 import android.app.Service;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -18,6 +19,7 @@ import android.telephony.TelephonyManager;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
+
 import com.crashlytics.android.Crashlytics;
 import com.veek.callblocker.DB.BlacklistDAO;
 import com.veek.callblocker.DB.RejectedCallsDAO;
@@ -26,12 +28,16 @@ import com.veek.callblocker.Fragment.RejectedFragment;
 import com.veek.callblocker.Model.Blacklist;
 import com.veek.callblocker.Model.RejectedCall;
 import com.veek.callblocker.Util.BlacklistAdapter;
+
 import io.fabric.sdk.android.Fabric;
+
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 
-public class MainActivity extends AppCompatActivity{
+public class MainActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
     private TabLayout tabLayout;
@@ -39,7 +45,8 @@ public class MainActivity extends AppCompatActivity{
     private FloatingActionButton fab;
     public static ViewPagerAdapter adapter;
 
-    public static AlertDialog alertDialog;
+    public static AlertDialog alertManual;
+    public static AlertDialog alertAdd;
 
     public static BlacklistDAO blackListDao;
     public static List<Blacklist> blockList;
@@ -70,7 +77,8 @@ public class MainActivity extends AppCompatActivity{
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 viewPager.setCurrentItem(tab.getPosition());
-                if(tab.getPosition() == 0) fab.hide(); else fab.show();
+                if (tab.getPosition() == 0) fab.hide();
+                else fab.show();
                 switch (tab.getPosition()) {
                     case 0:
                         fab.hide();
@@ -79,39 +87,55 @@ public class MainActivity extends AppCompatActivity{
                         fab.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorPrimary)));
                         fab.setOnClickListener(new View.OnClickListener() {
                             @Override
-                            public void onClick(View v) {
-                                final View view = (View) getLayoutInflater().inflate(R.layout.dialog_add, null);
-                                final EditText etNumber = (EditText) view.findViewById(R.id.etNumber);
-                                final EditText etName = (EditText) view.findViewById(R.id.etName);
+                            public void onClick(View view) {
                                 AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                                builder.setTitle(R.string.add_entry);
-                                builder.setView(view)
-                                        .setPositiveButton(R.string.add, new DialogInterface.OnClickListener() {
-                                            @Override
-                                            public void onClick(DialogInterface dialog, int which) {
-                                                final Blacklist phone = new Blacklist();
-                                                phone.phoneNumber = etNumber.getText().toString();
-                                                phone.phoneName = etName.getText().toString();
-                                                TelephonyManager tm = (TelephonyManager) getSystemService(Service.TELEPHONY_SERVICE);
-                                                if (phone.phoneNumber.equals("")) {
-                                                    Toast.makeText(MainActivity.this, R.string.empty_nmb, Toast.LENGTH_LONG).show();
-                                                } else  if (MainActivity.blockList.contains(new Blacklist(phone.phoneNumber, phone.phoneName))){
-                                                        Toast.makeText(MainActivity.this, R.string.alr_blocked, Toast.LENGTH_LONG).show();
-                                                }
-                                                    else {
-                                                        blackListDao.create(phone);
-                                                        blockList.add(new Blacklist(phone.phoneNumber, phone.phoneName));
-                                                        BlacklistFragment fragment = (BlacklistFragment) adapter.getItem(viewPager.getCurrentItem());
-                                                        if (fragment instanceof BlacklistFragment) {
-                                                            fragment.setChanged();
-                                                        }
-                                                    }
-                                                }
+                                builder.setItems(getResources().getStringArray(R.array.add_from), new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        switch (i) {
+                                            case 0:
+                                                final View view = (View) getLayoutInflater().inflate(R.layout.dialog_add, null);
+                                                final EditText etNumber = (EditText) view.findViewById(R.id.etNumber);
+                                                final EditText etName = (EditText) view.findViewById(R.id.etName);
+                                                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                                                builder.setTitle(getResources().getStringArray(R.array.add_from)[0]);
+                                                builder.setView(view)
+                                                        .setPositiveButton(R.string.add, new DialogInterface.OnClickListener() {
+                                                            @Override
+                                                            public void onClick(DialogInterface dialog, int which) {
+                                                                final Blacklist phone = new Blacklist();
+                                                                phone.phoneNumber = etNumber.getText().toString();
+                                                                phone.phoneName = etName.getText().toString();
+                                                                if (phone.phoneNumber.equals("")) {
+                                                                    Toast.makeText(MainActivity.this, R.string.empty_nmb, Toast.LENGTH_LONG).show();
+                                                                } else if (MainActivity.blockList.contains(new Blacklist(phone.phoneNumber, phone.phoneName))) {
+                                                                    Toast.makeText(MainActivity.this, R.string.alr_blocked, Toast.LENGTH_LONG).show();
+                                                                } else {
+                                                                    blackListDao.create(phone);
+                                                                    blockList.add(new Blacklist(phone.phoneNumber, phone.phoneName));
+                                                                    BlacklistFragment fragment = (BlacklistFragment) adapter.getItem(viewPager.getCurrentItem());
+                                                                    if (fragment instanceof BlacklistFragment) {
+                                                                        fragment.setChanged();
+                                                                    }
+                                                                }
+                                                            }
 
-                                        })
-                                        .setCancelable(true);
-                                alertDialog = builder.create();
-                                alertDialog.show();
+                                                        })
+                                                        .setCancelable(true);
+                                                alertManual = builder.create();
+                                                alertManual.show();
+                                                break;
+                                            case 1:
+                                                startActivity(new Intent(MainActivity.this, CallLogActivity.class));
+                                                break;
+                                            case 2:
+                                                startActivity(new Intent(MainActivity.this, ContactListActivity.class));
+                                                break;
+                                        }
+                                    }
+                                });
+                                alertAdd = builder.create();
+                                alertAdd.show();
                             }
                         });
                         fab.show();
@@ -142,18 +166,12 @@ public class MainActivity extends AppCompatActivity{
         tabLayout.getTabAt(1).setIcon(tabIcons[1]);
     }
 
-    public void updateRejectedFragment(){
-        RejectedFragment fragment = (RejectedFragment) adapter.getItem(viewPager.getCurrentItem());
-        fragment.setChanged();
-    }
-
     private void setupViewPager(ViewPager viewPager) {
         adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFrag(new RejectedFragment(),"ONE");
+        adapter.addFrag(new RejectedFragment(), "ONE");
         adapter.addFrag(new BlacklistFragment(), "TWO");
         viewPager.setAdapter(adapter);
     }
-
 
 
     class ViewPagerAdapter extends FragmentPagerAdapter {
@@ -195,17 +213,73 @@ public class MainActivity extends AppCompatActivity{
         rejectedCallsDAO = new RejectedCallsDAO(this);
         rejectedCalls = rejectedCallsDAO.getAllRejectedCalls();
 
-//        rejectedCalls.add(new RejectedCall("666", "Ez"));
-     //   rejectedCalls.get(0).amountCalls = 3;
-
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        if (alertDialog != null) if (alertDialog.isShowing()) alertDialog.dismiss();
-        if (BlacklistAdapter.alert != null) if (BlacklistAdapter.alert.isShowing()) BlacklistAdapter.alert.dismiss();
-        if (BlacklistAdapter.alertEdit != null) if (BlacklistAdapter.alertEdit.isShowing()) BlacklistAdapter.alertEdit.dismiss();
-        if (BlacklistAdapter.alertDelete != null) if (BlacklistAdapter.alertDelete.isShowing()) BlacklistAdapter.alertDelete.dismiss();
+        if (alertManual != null) if (alertManual.isShowing()) alertManual.dismiss();
+        if (BlacklistAdapter.alert != null)
+            if (BlacklistAdapter.alert.isShowing()) BlacklistAdapter.alert.dismiss();
+        if (BlacklistAdapter.alertEdit != null)
+            if (BlacklistAdapter.alertEdit.isShowing()) BlacklistAdapter.alertEdit.dismiss();
+        if (BlacklistAdapter.alertDelete != null)
+            if (BlacklistAdapter.alertDelete.isShowing()) BlacklistAdapter.alertDelete.dismiss();
+        if (alertAdd != null) if (alertAdd.isShowing()) alertAdd.dismiss();
     }
 }
+
+//
+//new View.OnClickListener() {
+//@Override
+//public void onClick(View view) {
+//        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+//        builder.setItems(MainActivity.this.getResources().getStringArray(R.array.add_from), new DialogInterface.OnClickListener() {
+//@Override
+//public void onClick(DialogInterface dialogInterface, int i) {
+//        switch (i) {
+//        case 0:
+//final View view = (View) getLayoutInflater().inflate(R.layout.dialog_add, null);
+//final EditText etNumber = (EditText) view.findViewById(R.id.etNumber);
+//final EditText etName = (EditText) view.findViewById(R.id.etName);
+//        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+//        builder.setTitle(R.string.add_entry);
+//        builder.setView(view)
+//        .setPositiveButton(R.string.add, new DialogInterface.OnClickListener() {
+//@Override
+//public void onClick(DialogInterface dialog, int which) {
+//final Blacklist phone = new Blacklist();
+//        phone.phoneNumber = etNumber.getText().toString();
+//        phone.phoneName = etName.getText().toString();
+//        TelephonyManager tm = (TelephonyManager) getSystemService(Service.TELEPHONY_SERVICE);
+//        if (phone.phoneNumber.equals("")) {
+//        Toast.makeText(MainActivity.this, R.string.empty_nmb, Toast.LENGTH_LONG).show();
+//        } else if (MainActivity.blockList.contains(new Blacklist(phone.phoneNumber, phone.phoneName))) {
+//        Toast.makeText(MainActivity.this, R.string.alr_blocked, Toast.LENGTH_LONG).show();
+//        } else {
+//        blackListDao.create(phone);
+//        blockList.add(new Blacklist(phone.phoneNumber, phone.phoneName));
+//        BlacklistFragment fragment = (BlacklistFragment) adapter.getItem(viewPager.getCurrentItem());
+//        if (fragment instanceof BlacklistFragment) {
+//        fragment.setChanged();
+//        }
+//        }
+//        }
+//
+//        })
+//        .setCancelable(true);
+//        alertManual = builder.create();
+//        alertManual.show();
+//        break;
+//        case 1:
+//        startActivity(new Intent(MainActivity.this, CallLogActivity.class));
+//        break;
+//        }
+//        }
+//        });
+//
+//        alertAdd = builder.create();
+//        alertAdd.show();
+//
+//        }
+//        }

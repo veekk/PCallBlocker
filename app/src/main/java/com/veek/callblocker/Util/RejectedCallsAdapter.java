@@ -19,6 +19,8 @@ import com.veek.callblocker.MainActivity;
 import com.veek.callblocker.Model.RejectedCall;
 import com.veek.callblocker.R;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -30,6 +32,9 @@ public class RejectedCallsAdapter extends RecyclerView.Adapter<RejectedCallsAdap
     public List<RejectedCall> rejectedCalls;
     AlertDialog alert;
     AlertDialog alertDelete;
+    Date date = new Date();
+
+    SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy HH:mm");
 
     @Override
     public RejectedCallsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -44,7 +49,8 @@ public class RejectedCallsAdapter extends RecyclerView.Adapter<RejectedCallsAdap
         else holder.tvName.setText(rejectedCalls.get(position).phoneName);
         holder.tvAmount.setText(context.getString(R.string.rejected_calls) + " " + Long.toString(rejectedCalls.get(position).amountCalls));
         holder.tvNumber.setText(rejectedCalls.get(position).phoneNumber);
-        holder.tvTime.setText(context.getString(R.string.last_call) + " " + rejectedCalls.get(position).time);
+        holder.tvTime.setText(context.getString(R.string.last_call) + " " + sdf.format(rejectedCalls.get(position).time));
+                //rejectedCalls.get(position).time);
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
