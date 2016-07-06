@@ -16,6 +16,7 @@ import com.veek.callblocker.Fragment.RejectedFragment;
 import com.veek.callblocker.MainActivity;
 import com.veek.callblocker.Model.Blacklist;
 import com.veek.callblocker.Model.RejectedCall;
+import com.veek.callblocker.R;
 
 import java.lang.reflect.Method;
 import java.util.Calendar;
@@ -35,6 +36,22 @@ public class CallBarring extends BroadcastReceiver
 
     @Override
     public void onReceive(Context context, Intent intent) {
+
+            String CountryID="";
+            String CountryZipCode="";
+
+            TelephonyManager manager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+            //getNetworkCountryIso
+            CountryID= manager.getSimCountryIso().toUpperCase();
+            String[] rl=context.getResources().getStringArray(R.array.CountryCodes);
+            for(int i=0;i<rl.length;i++) {
+                String[] g = rl[i].split(",");
+                if (g[1].trim().equals(CountryID.trim())) {
+                    CountryZipCode = g[0];
+                    break;
+                }
+            }
+
         // If, the received action is not a type of "Phone_State", ignore it
         if (!intent.getAction().equals("android.intent.action.PHONE_STATE"))
             return;
@@ -50,6 +67,8 @@ public class CallBarring extends BroadcastReceiver
             switch (tm.getCallState()) {
                 case TelephonyManager.CALL_STATE_RINGING:
                     number = intent.getStringExtra(TelephonyManager.EXTRA_INCOMING_NUMBER);
+//                    if (number.contains(CountryZipCode)) disconnectPhoneItelephony(context);
+
 
                     if (MainActivity.blockList.contains(new Blacklist(number, ""))) {
                         AudioManager am;
@@ -88,6 +107,7 @@ public class CallBarring extends BroadcastReceiver
                     }
             }
         }
+
     }
 
     // Method to disconnect phone automatically and programmatically
@@ -111,4 +131,6 @@ public class CallBarring extends BroadcastReceiver
             e.printStackTrace();
         }
     }
+
+
 }

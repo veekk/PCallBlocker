@@ -9,6 +9,8 @@
         android:layout_gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+
+        card_view:cardUseCompatPadding="true"
         android:foreground="?android:attr/selectableItemBackground"
         android:longClickable="true"
         card_view:cardCornerRadius="4dp"

@@ -14,7 +14,6 @@ public class SplashActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         Intent intent = new Intent(this, MainActivity.class);
-        //Intent intent = new Intent(this, CallLogActivity.class);
         startActivity(intent);
         finish();
     }

@@ -34,6 +34,12 @@
         <item>Из списка контактов</item>
     </string-array>
     <string name="add">Добавить</string>
+    <string name="add_call_log">Добавить данный номер в чёрный список?</string>
+    <string name="call_log_succ">Номер успешно добавлен</string>
+    <string name="about">О программе</string>
+    <string name="feedback">Оставить отзыв</string>
+    <string name="rate_app">Оценить программу!</string>
+    <string name="share">Поделиться</string>
 
 
 </resources>

@@ -39,7 +39,8 @@ public class BlacklistAdapter extends RecyclerView.Adapter<BlacklistAdapter.Blac
     @Override
     public void onBindViewHolder(BlacklistViewHolder holder, final int position) {
         holder.tvNumber.setText(blacklist.get(position).phoneNumber);
-        if (blacklist.get(position).phoneName.equals("")) holder.tvName.setText(blacklist.get(position).phoneNumber);
+        if (blacklist.get(position).phoneName==null) holder.tvName.setText(blacklist.get(position).phoneNumber);
+        else if (blacklist.get(position).phoneName.equals("")) holder.tvName.setText(blacklist.get(position).phoneNumber);
         else holder.tvName.setText(blacklist.get(position).phoneName);
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -20,8 +20,12 @@ import com.veek.callblocker.Model.RejectedCall;
 import com.veek.callblocker.R;
 
 import java.text.SimpleDateFormat;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+
+import me.everything.providers.android.contacts.Contact;
 
 /**
  * Crafted by veek on 29.06.16 with love ♥
@@ -45,7 +49,8 @@ public class RejectedCallsAdapter extends RecyclerView.Adapter<RejectedCallsAdap
 
     @Override
     public void onBindViewHolder(RejectedCallsViewHolder holder, final int position) {
-        if (rejectedCalls.get(position).phoneName.equals("")) holder.tvName.setText(rejectedCalls.get(position).phoneNumber);
+        if (rejectedCalls.get(position).phoneName == null) holder.tvName.setText(rejectedCalls.get(position).phoneNumber);
+        else if (rejectedCalls.get(position).phoneName.equals("")) holder.tvName.setText(rejectedCalls.get(position).phoneNumber);
         else holder.tvName.setText(rejectedCalls.get(position).phoneName);
         holder.tvAmount.setText(context.getString(R.string.rejected_calls) + " " + Long.toString(rejectedCalls.get(position).amountCalls));
         holder.tvNumber.setText(rejectedCalls.get(position).phoneNumber);
@@ -128,6 +133,13 @@ public class RejectedCallsAdapter extends RecyclerView.Adapter<RejectedCallsAdap
 
     public RejectedCallsAdapter(Context context, List<RejectedCall> rejectedCalls) {
         this.context = context;
+        Collections.sort(rejectedCalls, new Comparator<RejectedCall>() {
+            @Override
+            public int compare(RejectedCall rejectedCall, RejectedCall t1) {
+                return rejectedCall.time.compareTo(t1.time);
+            }
+        });
+
         this.rejectedCalls = rejectedCalls;
     }
 }
