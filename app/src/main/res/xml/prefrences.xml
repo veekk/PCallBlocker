@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <SwitchPreference
+        android:summary="@string/blocking_enabled_summary"
+        android:title="@string/blocking_enabled"
+        android:key="block_enabled">
+    </SwitchPreference>
+    <SwitchPreference
+        android:summary="@string/hidden_summary"
+        android:title="@string/hidden_nmbrs"
+        android:key="hidden">
+    </SwitchPreference>
+    <SwitchPreference
+    android:summary="@string/international_summary"
+    android:title="@string/international_nmbrs"
+        android:key="international">
+    </SwitchPreference>
+    <SwitchPreference
+        android:summary="@string/not_summary"
+        android:title="@string/not_contacts"
+        android:key="not_contacts">
+    </SwitchPreference>
+    <SwitchPreference
+        android:summary="@string/all_summary"
+        android:title="@string/all_numbers"
+        android:key="all_numbers">
+    </SwitchPreference>
+</PreferenceScreen>

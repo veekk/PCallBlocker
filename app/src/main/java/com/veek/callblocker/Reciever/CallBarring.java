@@ -17,6 +17,7 @@ import com.veek.callblocker.MainActivity;
 import com.veek.callblocker.Model.Blacklist;
 import com.veek.callblocker.Model.RejectedCall;
 import com.veek.callblocker.R;
+import com.veek.callblocker.Util.CustomPreferenceManager;
 
 import java.lang.reflect.Method;
 import java.util.Calendar;
@@ -29,16 +30,18 @@ public class CallBarring extends BroadcastReceiver
 {
     // This String will hold the incoming phone number
     private String number;
-    Calendar c = Calendar.getInstance();
     Date date = new Date();
+    String CountryID="";
+    String CountryZipCode="";
+    CustomPreferenceManager preferenceManager = CustomPreferenceManager.getInstance();
+
+
+
 
 
 
     @Override
     public void onReceive(Context context, Intent intent) {
-
-            String CountryID="";
-            String CountryZipCode="";
 
             TelephonyManager manager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
             //getNetworkCountryIso
@@ -59,52 +62,52 @@ public class CallBarring extends BroadcastReceiver
             // Else, try to do some action
         else {
             // Fetch the number of incoming call
-            TelephonyManager tm =
+            TelephonyManager tm = (TelephonyManager) context.getSystemService(Service.TELEPHONY_SERVICE);
+            preferenceManager.init(context, "settings");
+            if (preferenceManager.getState("block_enabled")) {
+                switch (tm.getCallState()) {
+                    case TelephonyManager.CALL_STATE_RINGING:
+                        number = intent.getStringExtra(TelephonyManager.EXTRA_INCOMING_NUMBER);
 
-                    (TelephonyManager) context.getSystemService(Service.TELEPHONY_SERVICE);
-
-
-            switch (tm.getCallState()) {
-                case TelephonyManager.CALL_STATE_RINGING:
-                    number = intent.getStringExtra(TelephonyManager.EXTRA_INCOMING_NUMBER);
-//                    if (number.contains(CountryZipCode)) disconnectPhoneItelephony(context);
-
-
-                    if (MainActivity.blockList.contains(new Blacklist(number, ""))) {
-                        AudioManager am;
-                        am = (AudioManager) context.getApplicationContext().getSystemService(Context.AUDIO_SERVICE);
-                        am.setRingerMode(AudioManager.RINGER_MODE_SILENT);
-                        disconnectPhoneItelephony(context);
-                        am.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
-                    }
-
-                    for (Blacklist blacklist : MainActivity.blockList) {
-                        if (blacklist.equals(new Blacklist(number, ""))) {
-                            int inc = 0;
-                            if (MainActivity.rejectedCalls.size()>0){
-                            for (RejectedCall rejectedCall : MainActivity.rejectedCalls){
-                                if (rejectedCall.equals(blacklist)){
-                                    rejectedCall.incAmount();
-                                   //rejectedCall.updTime(Integer.toString(c.get(Calendar.HOUR_OF_DAY)) + ":" + Integer.toString(c.get(Calendar.MINUTE)));
-                                    rejectedCall.updTime(date.getTime());
-                                    rejectedCall.phoneName = blacklist.phoneName;
-                                    MainActivity.rejectedCallsDAO.update(rejectedCall);
-                                    MainActivity.rejectedCalls = MainActivity.rejectedCallsDAO.getAllRejectedCalls();
-                                    inc = 0;
-                                    break;
-                                } else inc++;
-                            }
-                                if (inc == 0) break;
-                            }
-                            if (inc>0 || MainActivity.rejectedCalls.size()==0) {
-                                MainActivity.rejectedCallsDAO.create(new RejectedCall(blacklist.phoneNumber, blacklist.phoneName));
-                                MainActivity.rejectedCalls = MainActivity.rejectedCallsDAO.getAllRejectedCalls();
+                        if (preferenceManager.getState("international")) {
+                            if (number != null) if (number.contains(CountryZipCode)) {
+                                blockCall(context);
                                 break;
                             }
-                            break;
-
                         }
-                    }
+
+                        if (preferenceManager.getState("hidden")) {
+                            if (number != null){
+                            if (Long.parseLong(number) < 0) {
+                                blockCall(context);
+                                break;
+                            }
+                            }
+                        }
+
+                        if (preferenceManager.getState("all_numbers")) {
+                            blockCall(context);
+                            break;
+                        }
+
+                            if (MainActivity.blockList.contains(new Blacklist(number, ""))) {
+                                AudioManager am;
+                                am = (AudioManager) context.getApplicationContext().getSystemService(Context.AUDIO_SERVICE);
+                                am.setRingerMode(AudioManager.RINGER_MODE_SILENT);
+                                disconnectPhoneItelephony(context);
+                                am.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
+                                for (Blacklist blacklist : MainActivity.blockList) {
+                                    if (blacklist.equals(new Blacklist(number, ""))) {
+                                        blockCall(context);
+                                        break;
+                                    }
+                            }
+
+
+                                break;
+                            }
+                        }
+
             }
         }
 
@@ -130,6 +133,33 @@ public class CallBarring extends BroadcastReceiver
         {
             e.printStackTrace();
         }
+    }
+
+    private void blockCall(Context context){
+        AudioManager am;
+        am = (AudioManager) context.getApplicationContext().getSystemService(Context.AUDIO_SERVICE);
+        am.setRingerMode(AudioManager.RINGER_MODE_SILENT);
+        disconnectPhoneItelephony(context);
+        am.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
+        int inc = 0;
+        if (MainActivity.rejectedCalls.size() > 0) {
+            for (RejectedCall rejectedCall : MainActivity.rejectedCalls) {
+                if (rejectedCall.phoneNumber.equals(number)) {
+                    rejectedCall.incAmount();
+                    rejectedCall.updTime(date.getTime());
+                    MainActivity.rejectedCallsDAO.update(rejectedCall);
+                    MainActivity.rejectedCalls = MainActivity.rejectedCallsDAO.getAllRejectedCalls();
+                    inc = 0;
+                    break;
+                } else inc++;
+            }
+        }
+        if (inc > 0 || MainActivity.rejectedCalls.size() == 0) {
+            MainActivity.rejectedCallsDAO.create(new RejectedCall(number, ""));
+            MainActivity.rejectedCalls = MainActivity.rejectedCallsDAO.getAllRejectedCalls();
+
+        }
+
     }
 
 

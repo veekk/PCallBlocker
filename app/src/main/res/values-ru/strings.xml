@@ -40,6 +40,16 @@
     <string name="feedback">Оставить отзыв</string>
     <string name="rate_app">Оценить программу!</string>
     <string name="share">Поделиться</string>
+    <string name="blocking_enabled">Блокировка включена</string>
+    <string name="hidden_nmbrs">Скрытые номера</string>
+    <string name="not_contacts">Не из моих контактов</string>
+    <string name="international_nmbrs">Международные номера</string>
+    <string name="all_numbers">Все номера</string>
+    <string name="all_summary">Блокировать все входящие вызовы со всех номеров</string>
+    <string name="blocking_enabled_summary">Включить/выключить блокировку звонков</string>
+    <string name="hidden_summary">Блокировать все вызовы с приватных(скрытых) номеров</string>
+    <string name="international_summary">Блокировать все международные вызовы</string>
+    <string name="not_summary">Блокировать все вызовы от номеров не из моего списка контактов</string>
 
 
 </resources>

@@ -36,7 +36,7 @@
     <string name="add">Add</string>
     <string name="add_call_log">Add this number to blacklist?</string>
     <string name="call_log_succ">Number succesfully added</string>
-    <string-array name="CountryCodes" >
+    <string-array name="CountryCodes">
         <item>93,AF</item>
         <item>355,AL</item>
         <item>213,DZ</item>
@@ -248,5 +248,15 @@
     <string name="rate_app">Rate this app!</string>
     <string name="feedback">Send feedback</string>
     <string name="about">About</string>
+    <string name="blocking_enabled">Blocking enabled</string>
+    <string name="blocking_enabled_summary">Enable/disable blocking</string>
+    <string name="hidden_nmbrs">Hidden numbers</string>
+    <string name="hidden_summary">Block all call from hidden numbers</string>
+    <string name="international_nmbrs">International numbers</string>
+    <string name="international_summary">Block all calls from international numbers</string>
+    <string name="not_contacts">Not in my contacts</string>
+    <string name="not_summary">Block all calls from numbers not in your contact list</string>
+    <string name="all_numbers">Block all numbers</string>
+    <string name="all_summary">Block all calls from all numbers</string>
 
 </resources>

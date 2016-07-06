@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
@@ -33,7 +34,8 @@ public class ContactListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_call_log);
         toolbar = (Toolbar) findViewById(R.id.toolbarCL);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setTitle(getResources().getStringArray(R.array.add_from)[2]);
         RecyclerView rvCallLog;
         rvCallLog = (RecyclerView) findViewById(R.id.rvCallLog);
@@ -52,5 +54,16 @@ public class ContactListActivity extends AppCompatActivity {
         rvCallLog.setLayoutParams(lp);
         rvCallLog.setLayoutManager(llm);
         rvCallLog.setAdapter(adapter);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+        }
+
+
+        return super.onOptionsItemSelected(item);
     }
 }
