@@ -23,6 +23,10 @@ import com.veek.callblocker.Util.CustomPreferenceManager;
 import java.lang.reflect.Method;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
+
+import me.everything.providers.android.contacts.Contact;
+import me.everything.providers.android.contacts.ContactsProvider;
 
 /**
  * Crafted by veek on 18.06.16 with love ♥
@@ -70,12 +74,6 @@ public class CallBarring extends BroadcastReceiver
                     case TelephonyManager.CALL_STATE_RINGING:
                         number = intent.getStringExtra(TelephonyManager.EXTRA_INCOMING_NUMBER);
 
-                        if (preferenceManager.getState("international")) {
-                            if (number != null) if (number.contains(CountryZipCode)) {
-                                blockCall(context);
-                                break;
-                            }
-                        }
 
                         if (preferenceManager.getState("hidden")) {
                             if (number == null){
@@ -87,6 +85,30 @@ public class CallBarring extends BroadcastReceiver
                                 break;
                             }
                         }
+
+                        if (preferenceManager.getState("international")) {
+                            if (number != null) if (!number.contains(CountryZipCode)) {
+                                blockCall(context);
+                                break;
+                            }
+                        }
+
+                        if (preferenceManager.getState("not_contacts")){
+                                int i = 0;
+                            ContactsProvider contactsProvider = new ContactsProvider(context);
+                            List<Contact> contacts = contactsProvider.getContacts().getList();
+                            for (Contact contact : contacts) {
+                                if (PhoneNumberUtils.compare(contact.normilizedPhone, number)) {
+                                    i++;
+                                }
+                            }
+                                if (i==0) {
+                                    blockCall(context);
+                                    break;
+                                }
+                        }
+
+
 
                         if (preferenceManager.getState("all_numbers")) {
                             blockCall(context);
@@ -158,7 +180,16 @@ public class CallBarring extends BroadcastReceiver
             }
         }
         if (inc > 0 || MainActivity.rejectedCalls.size() == 0) {
-            MainActivity.rejectedCallsDAO.create(new RejectedCall(number, ""));
+            String name = "";
+                ContactsProvider contactsProvider = new ContactsProvider(context);
+                List<Contact> contacts = contactsProvider.getContacts().getList();
+                for (Contact contact : contacts) {
+                    if (PhoneNumberUtils.compare(contact.normilizedPhone, number)) {
+                        name = contact.displayName;
+                    }
+                }
+
+            MainActivity.rejectedCallsDAO.create(new RejectedCall(number, name));
             MainActivity.rejectedCalls = MainActivity.rejectedCallsDAO.getAllRejectedCalls();
 
         }

@@ -13,6 +13,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.telephony.PhoneNumberUtils;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -36,6 +37,8 @@ import java.util.List;
 
 import io.github.yavski.fabspeeddial.FabSpeedDial;
 import io.github.yavski.fabspeeddial.SimpleMenuListenerAdapter;
+import me.everything.providers.android.contacts.Contact;
+import me.everything.providers.android.contacts.ContactsProvider;
 
 /**
  * Crafted by veek on 05.07.16 with love ♥
@@ -97,6 +100,15 @@ public class MainFragment extends Fragment {
                                             Toast.makeText(activity, R.string.alr_blocked, Toast.LENGTH_SHORT).show();
                                         } else {
                                             MainActivity.blackListDao.create(phone);
+                                            if (phone.phoneName.equals("")) {
+                                                ContactsProvider contactsProvider = new ContactsProvider(getActivity());
+                                                List<Contact> contacts = contactsProvider.getContacts().getList();
+                                                for (Contact contact : contacts){
+                                                    if (PhoneNumberUtils.compare(contact.normilizedPhone, phone.phoneNumber)){
+                                                        phone.phoneName = contact.displayName;
+                                                    }
+                                                }
+                                            }
                                             MainActivity.blockList.add(new Blacklist(phone.phoneNumber, phone.phoneName));
                                             BlacklistFragment fragment = (BlacklistFragment) adapter.getItem(0);
                                             if (fragment != null) {
@@ -117,72 +129,6 @@ public class MainFragment extends Fragment {
                 return true;
             }
         });
-
-
-//        fab = (FloatingActionButton) rootView.findViewById(R.id.fab);
-//        //fab.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorPrimary)));
-//
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-//                builder.setItems(getResources().getStringArray(R.array.add_from), new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialogInterface, int i) {
-//                        switch (i) {
-//                            case 0:
-//                                final View view = (View) activity.getLayoutInflater().inflate(R.layout.dialog_add, null);
-//                                final EditText etNumber = (EditText) view.findViewById(R.id.etNumber);
-//                                final EditText etName = (EditText) view.findViewById(R.id.etName);
-//                                AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-//                                builder.setTitle(getResources().getStringArray(R.array.add_from)[0]);
-//                                builder.setView(view)
-//                                        .setPositiveButton(R.string.add, new DialogInterface.OnClickListener() {
-//                                            @Override
-//                                            public void onClick(DialogInterface dialog, int which) {
-//                                                final Blacklist phone = new Blacklist();
-//                                                phone.phoneNumber = etNumber.getText().toString();
-//                                                phone.phoneName = etName.getText().toString();
-//                                                if (phone.phoneNumber.equals("")) {
-//                                                    Toast.makeText(activity, R.string.empty_nmb, Toast.LENGTH_SHORT).show();
-//                                                } else if (MainActivity.blockList.contains(new Blacklist(phone.phoneNumber, phone.phoneName))) {
-//                                                    Toast.makeText(activity, R.string.alr_blocked, Toast.LENGTH_SHORT).show();
-//                                                } else {
-//                                                    MainActivity.blackListDao.create(phone);
-//                                                    MainActivity.blockList.add(new Blacklist(phone.phoneNumber, phone.phoneName));
-//                                                    BlacklistFragment fragment = (BlacklistFragment) adapter.getItem(0);
-//                                                    if (fragment != null) {
-//                                                        fragment.setChanged();
-//                                                    }
-//                                                }
-//                                            }
-//
-//                                        })
-//                                        .setCancelable(true);
-//                                alertManual = builder.create();
-//                                alertManual.show();
-//                                break;
-//                            case 1:
-//                                startActivity(new Intent(activity, CallLogActivity.class));
-//                                break;
-//                            case 2:
-//                                startActivity(new Intent(activity, ContactListActivity.class));
-//                                break;
-//                        }
-//                    }
-//                });
-//                alertAdd = builder.create();
-//                alertAdd.show();
-//            }
-//        });
-
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                fragmentManager.init(activity, R.id.cLay);
-//                fragmentManager.setFragment(new PreferenceFragment()    , true);
-//            }
-//        });
 
 
         viewPager = (ViewPager) rootView.findViewById(R.id.viewpager);

@@ -138,6 +138,7 @@ public class RejectedCallsAdapter extends RecyclerView.Adapter<RejectedCallsAdap
                 return rejectedCall.time.compareTo(t1.time);
             }
         });
+        Collections.reverse(rejectedCalls);
 
         this.rejectedCalls = rejectedCalls;
     }
