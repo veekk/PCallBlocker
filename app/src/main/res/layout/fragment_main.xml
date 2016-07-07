@@ -8,7 +8,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
-
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
@@ -22,22 +21,25 @@
             android:layout_height="wrap_content"
             app:tabMode="fixed"
             app:tabIndicatorHeight="4dp"
+            app:tabIndicatorColor="@color/primary_light"
             app:tabGravity="fill"/>
     </android.support.design.widget.AppBarLayout>
-
-    <android.support.design.widget.FloatingActionButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:fab_colorNormal="@color/colorPrimaryDark"
-        android:layout_margin="16dp"
-        android:clickable="true"
-        android:id="@+id/fab"
-        android:src="@drawable/plus"
-        android:layout_gravity="end|bottom" />
 
     <android.support.v4.view.ViewPager
         android:id="@+id/viewpager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+
+    <io.github.yavski.fabspeeddial.FabSpeedDial
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:id="@+id/fabSpeedDial"
+        app:fabGravity="bottom_end"
+        app:fabMenu="@menu/fab"
+        android:layout_margin="6dp"
+        app:miniFabBackgroundTint="@android:color/white"
+        app:miniFabDrawableTint="?attr/colorPrimaryDark"
+        app:miniFabTitleTextColor="?attr/colorPrimaryDark" />
 </android.support.design.widget.CoordinatorLayout>

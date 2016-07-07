@@ -10,6 +10,7 @@ import android.media.AudioManager;
 import android.os.Build;
 import android.telephony.PhoneNumberUtils;
 import android.telephony.TelephonyManager;
+import android.util.Log;
 
 import com.android.internal.telephony.ITelephony;
 import com.veek.callblocker.Fragment.RejectedFragment;
@@ -77,11 +78,13 @@ public class CallBarring extends BroadcastReceiver
                         }
 
                         if (preferenceManager.getState("hidden")) {
-                            if (number != null){
-                            if (Long.parseLong(number) < 0) {
-                                blockCall(context);
+                            if (number == null){
+                                AudioManager am;
+                                am = (AudioManager) context.getApplicationContext().getSystemService(Context.AUDIO_SERVICE);
+                                am.setRingerMode(AudioManager.RINGER_MODE_SILENT);
+                                disconnectPhoneItelephony(context);
+                                am.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
                                 break;
-                            }
                             }
                         }
 

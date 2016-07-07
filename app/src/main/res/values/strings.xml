@@ -258,5 +258,8 @@
     <string name="not_summary">Block all calls from numbers not in your contact list</string>
     <string name="all_numbers">Block all numbers</string>
     <string name="all_summary">Block all calls from all numbers</string>
+    <string name="manual">Manual add</string>
+    <string name="contact_list_add">Add from contact list</string>
+    <string name="last_call_add">Add last incoming call</string>
 
 </resources>

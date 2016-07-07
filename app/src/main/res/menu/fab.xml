@@ -1,0 +1,14 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/action_manual_add"
+        android:icon="@drawable/pencil"
+        android:title="@string/manual" />
+    <item
+        android:id="@+id/action_contact_add"
+        android:icon="@drawable/account_box"
+        android:title="@string/contact_list_add"/>
+    <item
+        android:id="@+id/action_email"
+        android:icon="@drawable/phone_incoming"
+        android:title="@string/last_call_add" />
+</menu>

@@ -37,54 +37,6 @@ public class SettingsActivity extends AppCompatActivity {
 
         fragmentManager.init(this, R.id.Flay);
         fragmentManager.setFragment(new PreferenceFragment(), false);
-
-
-//
-//        cbBlockEnable = (CheckBox) findViewById(R.id.cbBlockEnable);
-//        cbHidden = (CheckBox) findViewById(R.id.cbHidden);
-//        cbInternational = (CheckBox) findViewById(R.id.cbInternational);
-//        cbNotContacts = (CheckBox) findViewById(R.id.cbNotContacts);
-//        cbAllNumbers = (CheckBox) findViewById(R.id.cbAllNumbers);
-//
-//        preferenceManager.init(this, "settings");
-//
-//        cbBlockEnable.setChecked(preferenceManager.getState("block_enabled"));
-//        cbHidden.setChecked(preferenceManager.getState("hidden"));
-//        cbInternational.setChecked(preferenceManager.getState("international"));
-//        cbNotContacts.setChecked(preferenceManager.getState("not_contacts"));
-//        cbAllNumbers.setChecked(preferenceManager.getState("all_numbers"));
-//
-//        cbBlockEnable.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-//                preferenceManager.putState("block_enabled", b);
-//            }
-//        });
-//        cbHidden.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-//                preferenceManager.putState("hidden", b);
-//            }
-//        });
-//        cbInternational.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-//                preferenceManager.putState("international", b);
-//            }
-//        });
-//        cbNotContacts.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-//                preferenceManager.putState("not_contacts", b);
-//            }
-//        });
-//        cbAllNumbers.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-//                preferenceManager.putState("all_numbers", b);
-//            }
-//        });
-
     }
 
     @Override

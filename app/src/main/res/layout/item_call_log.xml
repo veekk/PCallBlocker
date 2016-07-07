@@ -1,97 +1,91 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/lLay"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:padding="6dp"
-    android:id="@+id/lLay"
+    android:animateLayoutChanges="true"
+    android:background="?android:attr/selectableItemBackground"
     android:clickable="true"
-    android:weightSum="1">
+    android:focusable="true"
+    android:longClickable="true">
 
-
-    <android.support.v7.widget.CardView
-        xmlns:card_view="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/cardViewCL"
-        android:layout_gravity="center"
-        android:layout_width="match_parent"
-
-        card_view:cardUseCompatPadding="true"
-        android:layout_height="wrap_content"
-        android:foreground="?android:attr/selectableItemBackground"
-        android:longClickable="true"
-        card_view:cardCornerRadius="4dp"
-        android:layout_weight="19.19">
-
-
-    <GridLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <TextView
+    <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Large Text"
-        android:id="@+id/tvNameCL"
-            android:layout_row="0"
-            android:layout_column="0"
-            android:padding="8dp"
-            android:phoneNumber="false" />
+        android:layout_height="wrap_content">
 
-        <LinearLayout
-            android:orientation="horizontal"
+        <RelativeLayout
+            android:id="@+id/top"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_row="0"
-            android:layout_column="1"
-            android:layout_gravity="right">
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="16dp">
 
             <TextView
+                android:id="@+id/tvNameCL"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="Small Text"
-                android:id="@+id/tvCallType"
-                android:layout_row="0"
-                android:layout_column="1"
-                android:padding="8dp"
+                android:layout_centerVertical="true"
                 android:phoneNumber="false"
-                android:autoText="true" />
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textSize="18sp"
+                tools:text="Vitalya" />
+
+
+            <TextView
+                android:id="@+id/tvCallType"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:autoText="true"
+                android:phoneNumber="false"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textSize="16sp"
+                tools:text="Исходящий вызов" />
 
             <ImageView
-            android:layout_width="43dp"
-            android:layout_height="43dp"
-            android:id="@+id/ivCallLogStatus"
-                android:layout_row="0"
-                android:layout_column="2"
-                android:padding="8dp"
-                android:layout_gravity="right" />
-        </LinearLayout>
+                android:id="@+id/ivCallLogStatus"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="4dp"
+                android:layout_toLeftOf="@+id/tvCallType" />
 
-        <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Medium Text"
-        android:id="@+id/tvNumberCL"
-            android:layout_weight="19.19"
-            android:layout_row="1"
-            android:layout_column="0"
-            android:padding="8dp"
-            android:phoneNumber="true" />
+        </RelativeLayout>
 
-        <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="Small Text"
-        android:id="@+id/tvTimeCL"
-            android:layout_row="1"
-            android:layout_column="1"
-            android:padding="8dp"
-            android:layout_gravity="right" />
-    </GridLayout>
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/top"
+            android:layout_marginBottom="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="8dp">
 
-    </android.support.v7.widget.CardView>
+            <TextView
+                android:id="@+id/tvNumberCL"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:phoneNumber="true"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textSize="16sp"
+                tools:text="+380 66 481 20 89" />
 
-</LinearLayout>
+            <TextView
+                android:id="@+id/tvTimeCL"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:text="Small Text"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textSize="16sp" />
+
+
+        </RelativeLayout>
+    </RelativeLayout>
+</RelativeLayout>

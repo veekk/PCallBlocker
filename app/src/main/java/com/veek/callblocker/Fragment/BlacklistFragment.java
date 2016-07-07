@@ -1,7 +1,9 @@
 package com.veek.callblocker.Fragment;
 
+import android.graphics.drawable.Drawable;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,6 +13,7 @@ import android.widget.LinearLayout;
 import com.veek.callblocker.MainActivity;
 import com.veek.callblocker.R;
 import com.veek.callblocker.Util.BlacklistAdapter;
+import com.veek.callblocker.Util.DividerItemDecoration;
 
 
 /**
@@ -57,10 +60,13 @@ public class BlacklistFragment extends Fragment {
     public void reCast (){
         if (rootView != null) {
             rvBlacklist = (RecyclerView) rootView.findViewById(R.id.rvBlacklist);
+            Drawable dividerDrawable = ContextCompat.getDrawable(getActivity(), R.drawable.divider);
+            RecyclerView.ItemDecoration dividerItemDecoration = new DividerItemDecoration(dividerDrawable);
             LinearLayoutManager llm = new LinearLayoutManager(getActivity());
             LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
             rvBlacklist.setLayoutParams(lp);
             rvBlacklist.setLayoutManager(llm);
+            rvBlacklist.addItemDecoration(dividerItemDecoration);
             adapter = new BlacklistAdapter(MainActivity.blockList, getActivity());
             rvBlacklist.setAdapter(adapter);
         }

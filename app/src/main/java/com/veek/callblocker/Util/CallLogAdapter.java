@@ -5,12 +5,15 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.telephony.PhoneNumberUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.GridLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -54,7 +57,7 @@ public class CallLogAdapter extends RecyclerView.Adapter<CallLogAdapter.CallLogV
     public void onBindViewHolder(CallLogViewHolder holder, final int position) {
         if (calls.get(position).name != null) holder.tvName.setText(calls.get(position).name);
         else holder.tvName.setText(calls.get(position).number);
-        holder.tvNumber.setText(calls.get(position).number);
+        holder.tvNumber.setText(PhoneNumberUtils.stripSeparators(calls.get(position).number));
         holder.tvTime.setText(sdf.format(calls.get(position).callDate));
         switch (calls.get(position).type) {
             case INCOMING:
@@ -70,7 +73,7 @@ public class CallLogAdapter extends RecyclerView.Adapter<CallLogAdapter.CallLogV
                 holder.tvCallType.setText(R.string.missed_call);
                 break;
         }
-        holder.cardView.setOnClickListener(new View.OnClickListener() {
+        holder.lLay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (MainActivity.blockList.contains(new Blacklist(calls.get(position).number, calls.get(position).name))) {
@@ -112,7 +115,7 @@ public class CallLogAdapter extends RecyclerView.Adapter<CallLogAdapter.CallLogV
         TextView tvTime;
         TextView tvCallType;
         ImageView ivStatus;
-        CardView cardView;
+        RelativeLayout lLay;
 
         public CallLogViewHolder(View itemView) {
             super(itemView);
@@ -121,7 +124,7 @@ public class CallLogAdapter extends RecyclerView.Adapter<CallLogAdapter.CallLogV
             tvTime = (TextView) itemView.findViewById(R.id.tvTimeCL);
             tvCallType = (TextView) itemView.findViewById(R.id.tvCallType);
             ivStatus = (ImageView) itemView.findViewById(R.id.ivCallLogStatus);
-            cardView = (CardView) itemView.findViewById(R.id.cardViewCL);
+            lLay = (RelativeLayout) itemView.findViewById(R.id.lLay);
         }
     }
 }

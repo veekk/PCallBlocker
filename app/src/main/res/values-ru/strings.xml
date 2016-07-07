@@ -50,6 +50,9 @@
     <string name="hidden_summary">Блокировать все вызовы с приватных(скрытых) номеров</string>
     <string name="international_summary">Блокировать все международные вызовы</string>
     <string name="not_summary">Блокировать все вызовы от номеров не из моего списка контактов</string>
+    <string name="contact_list_add">Добавить из списка контактов</string>
+    <string name="last_call_add">Добавить последний входящий звонка</string>
+    <string name="manual">Добавить вручную</string>
 
 
 </resources>

@@ -1,7 +1,9 @@
 package com.veek.callblocker.Fragment;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,6 +15,7 @@ import com.veek.callblocker.MainActivity;
 import com.veek.callblocker.Model.RejectedCall;
 import com.veek.callblocker.R;
 import com.veek.callblocker.Util.BlacklistAdapter;
+import com.veek.callblocker.Util.DividerItemDecoration;
 import com.veek.callblocker.Util.RejectedCallsAdapter;
 
 import java.util.ArrayList;
@@ -61,6 +64,9 @@ public class RejectedFragment extends Fragment {
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         rvRejectedCalls.setLayoutParams(lp);
         rvRejectedCalls.setLayoutManager(llm);
+        Drawable dividerDrawable = ContextCompat.getDrawable(getActivity(), R.drawable.divider);
+        RecyclerView.ItemDecoration dividerItemDecoration = new DividerItemDecoration(dividerDrawable);
+        rvRejectedCalls.addItemDecoration(dividerItemDecoration);
         adapter = new RejectedCallsAdapter(getActivity(), MainActivity.rejectedCalls);
         rvRejectedCalls.setAdapter(adapter);
     }

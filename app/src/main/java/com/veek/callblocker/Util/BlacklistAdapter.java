@@ -3,12 +3,12 @@ package com.veek.callblocker.Util;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.veek.callblocker.MainActivity;
 import com.veek.callblocker.Model.Blacklist;
@@ -42,7 +42,7 @@ public class BlacklistAdapter extends RecyclerView.Adapter<BlacklistAdapter.Blac
         if (blacklist.get(position).phoneName==null) holder.tvName.setText(blacklist.get(position).phoneNumber);
         else if (blacklist.get(position).phoneName.equals("")) holder.tvName.setText(blacklist.get(position).phoneNumber);
         else holder.tvName.setText(blacklist.get(position).phoneName);
-        holder.cardView.setOnClickListener(new View.OnClickListener() {
+        holder.lLay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
@@ -110,10 +110,10 @@ public class BlacklistAdapter extends RecyclerView.Adapter<BlacklistAdapter.Blac
     public static class BlacklistViewHolder extends RecyclerView.ViewHolder{
         TextView tvNumber;
         TextView tvName;
-        CardView cardView;
+        LinearLayout lLay;
         public BlacklistViewHolder(View itemView) {
             super(itemView);
-            cardView = (CardView) itemView.findViewById(R.id.card_view);
+            lLay = (LinearLayout) itemView.findViewById(R.id.lLay);
             tvNumber = (TextView) itemView.findViewById(R.id.tvNumber);
             tvName = (TextView) itemView.findViewById(R.id.tvName);
         }

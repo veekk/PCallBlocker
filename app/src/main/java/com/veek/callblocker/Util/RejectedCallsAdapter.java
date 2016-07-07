@@ -8,11 +8,12 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.veek.callblocker.MainActivity;
@@ -24,8 +25,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
-
-import me.everything.providers.android.contacts.Contact;
 
 /**
  * Crafted by veek on 29.06.16 with love ♥
@@ -56,7 +55,7 @@ public class RejectedCallsAdapter extends RecyclerView.Adapter<RejectedCallsAdap
         holder.tvNumber.setText(rejectedCalls.get(position).phoneNumber);
         holder.tvTime.setText(context.getString(R.string.last_call) + " " + sdf.format(rejectedCalls.get(position).time));
                 //rejectedCalls.get(position).time);
-        holder.cardView.setOnClickListener(new View.OnClickListener() {
+        holder.lLay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
@@ -120,14 +119,14 @@ public class RejectedCallsAdapter extends RecyclerView.Adapter<RejectedCallsAdap
         TextView tvName;
         TextView tvAmount;
         TextView tvTime;
-        CardView cardView;
+        LinearLayout lLay;
         public RejectedCallsViewHolder(View itemView) {
             super(itemView);
             tvNumber = (TextView) itemView.findViewById(R.id.tvNumberR);
             tvName = (TextView) itemView.findViewById(R.id.tvNameR);
             tvAmount = (TextView) itemView.findViewById(R.id.tvAmountR);
             tvTime = (TextView) itemView.findViewById(R.id.tvTime);
-            cardView = (CardView) itemView.findViewById(R.id.card_view_r);
+            lLay = (LinearLayout) itemView.findViewById(R.id.lLay);
         }
     }
 

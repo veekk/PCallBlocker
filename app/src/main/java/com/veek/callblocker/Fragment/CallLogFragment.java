@@ -1,8 +1,9 @@
 package com.veek.callblocker.Fragment;
 
+import android.graphics.drawable.Drawable;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,10 +13,9 @@ import android.widget.LinearLayout;
 
 import com.veek.callblocker.R;
 import com.veek.callblocker.Util.CallLogAdapter;
+import com.veek.callblocker.Util.DividerItemDecoration;
 
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 
 import me.everything.providers.android.calllog.Call;
@@ -28,6 +28,7 @@ public class CallLogFragment extends Fragment {
 
 
     View rootView;
+    RecyclerView rvCallLog;
 
     public CallLogFragment(){
 
@@ -41,17 +42,24 @@ public class CallLogFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_call_log, null);
-        RecyclerView rvCallLog;
-        rvCallLog = (RecyclerView) rootView.findViewById(R.id.rvCallLog);
+
+        Drawable dividerDrawable = ContextCompat.getDrawable(getActivity(), R.drawable.divider);
+        RecyclerView.ItemDecoration dividerItemDecoration = new DividerItemDecoration(dividerDrawable);
+
         CallsProvider callsProvider = new CallsProvider(getActivity());
         List<Call> calls = callsProvider.getCalls().getList();
         Collections.reverse(calls);
         CallLogAdapter adapter = new CallLogAdapter(calls, getActivity(), getActivity());
+
         LinearLayoutManager llm = new LinearLayoutManager(getActivity());
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+
+        rvCallLog = (RecyclerView) rootView.findViewById(R.id.rvCallLog);
+        rvCallLog.addItemDecoration(dividerItemDecoration);
         rvCallLog.setLayoutParams(lp);
         rvCallLog.setLayoutManager(llm);
         rvCallLog.setAdapter(adapter);
+
         return rootView;
     }
 }
