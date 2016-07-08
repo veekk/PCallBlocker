@@ -53,6 +53,20 @@
     <string name="contact_list_add">Добавить из списка контактов</string>
     <string name="last_call_add">Добавить последний входящий звонка</string>
     <string name="manual">Добавить вручную</string>
+    <string name="done">Готово</string>
+    <string name="first_hidden">Блокировать скрытые номера?</string>
+    <string name="first_international">Блокировать международные номера?</string>
+    <string name="first_not_contact">Блокировать номера не из контактов?</string>
+    <string name="first_title">Выбери свою судьбу!</string>
+    <string name="skip">Пропустить</string>
+    <string name="security_settings">Настройки безопасности</string>
+    <string name="first_password">Создать пароль?</string>
+    <string name="block_pref">Настройки блокировки</string>
+    <string name="security_pref">Настройки безопасности</string>
+    <string name="password_on">Блокировка паролем</string>
+    <string name="pin">PIN-код</string>
+    <string name="password_summary">Включить/выключить пароль</string>
+    <string name="pin_summary">Нажмите для изменения PIN-кода</string>
 
 
 </resources>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:pinview="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <com.dpizarro.pinview.library.PinView
+        android:id="@+id/pinView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        pinview:password="true"
+        pinview:numberPinBoxes="4"
+        pinview:split="-"
+        pinview:numberCharacters="1"
+        pinview:deleteOnClick="false"
+        pinview:keyboardMandatory="false"
+        pinview:nativePinBox="true"
+        pinview:colorSplit="@color/primary_text"
+        pinview:colorTextPinBox="@android:color/black"
+        pinview:colorTextTitles="@color/primary_text"
+        android:layout_weight="0.19" />
+</LinearLayout>

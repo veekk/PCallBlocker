@@ -10,19 +10,11 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-
-import com.veek.callblocker.Util.CallLogAdapter;
 import com.veek.callblocker.Util.ContactListAdapter;
 import com.veek.callblocker.Util.DividerItemDecoration;
-
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Iterator;
 import java.util.List;
-
-import me.everything.providers.android.calllog.Call;
-import me.everything.providers.android.calllog.CallsProvider;
 import me.everything.providers.android.contacts.Contact;
 import me.everything.providers.android.contacts.ContactsProvider;
 

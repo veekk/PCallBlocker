@@ -3,9 +3,7 @@ package com.veek.callblocker.Fragment;
 import android.app.Fragment;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.ColorStateList;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -18,23 +16,15 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 import android.widget.Toast;
-
-import com.veek.callblocker.CallLogActivity;
 import com.veek.callblocker.ContactListActivity;
-import com.veek.callblocker.DB.BlacklistDAO;
-import com.veek.callblocker.DB.RejectedCallsDAO;
 import com.veek.callblocker.MainActivity;
 import com.veek.callblocker.Model.Blacklist;
-import com.veek.callblocker.Model.RejectedCall;
 import com.veek.callblocker.R;
 import com.veek.callblocker.Util.CustomFragmentManager;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import io.github.yavski.fabspeeddial.FabSpeedDial;
 import io.github.yavski.fabspeeddial.SimpleMenuListenerAdapter;
 import me.everything.providers.android.contacts.Contact;
@@ -99,7 +89,6 @@ public class MainFragment extends Fragment {
                                         } else if (MainActivity.blockList.contains(new Blacklist(phone.phoneNumber, phone.phoneName))) {
                                             Toast.makeText(activity, R.string.alr_blocked, Toast.LENGTH_SHORT).show();
                                         } else {
-                                            MainActivity.blackListDao.create(phone);
                                             if (phone.phoneName.equals("")) {
                                                 ContactsProvider contactsProvider = new ContactsProvider(getActivity());
                                                 List<Contact> contacts = contactsProvider.getContacts().getList();
@@ -109,6 +98,7 @@ public class MainFragment extends Fragment {
                                                     }
                                                 }
                                             }
+                                            MainActivity.blackListDao.create(phone);
                                             MainActivity.blockList.add(new Blacklist(phone.phoneNumber, phone.phoneName));
                                             BlacklistFragment fragment = (BlacklistFragment) adapter.getItem(0);
                                             if (fragment != null) {

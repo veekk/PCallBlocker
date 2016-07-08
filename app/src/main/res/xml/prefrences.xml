@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <PreferenceCategory android:title="@string/block_pref">
     <SwitchPreference
         android:summary="@string/blocking_enabled_summary"
         android:title="@string/blocking_enabled"
@@ -26,4 +27,17 @@
         android:title="@string/all_numbers"
         android:key="all_numbers">
     </SwitchPreference>
+</PreferenceCategory>
+    <PreferenceCategory android:title="@string/security_pref">
+    <SwitchPreference
+        android:summary="@string/password_summary"
+        android:title="@string/password_on"
+        android:key="password_on"/>
+        <Preference
+            android:title="@string/pin"
+            android:summary="@string/pin_summary"
+            android:enabled="false"
+            android:key="pin"/>
+    </PreferenceCategory>
+
 </PreferenceScreen>

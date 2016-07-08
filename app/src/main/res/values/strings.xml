@@ -261,5 +261,19 @@
     <string name="manual">Manual add</string>
     <string name="contact_list_add">Add from contact list</string>
     <string name="last_call_add">Add last incoming call</string>
+    <string name="first_hidden">Block hidden number?</string>
+    <string name="first_international">Block international?</string>
+    <string name="first_not_contact">Block not in contacts?</string>
+    <string name="first_title">Choose your destiny!</string>
+    <string name="done">Done</string>
+    <string name="skip">Skip</string>
+    <string name="security_settings">Security settings</string>
+    <string name="first_password">Create a password?</string>
+    <string name="block_pref">Blocking settings</string>
+    <string name="security_pref">Security settings</string>
+    <string name="password_on">Password blocking</string>
+    <string name="pin">PIN-code</string>
+    <string name="password_summary">Enable/disable password</string>
+    <string name="pin_summary">Press for change PIN</string>
 
 </resources>

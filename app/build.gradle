@@ -13,6 +13,10 @@ apply plugin: 'realm-android'
 
 repositories {
     maven { url 'https://maven.fabric.io/public' }
+    mavenCentral()
+    maven {
+        url "https://oss.sonatype.org/content/repositories/snapshots/"
+    }
 
     }
 
@@ -44,6 +48,9 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:24.0.0'
     compile 'me.everything:providers-android:1.0.1'
     compile 'io.github.yavski:fab-speed-dial:1.0.4'
+    compile 'com.stephentuso:welcome:0.7.2'
+    compile 'me.drozdzynski.library.steppers:steppers:0.3.3-SNAPSHOT'
+    compile 'com.github.davidpizarro:pinview:1.0.0'
     compile('com.crashlytics.sdk.android:crashlytics:2.5.7@aar') {
         transitive = true;
     }

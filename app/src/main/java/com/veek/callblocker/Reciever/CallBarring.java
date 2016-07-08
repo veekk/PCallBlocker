@@ -1,19 +1,14 @@
 package com.veek.callblocker.Reciever;
 
-import android.annotation.TargetApi;
-import android.app.NotificationManager;
 import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.media.AudioManager;
-import android.os.Build;
 import android.telephony.PhoneNumberUtils;
 import android.telephony.TelephonyManager;
-import android.util.Log;
 
 import com.android.internal.telephony.ITelephony;
-import com.veek.callblocker.Fragment.RejectedFragment;
 import com.veek.callblocker.MainActivity;
 import com.veek.callblocker.Model.Blacklist;
 import com.veek.callblocker.Model.RejectedCall;
@@ -21,7 +16,6 @@ import com.veek.callblocker.R;
 import com.veek.callblocker.Util.CustomPreferenceManager;
 
 import java.lang.reflect.Method;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 

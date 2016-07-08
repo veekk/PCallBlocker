@@ -4,7 +4,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.view.ViewGroup;
-
 import com.veek.callblocker.Fragment.BlacklistFragment;
 import com.veek.callblocker.Fragment.CallLogFragment;
 import com.veek.callblocker.Fragment.RejectedFragment;

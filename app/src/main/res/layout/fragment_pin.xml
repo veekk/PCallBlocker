@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:pinview="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="20dp"
+    android:weightSum="1">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:src="@drawable/lock"
+        android:layout_height="300dp"
+        android:layout_width="300dp"
+        android:layout_gravity="center_horizontal" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Avoid unwanted and dangerous numbers"
+        android:id="@+id/textView3" />
+    <android.support.v7.widget.SwitchCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="20dp"
+        android:id="@+id/swPin"
+        android:text="Do you want to set password?"/>
+
+    <com.dpizarro.pinview.library.PinView
+        android:id="@+id/pinView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/WelcomeScreenTheme.Light"
+        pinview:password="true"
+        pinview:numberPinBoxes="4"
+        pinview:split="-"
+        pinview:numberCharacters="1"
+        pinview:deleteOnClick="false"
+        pinview:keyboardMandatory="false"
+        android:visibility="gone"
+        pinview:nativePinBox="true"
+        pinview:colorTextPinBox="@android:color/black"
+        android:layout_weight="0.19" />
+</LinearLayout>
