@@ -175,6 +175,7 @@ public class PreferenceFragment extends android.preference.PreferenceFragment{
                             imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
                             preferenceManager.putState("password_on", false);
+                            pin.setEnabled(false);
                         } else {
                             imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);

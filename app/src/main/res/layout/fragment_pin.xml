@@ -38,7 +38,7 @@
         pinview:deleteOnClick="false"
         pinview:keyboardMandatory="false"
         android:visibility="gone"
-        pinview:nativePinBox="true"
+        pinview:nativePinBox="false"
         pinview:colorTextPinBox="@android:color/black"
         android:layout_weight="0.19" />
 </LinearLayout>
