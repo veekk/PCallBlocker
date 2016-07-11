@@ -28,6 +28,12 @@
         android:key="all_numbers">
     </SwitchPreference>
 </PreferenceCategory>
+    <PreferenceCategory android:title="@string/notification">
+        <SwitchPreference
+            android:summary="@string/notification_sum"
+            android:title="@string/notification_on"
+            android:key="notification_on"/>
+    </PreferenceCategory>
     <PreferenceCategory android:title="@string/security_pref">
     <SwitchPreference
         android:summary="@string/password_summary"

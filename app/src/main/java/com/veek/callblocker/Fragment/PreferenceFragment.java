@@ -2,6 +2,7 @@ package com.veek.callblocker.Fragment;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.SwitchPreference;
@@ -12,6 +13,7 @@ import android.widget.Toast;
 
 import com.dpizarro.pinview.library.PinView;
 import com.veek.callblocker.R;
+import com.veek.callblocker.Service.NotifyService;
 import com.veek.callblocker.Util.CustomPreferenceManager;
 
 /**
@@ -25,6 +27,7 @@ public class PreferenceFragment extends android.preference.PreferenceFragment{
     SwitchPreference swInternational;
     SwitchPreference swNotContacts;
     SwitchPreference swAllNumbers;
+    SwitchPreference swNotification;
 
 
     InputMethodManager imm;
@@ -47,6 +50,7 @@ public class PreferenceFragment extends android.preference.PreferenceFragment{
         swNotContacts = (SwitchPreference) findPreference("not_contacts");
         swAllNumbers = (SwitchPreference) findPreference("all_numbers");
         swPassword = (SwitchPreference) findPreference("password_on");
+        swNotification = (SwitchPreference) findPreference("notification_on");
 
         pin = (Preference) findPreference("pin");
 
@@ -56,6 +60,7 @@ public class PreferenceFragment extends android.preference.PreferenceFragment{
         swNotContacts.setChecked(preferenceManager.getState("not_contacts"));
         swAllNumbers.setChecked(preferenceManager.getState("all_numbers"));
         swPassword.setChecked(preferenceManager.getState("password_on"));
+        swNotification.setChecked(preferenceManager.getState("notification_on"));
 
         pin.setEnabled(swPassword.isChecked());
 
@@ -110,6 +115,17 @@ public class PreferenceFragment extends android.preference.PreferenceFragment{
             }
         });
 
+        swNotification.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object o) {
+                preferenceManager.putState("notification_on", !swNotification.isChecked());
+                if (preferenceManager.getState("notification_on")){
+                    getActivity().startService(new Intent(getActivity(), NotifyService.class));
+                } else getActivity().stopService(new Intent(getActivity(), NotifyService.class));
+                return true;
+            }
+        });
+
         pin.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
@@ -124,9 +140,9 @@ public class PreferenceFragment extends android.preference.PreferenceFragment{
     private void pinCheckingDialog(){
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         final View view = View.inflate(getActivity(), R.layout.dialog_pin, null);
-        builder.setTitle("Enter current PIN")
+        builder.setTitle(R.string.current_pin_dialog)
                 .setView(view)
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -134,7 +150,7 @@ public class PreferenceFragment extends android.preference.PreferenceFragment{
 
                     }
                 })
-                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         PinView pinView = (PinView) view.findViewById(R.id.pinView);
@@ -144,7 +160,7 @@ public class PreferenceFragment extends android.preference.PreferenceFragment{
                         } else {
                             imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-                            Toast.makeText(getActivity(), "Entered PIN incorrect", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getActivity(), R.string.invalid_pin, Toast.LENGTH_LONG).show();
                         }
                     }
                 });
@@ -155,9 +171,9 @@ public class PreferenceFragment extends android.preference.PreferenceFragment{
     private void pinDisablingDialog(){
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         final View view = View.inflate(getActivity(), R.layout.dialog_pin, null);
-        builder.setTitle("Enter current PIN")
+        builder.setTitle(R.string.current_pin_dialog)
                 .setView(view)
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -166,12 +182,11 @@ public class PreferenceFragment extends android.preference.PreferenceFragment{
 
                     }
                 })
-                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         PinView pinView = (PinView) view.findViewById(R.id.pinView);
                         if (pinView.getPinResults().equals(preferenceManager.getString("pin"))){
-                            dialogInterface.dismiss();
                             imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
                             preferenceManager.putState("password_on", false);
@@ -179,11 +194,18 @@ public class PreferenceFragment extends android.preference.PreferenceFragment{
                         } else {
                             imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-                            Toast.makeText(getActivity(), "Entered PIN incorrect", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getActivity(), R.string.invalid_pin, Toast.LENGTH_LONG).show();
                             swPassword.setChecked(true);
                         }
                     }
-                });
+                })
+        .setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialogInterface) {
+                imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+            }
+        });
         AlertDialog dialog = builder.create();
         dialog.show();
     }
@@ -191,9 +213,9 @@ public class PreferenceFragment extends android.preference.PreferenceFragment{
     private void pinChangeDialog(){
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         final View view = View.inflate(getActivity(), R.layout.dialog_pin, null);
-        builder.setTitle("Enter new PIN")
+        builder.setTitle(R.string.pin_new)
                 .setView(view)
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -201,7 +223,7 @@ public class PreferenceFragment extends android.preference.PreferenceFragment{
 
                     }
                 })
-                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         PinView pinView = (PinView) view.findViewById(R.id.pinView);
@@ -211,7 +233,7 @@ public class PreferenceFragment extends android.preference.PreferenceFragment{
                             preferenceManager.putString("pin", pinView.getPinResults());
                             imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-                            Toast.makeText(getActivity(), "PIN changed succesfully", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getActivity(), R.string.pin_change_succ, Toast.LENGTH_LONG).show();
 
                     }
                 });

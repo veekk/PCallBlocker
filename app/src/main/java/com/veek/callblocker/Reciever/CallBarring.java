@@ -33,6 +33,7 @@ public class CallBarring extends BroadcastReceiver
     String CountryID="";
     String CountryZipCode="";
     CustomPreferenceManager preferenceManager = CustomPreferenceManager.getInstance();
+    AudioManager am;
 
 
 
@@ -68,7 +69,53 @@ public class CallBarring extends BroadcastReceiver
                     case TelephonyManager.CALL_STATE_RINGING:
                         number = intent.getStringExtra(TelephonyManager.EXTRA_INCOMING_NUMBER);
 
+                        if (number != null) {
+                            if (preferenceManager.getState("all_numbers")) {
+                                blockCall(context, "all_numbers");
+                                break;
+                            }
 
+
+                            if (preferenceManager.getState("international")) {
+                                    if (!number.substring(0, CountryZipCode.length()+1).contains(CountryZipCode)) {
+                                        blockCall(context, "international");
+                                        break;
+                                    }
+                            }
+
+                            if (preferenceManager.getState("not_contacts")) {
+                                int i = 0;
+                                ContactsProvider contactsProvider = new ContactsProvider(context);
+                                List<Contact> contacts = contactsProvider.getContacts().getList();
+                                for (Contact contact : contacts) {
+                                    if (PhoneNumberUtils.compare(contact.normilizedPhone, number)) {
+                                        i++;
+                                    }
+                                }
+                                if (i == 0) {
+                                    blockCall(context, "not_contacts");
+                                    break;
+                                }
+                            }
+
+
+                            if (MainActivity.blockList.contains(new Blacklist(number, ""))) {
+                                AudioManager am;
+                                am = (AudioManager) context.getApplicationContext().getSystemService(Context.AUDIO_SERVICE);
+                                am.setRingerMode(AudioManager.RINGER_MODE_SILENT);
+                                disconnectPhoneItelephony(context);
+                                am.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
+                                for (Blacklist blacklist : MainActivity.blockList) {
+                                    if (blacklist.equals(new Blacklist(number, ""))) {
+                                        blockCall(context, "blacklist");
+                                        break;
+                                    }
+                                }
+
+
+                                break;
+                            }
+                        } else
                         if (preferenceManager.getState("hidden")) {
                             if (number == null){
                                 AudioManager am;
@@ -79,54 +126,7 @@ public class CallBarring extends BroadcastReceiver
                                 break;
                             }
                         }
-
-                        if (preferenceManager.getState("international")) {
-                            if (number != null) if (!number.contains(CountryZipCode)) {
-                                blockCall(context);
-                                break;
-                            }
-                        }
-
-                        if (preferenceManager.getState("not_contacts")){
-                                int i = 0;
-                            ContactsProvider contactsProvider = new ContactsProvider(context);
-                            List<Contact> contacts = contactsProvider.getContacts().getList();
-                            for (Contact contact : contacts) {
-                                if (PhoneNumberUtils.compare(contact.normilizedPhone, number)) {
-                                    i++;
-                                }
-                            }
-                                if (i==0) {
-                                    blockCall(context);
-                                    break;
-                                }
-                        }
-
-
-
-                        if (preferenceManager.getState("all_numbers")) {
-                            blockCall(context);
-                            break;
-                        }
-
-                            if (MainActivity.blockList.contains(new Blacklist(number, ""))) {
-                                AudioManager am;
-                                am = (AudioManager) context.getApplicationContext().getSystemService(Context.AUDIO_SERVICE);
-                                am.setRingerMode(AudioManager.RINGER_MODE_SILENT);
-                                disconnectPhoneItelephony(context);
-                                am.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
-                                for (Blacklist blacklist : MainActivity.blockList) {
-                                    if (blacklist.equals(new Blacklist(number, ""))) {
-                                        blockCall(context);
-                                        break;
-                                    }
-                            }
-
-
-                                break;
-                            }
-                        }
-
+                }
             }
         }
 
@@ -154,8 +154,7 @@ public class CallBarring extends BroadcastReceiver
         }
     }
 
-    private void blockCall(Context context){
-        AudioManager am;
+    private void blockCall(Context context, String type){
         am = (AudioManager) context.getApplicationContext().getSystemService(Context.AUDIO_SERVICE);
         am.setRingerMode(AudioManager.RINGER_MODE_SILENT);
         disconnectPhoneItelephony(context);
@@ -166,6 +165,7 @@ public class CallBarring extends BroadcastReceiver
                 if (rejectedCall.phoneNumber.equals(number)) {
                     rejectedCall.incAmount();
                     rejectedCall.updTime(date.getTime());
+                    rejectedCall.type = type;
                     MainActivity.rejectedCallsDAO.update(rejectedCall);
                     MainActivity.rejectedCalls = MainActivity.rejectedCallsDAO.getAllRejectedCalls();
                     inc = 0;
@@ -183,7 +183,7 @@ public class CallBarring extends BroadcastReceiver
                     }
                 }
 
-            MainActivity.rejectedCallsDAO.create(new RejectedCall(number, name));
+            MainActivity.rejectedCallsDAO.create(new RejectedCall(number, name, type));
             MainActivity.rejectedCalls = MainActivity.rejectedCallsDAO.getAllRejectedCalls();
 
         }

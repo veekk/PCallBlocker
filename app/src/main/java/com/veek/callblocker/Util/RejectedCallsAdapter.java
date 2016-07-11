@@ -20,6 +20,8 @@ import com.veek.callblocker.MainActivity;
 import com.veek.callblocker.Model.RejectedCall;
 import com.veek.callblocker.R;
 
+import org.w3c.dom.Text;
+
 import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.Comparator;
@@ -51,10 +53,23 @@ public class RejectedCallsAdapter extends RecyclerView.Adapter<RejectedCallsAdap
         if (rejectedCalls.get(position).phoneName == null) holder.tvName.setText(rejectedCalls.get(position).phoneNumber);
         else if (rejectedCalls.get(position).phoneName.equals("")) holder.tvName.setText(rejectedCalls.get(position).phoneNumber);
         else holder.tvName.setText(rejectedCalls.get(position).phoneName);
-        holder.tvAmount.setText(context.getString(R.string.rejected_calls) + " " + Long.toString(rejectedCalls.get(position).amountCalls));
+        holder.tvAmount.setText(" " + Long.toString(rejectedCalls.get(position).amountCalls));
         holder.tvNumber.setText(rejectedCalls.get(position).phoneNumber);
-        holder.tvTime.setText(context.getString(R.string.last_call) + " " + sdf.format(rejectedCalls.get(position).time));
+        holder.tvTime.setText(sdf.format(rejectedCalls.get(position).time));
                 //rejectedCalls.get(position).time);
+        switch (rejectedCalls.get(position).type) {
+            case "not_contacts":
+                holder.tvType.setText(R.string.reject_not);
+                break;
+            case "all_numbers":
+                holder.tvType.setText(R.string.reject_all);
+                break;
+            case "international":
+                holder.tvType.setText(R.string.international_reject);
+                break;
+            case "blacklist":
+                holder.tvType.setText(R.string.reject_type + " " + R.string.reject_black);
+        }
         holder.lLay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -119,14 +134,16 @@ public class RejectedCallsAdapter extends RecyclerView.Adapter<RejectedCallsAdap
         TextView tvName;
         TextView tvAmount;
         TextView tvTime;
-        LinearLayout lLay;
+        TextView tvType;
+        RelativeLayout lLay;
         public RejectedCallsViewHolder(View itemView) {
             super(itemView);
             tvNumber = (TextView) itemView.findViewById(R.id.tvNumberR);
             tvName = (TextView) itemView.findViewById(R.id.tvNameR);
             tvAmount = (TextView) itemView.findViewById(R.id.tvAmountR);
             tvTime = (TextView) itemView.findViewById(R.id.tvTime);
-            lLay = (LinearLayout) itemView.findViewById(R.id.lLay);
+            tvType = (TextView) itemView.findViewById(R.id.blockType);
+            lLay = (RelativeLayout) itemView.findViewById(R.id.lLay);
         }
     }
 

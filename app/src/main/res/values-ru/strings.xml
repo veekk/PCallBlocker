@@ -67,6 +67,20 @@
     <string name="pin">PIN-код</string>
     <string name="password_summary">Включить/выключить пароль</string>
     <string name="pin_summary">Нажмите для изменения PIN-кода</string>
+    <string name="current_pin_dialog">Введите текущий PIN</string>
+    <string name="invalid_pin">Введён неверный PIN</string>
+    <string name="pin_new">Введите новый PIN</string>
+    <string name="cancel">Отмена</string>
+    <string name="pin_change_succ">PIN успешно изменён</string>
+    <string name="pin_enter">Введите PIN-код</string>
+    <string name="reject_all">Блокировать все вызовы</string>
+    <string name="reject_black">Чёрный список</string>
+    <string name="reject_not">Не в контактах</string>
+    <string name="international_reject">Международный вызов</string>
+    <string name="reject_type">Причина блокировки:</string>
+    <string name="notification">Настройка уведомлений</string>
+    <string name="notification_on">Уведомления включены</string>
+    <string name="notification_sum">Включить/выключить уведомления</string>
 
 
 </resources>

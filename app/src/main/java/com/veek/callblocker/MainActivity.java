@@ -20,6 +20,7 @@ import com.veek.callblocker.DB.RejectedCallsDAO;
 import com.veek.callblocker.Fragment.MainFragment;
 import com.veek.callblocker.Model.Blacklist;
 import com.veek.callblocker.Model.RejectedCall;
+import com.veek.callblocker.Service.NotifyService;
 import com.veek.callblocker.Util.BlacklistAdapter;
 import com.veek.callblocker.Util.CustomFragmentManager;
 import com.veek.callblocker.Util.CustomPreferenceManager;
@@ -46,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
     WelcomeScreenHelper welcomeScreen;
 
 
+
     InputMethodManager imm;
 
     @Override
@@ -54,9 +56,12 @@ public class MainActivity extends AppCompatActivity {
         Fabric.with(this, new Crashlytics());
         setContentView(R.layout.activity_main);
 
-
         fragmentManager.init(this, R.id.cLay);
         preferenceManager.init(this, "settings");
+
+        if (preferenceManager.getState("notification_on")){
+            startService(new Intent(this, NotifyService.class));
+        }
 
         if (!preferenceManager.getState("notFirst")) {
             preferenceManager.putState("block_enabled", true);
@@ -142,9 +147,9 @@ public class MainActivity extends AppCompatActivity {
     private void pinCheckingDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         final View view = View.inflate(this, R.layout.dialog_pin, null);
-        builder.setTitle("Enter PIN")
+        builder.setTitle(R.string.pin_enter)
                 .setView(view)
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -152,7 +157,7 @@ public class MainActivity extends AppCompatActivity {
                         finish();
                     }
                 })
-                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         PinView pinView = (PinView) view.findViewById(R.id.pinView);

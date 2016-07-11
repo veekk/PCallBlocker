@@ -49,6 +49,7 @@ public class RejectedCallsDAO {
         values.put("phone_name", rejectedCall.phoneName);
         values.put("amount_calls", rejectedCall.amountCalls);
         values.put("time", rejectedCall.time);
+        values.put("reject_type", rejectedCall.type);
 
         // thirst. insert the object into the database
         final long id = database.insert(DBHelper.TABLE_REJECTED_CALLS , null, values);
@@ -64,6 +65,7 @@ public class RejectedCallsDAO {
         values.put("phone_name", rejectedCall.phoneName);
         values.put("amount_calls", rejectedCall.amountCalls);
         values.put("time", rejectedCall.time);
+        values.put("reject_type", rejectedCall.type);
         database.update(DBHelper.TABLE_REJECTED_CALLS, values, "id = ?", new String[] {String.valueOf(rejectedCall.id)});
 
     }
@@ -81,7 +83,7 @@ public class RejectedCallsDAO {
         final List<RejectedCall> rejectedCalls = new ArrayList<RejectedCall>();
 
         // second, Query the database and set the result into Cursor
-        final Cursor cursor = database.query(DBHelper.TABLE_REJECTED_CALLS, new String[]{"id","phone_number", "phone_name", "amount_calls", "time"}, null, null, null, null, null);
+        final Cursor cursor = database.query(DBHelper.TABLE_REJECTED_CALLS, new String[]{"id","phone_number", "phone_name", "amount_calls", "time", "reject_type"}, null, null, null, null, null);
 
         // Move the Cursor pointer to the first
         cursor.moveToFirst();
@@ -96,6 +98,7 @@ public class RejectedCallsDAO {
             rejectedCall.phoneName = cursor.getString(2);
             rejectedCall.amountCalls = cursor.getLong(3);
             rejectedCall.time = cursor.getLong(4);
+            rejectedCall.type = cursor.getString(5);
 
             // Add the object filled with appropriate data into the list
             rejectedCalls.add(rejectedCall);

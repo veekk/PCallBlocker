@@ -28,6 +28,8 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 
 import me.everything.providers.android.calllog.Call;
+import me.everything.providers.android.contacts.Contact;
+import me.everything.providers.android.contacts.ContactsProvider;
 
 /**
  * Crafted by veek on 30.06.16 with love ♥
@@ -84,8 +86,18 @@ public class CallLogAdapter extends RecyclerView.Adapter<CallLogAdapter.CallLogV
                             .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
-                                    MainActivity.blackListDao = new BlacklistDAO(context);
-                                    MainActivity.blackListDao.create(new Blacklist(calls.get(position).number, calls.get(position).name));
+                                    String name = null;
+                                    if (calls.get(position).name == null) {
+                                        ContactsProvider contactsProvider = new ContactsProvider(context);
+                                        List<Contact> contacts = contactsProvider.getContacts().getList();
+                                        for (Contact contact : contacts){
+                                            if (PhoneNumberUtils.compare(contact.normilizedPhone, calls.get(position).number)){
+                                                name = contact.displayName;
+                                                break;
+                                            }
+                                        }
+                                    } else name = calls.get(position).name;
+                                    MainActivity.blackListDao.create(new Blacklist(calls.get(position).number, name));
                                     MainActivity.blockList = MainActivity.blackListDao.getAllBlacklist();
                                     Toast.makeText(context, R.string.call_log_succ, Toast.LENGTH_SHORT).show();
                                 }

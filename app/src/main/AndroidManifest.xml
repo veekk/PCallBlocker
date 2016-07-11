@@ -54,6 +54,14 @@
         </activity>
         <activity android:name=".ContactListActivity" />
         <activity android:name=".SettingsActivity" />
+
+        <service
+
+            android:name=".Service.NotifyService"
+
+            android:process=":notifyservice" >
+
+        </service>
     </application>
 
 </manifest>

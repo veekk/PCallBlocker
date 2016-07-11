@@ -24,9 +24,12 @@ import com.veek.callblocker.Model.Blacklist;
 import com.veek.callblocker.R;
 import com.veek.callblocker.Util.CustomFragmentManager;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import io.github.yavski.fabspeeddial.FabSpeedDial;
 import io.github.yavski.fabspeeddial.SimpleMenuListenerAdapter;
+import me.everything.providers.android.calllog.Call;
+import me.everything.providers.android.calllog.CallsProvider;
 import me.everything.providers.android.contacts.Contact;
 import me.everything.providers.android.contacts.ContactsProvider;
 
@@ -115,6 +118,40 @@ public class MainFragment extends Fragment {
                     case R.id.action_contact_add:
                         startActivity(new Intent(activity, ContactListActivity.class));
                         break;
+                    case R.id.action_last_incoming:
+                        CallsProvider callsProvider = new CallsProvider(getActivity());
+                        List<Call> calls = callsProvider.getCalls().getList();
+                        Collections.reverse(calls);
+                        for(Call call : calls){
+                            if ((call.type == Call.CallType.INCOMING || call.type == Call.CallType.MISSED) && call.number != null){
+                                if (MainActivity.blockList.contains(new Blacklist(call.number, call.name))) {
+                                    Toast.makeText(activity, R.string.alr_blocked, Toast.LENGTH_SHORT).show();
+                                } else {
+                                    String name = null;
+                                    if (call.name == null) {
+                                        ContactsProvider contactsProvider = new ContactsProvider(getActivity());
+                                        List<Contact> contacts = contactsProvider.getContacts().getList();
+                                        for (Contact contact : contacts){
+                                            if (PhoneNumberUtils.compare(contact.normilizedPhone, call.number)){
+                                                name = contact.displayName;
+                                                break;
+                                            }
+                                        }
+                                    } else name = call.name;
+                                MainActivity.blackListDao.create(new Blacklist(call.number, name));
+                                MainActivity.blockList = MainActivity.blackListDao.getAllBlacklist();
+                                }
+                                try {
+                                    BlacklistFragment fragment = (BlacklistFragment) adapter.getItem(0);
+                                    if (fragment != null) {
+                                        fragment.reCast();
+                                    }
+                                } catch (Exception e) {
+
+                                }
+                                break;
+                            }
+                        }
                 }
                 return true;
             }

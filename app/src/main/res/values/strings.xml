@@ -275,5 +275,20 @@
     <string name="pin">PIN-code</string>
     <string name="password_summary">Enable/disable password</string>
     <string name="pin_summary">Press for change PIN</string>
+    <string name="current_pin_dialog">Enter current PIN</string>
+    <string name="pin_new">Enter new pin</string>
+    <string name="invalid_pin">PIN is incorrect</string>
+    <string name="ok" translatable="false">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="pin_change_succ">Pin changed succesfully</string>
+    <string name="pin_enter">Enter PIN</string>
+    <string name="reject_type">Blocking reason:</string>
+    <string name="international_reject">International call</string>
+    <string name="reject_all">Block all</string>
+    <string name="reject_not">Not in contacts</string>
+    <string name="reject_black">Blacklist</string>
+    <string name="notification">Notification settings</string>
+    <string name="notification_on">Enable notification</string>
+    <string name="notification_sum">Enabling/disabling notification</string>
 
 </resources>

@@ -13,6 +13,7 @@ public class RejectedCall {
     public long id;
     public String phoneNumber;
     public String phoneName;
+    public String type;
     public long amountCalls;
     Calendar c = Calendar.getInstance();
     Date date = new Date();
@@ -24,7 +25,8 @@ public class RejectedCall {
     }
 
     // To easily create Blacklist object, an alternative constructor
-    public RejectedCall(final String phoneNumber, final String phoneName) {
+    public RejectedCall(final String phoneNumber, final String phoneName, final String type) {
+        this.type = type;
         this.phoneName = phoneName;
         this.phoneNumber = phoneNumber;
         this.time = date.getTime();
