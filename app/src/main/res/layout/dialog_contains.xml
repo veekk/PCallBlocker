@@ -10,16 +10,16 @@
         android:padding="6dp"
         android:layout_height="wrap_content">
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="phone"
-        android:ems="10"
-        android:hint="@string/phone_number"
-        android:id="@+id/etNumber"
-        android:layout_gravity="center_horizontal"
-        android:padding="8dp" />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="phone"
+            android:ems="10"
+            android:hint="@string/phone_number_contains"
+            android:id="@+id/etNumber"
+            android:layout_gravity="center_horizontal"
+            android:padding="8dp"
+            android:maxLength="3" />
     </android.support.design.widget.TextInputLayout>
-
 
 </LinearLayout>

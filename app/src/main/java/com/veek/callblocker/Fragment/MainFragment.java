@@ -3,6 +3,7 @@ package com.veek.callblocker.Fragment;
 import android.app.Fragment;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentManager;
@@ -50,7 +51,7 @@ public class MainFragment extends Fragment {
     private FabSpeedDial fab;
 
     public static AlertDialog alertManual;
-    public static AlertDialog alertAdd;
+    public static AlertDialog alertContains;
 
     public static ViewPagerAdapter adapter;
 
@@ -77,7 +78,6 @@ public class MainFragment extends Fragment {
                     case R.id.action_manual_add:
                         final View view = activity.getLayoutInflater().inflate(R.layout.dialog_add, null);
                         final EditText etNumber = (EditText) view.findViewById(R.id.etNumber);
-                        final EditText etName = (EditText) view.findViewById(R.id.etName);
                         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
                         builder.setTitle(getResources().getStringArray(R.array.add_from)[0]);
                         builder.setView(view)
@@ -86,13 +86,11 @@ public class MainFragment extends Fragment {
                                     public void onClick(DialogInterface dialog, int which) {
                                         final Blacklist phone = new Blacklist();
                                         phone.phoneNumber = etNumber.getText().toString();
-                                        phone.phoneName = etName.getText().toString();
                                         if (phone.phoneNumber.equals("")) {
                                             Toast.makeText(activity, R.string.empty_nmb, Toast.LENGTH_SHORT).show();
                                         } else if (MainActivity.blockList.contains(new Blacklist(phone.phoneNumber, phone.phoneName))) {
                                             Toast.makeText(activity, R.string.alr_blocked, Toast.LENGTH_SHORT).show();
                                         } else {
-                                            if (phone.phoneName.equals("")) {
                                                 ContactsProvider contactsProvider = new ContactsProvider(getActivity());
                                                 List<Contact> contacts = contactsProvider.getContacts().getList();
                                                 for (Contact contact : contacts){
@@ -100,7 +98,7 @@ public class MainFragment extends Fragment {
                                                         phone.phoneName = contact.displayName;
                                                     }
                                                 }
-                                            }
+
                                             MainActivity.blackListDao.create(phone);
                                             MainActivity.blockList.add(new Blacklist(phone.phoneNumber, phone.phoneName));
                                             BlacklistFragment fragment = (BlacklistFragment) adapter.getItem(0);
@@ -120,28 +118,55 @@ public class MainFragment extends Fragment {
                         break;
                     case R.id.action_last_incoming:
                         CallsProvider callsProvider = new CallsProvider(getActivity());
-                        List<Call> calls = callsProvider.getCalls().getList();
-                        Collections.reverse(calls);
-                        for(Call call : calls){
-                            if ((call.type == Call.CallType.INCOMING || call.type == Call.CallType.MISSED) && call.number != null){
-                                if (MainActivity.blockList.contains(new Blacklist(call.number, call.name))) {
-                                    Toast.makeText(activity, R.string.alr_blocked, Toast.LENGTH_SHORT).show();
-                                } else {
-                                    String name = null;
-                                    if (call.name == null) {
-                                        ContactsProvider contactsProvider = new ContactsProvider(getActivity());
-                                        List<Contact> contacts = contactsProvider.getContacts().getList();
-                                        for (Contact contact : contacts){
-                                            if (PhoneNumberUtils.compare(contact.normilizedPhone, call.number)){
-                                                name = contact.displayName;
-                                                break;
-                                            }
-                                        }
-                                    } else name = call.name;
-                                MainActivity.blackListDao.create(new Blacklist(call.number, name));
-                                MainActivity.blockList = MainActivity.blackListDao.getAllBlacklist();
-                                }
-                                try {
+//                        int i = 0;
+//                        int size = callsProvider.getCalls().getList().size();
+//                        List<Call> calls;
+//                        if (size > 30) {
+//                            calls = callsProvider.getCalls().getList().subList((size - 30), size);
+//                        } else calls = callsProvider.getCalls().getList();
+//                        Collections.reverse(calls);
+//                        for(Call call : calls) {
+//                            if ((call.type == Call.CallType.INCOMING || call.type == Call.CallType.MISSED) && call.number != null) {
+//                                i++;
+//                                if (MainActivity.blockList.contains(new Blacklist(call.number, call.name))) {
+//                                    Toast.makeText(activity, R.string.alr_blocked, Toast.LENGTH_SHORT).show();
+//                                } else {
+//                                    String name = null;
+//                                    if (call.name == null) {
+//                                        ContactsProvider contactsProvider = new ContactsProvider(getActivity());
+//                                        List<Contact> contacts = contactsProvider.getContacts().getList();
+//                                        for (Contact contact : contacts) {
+//                                            if (PhoneNumberUtils.compare(contact.normilizedPhone, call.number)) {
+//                                                name = contact.displayName;
+//                                                break;
+//                                            }
+//                                        }
+//                                    } else name = call.name;
+//                                    MainActivity.blackListDao.create(new Blacklist(call.number, name));
+//                                    MainActivity.blockList = MainActivity.blackListDao.getAllBlacklist();
+//                                }
+//                                try {
+//                                    BlacklistFragment fragment = (BlacklistFragment) adapter.getItem(0);
+//                                    if (fragment != null) {
+//                                        fragment.reCast();
+//                                    }
+//                                } catch (Exception e) {
+//
+//                                }
+//                                if (i == 0) {
+//                                    Toast.makeText(getActivity(), R.string.last_not_found, Toast.LENGTH_LONG);
+//                                }
+//                                break;
+//                            }
+//                        }
+
+                        try {
+                            CallLogFragment callFragment = (CallLogFragment) adapter.getItem(1);
+                            if (callFragment != null){
+                                callFragment.lastIncoming();
+                            }
+                        } catch (Exception e){}
+                                                        try {
                                     BlacklistFragment fragment = (BlacklistFragment) adapter.getItem(0);
                                     if (fragment != null) {
                                         fragment.reCast();
@@ -149,9 +174,40 @@ public class MainFragment extends Fragment {
                                 } catch (Exception e) {
 
                                 }
-                                break;
-                            }
-                        }
+
+                        break;
+                    case R.id.action_contains:
+                        final View v = activity.getLayoutInflater().inflate(R.layout.dialog_contains, null);
+                        final EditText etN = (EditText) v.findViewById(R.id.etNumber);
+                        AlertDialog.Builder mBuilder = new AlertDialog.Builder(activity);
+                        mBuilder.setTitle(R.string.add_start_from);
+                        mBuilder.setView(v)
+                                .setPositiveButton(R.string.add, new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        final Blacklist phone = new Blacklist();
+                                        phone.phoneNumber = etN.getText().toString();
+                                        if (phone.phoneNumber.equals("")) {
+                                            Toast.makeText(activity, R.string.empty_nmb, Toast.LENGTH_SHORT).show();
+                                        } else if (MainActivity.blockList.contains(new Blacklist(phone.phoneNumber, phone.phoneName))) {
+                                            Toast.makeText(activity, R.string.alr_blocked, Toast.LENGTH_SHORT).show();
+                                        } else {
+                                            phone.phoneNumber = phone.phoneNumber + "xxxxxxx";
+                                            MainActivity.blackListDao.create(phone);
+                                            MainActivity.blockList.add(new Blacklist(phone.phoneNumber, phone.phoneName));
+                                            BlacklistFragment fragment = (BlacklistFragment) adapter.getItem(0);
+                                            if (fragment != null) {
+                                                fragment.setChanged();
+                                            }
+                                        }
+                                    }
+
+                                })
+                                .setCancelable(true);
+                        alertContains = mBuilder.create();
+                        alertContains.show();
+                        break;
+
                 }
                 return true;
             }

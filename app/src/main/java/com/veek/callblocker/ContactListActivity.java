@@ -65,4 +65,6 @@ public class ContactListActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+
 }

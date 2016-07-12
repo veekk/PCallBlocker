@@ -126,6 +126,21 @@ public class CallBarring extends BroadcastReceiver
                                 break;
                             }
                         }
+
+                        for (Blacklist blacklist:  MainActivity.blockList){
+                            if (blacklist.phoneNumber.contains("x")){
+                                String pNum = blacklist.phoneNumber.replace("x", "");
+                                if (number != null) {
+                                    if (number.contains("+")) {
+                                        if (number.substring(0, 6).contains(pNum)) {
+                                            blockCall(context, "blacklist");
+                                        }
+                                    } else if (number.substring(0, (pNum.length()+1)).contains(pNum)){
+                                        blockCall(context, "blacklist");
+                                    }
+                                }
+                            }
+                    }
                 }
             }
         }

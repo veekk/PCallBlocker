@@ -260,7 +260,7 @@
     <string name="all_summary">Block all calls from all numbers</string>
     <string name="manual">Manual add</string>
     <string name="contact_list_add">Add from contact list</string>
-    <string name="last_call_add">Add last incoming call</string>
+    <string name="last_call_add">From last incoming</string>
     <string name="first_hidden">Block hidden number?</string>
     <string name="first_international">Block international?</string>
     <string name="first_not_contact">Block not in contacts?</string>
@@ -290,5 +290,10 @@
     <string name="notification">Notification settings</string>
     <string name="notification_on">Enable notification</string>
     <string name="notification_sum">Enabling/disabling notification</string>
+    <string name="add_start_from">Starting from...</string>
+    <string name="phone_number_contains">Phone number code (3 symbols max.)</string>
+    <string name="last_not_found">Incoming number not found</string>
+    <string name="unknown_number">Unknown number</string>
+    <string name="cant_unknow">Can\'t add unknown number</string>
 
 </resources>

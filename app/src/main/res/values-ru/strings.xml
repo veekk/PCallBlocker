@@ -51,7 +51,7 @@
     <string name="international_summary">Блокировать все международные вызовы</string>
     <string name="not_summary">Блокировать все вызовы от номеров не из моего списка контактов</string>
     <string name="contact_list_add">Добавить из списка контактов</string>
-    <string name="last_call_add">Добавить последний входящий звонка</string>
+    <string name="last_call_add">С последнего входящего</string>
     <string name="manual">Добавить вручную</string>
     <string name="done">Готово</string>
     <string name="first_hidden">Блокировать скрытые номера?</string>
@@ -81,6 +81,11 @@
     <string name="notification">Настройка уведомлений</string>
     <string name="notification_on">Уведомления включены</string>
     <string name="notification_sum">Включить/выключить уведомления</string>
+    <string name="add_start_from">Начинается с...</string>
+    <string name="phone_number_contains">Код номера телефона (максимум 3 символа)</string>
+    <string name="last_not_found">Входящий номер не найден</string>
+    <string name="unknown_number">Неизвестный</string>
+    <string name="cant_unknow">Нельзя добавить неизвестный</string>
 
 
 </resources>

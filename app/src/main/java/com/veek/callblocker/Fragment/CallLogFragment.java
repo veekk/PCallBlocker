@@ -6,11 +6,15 @@ import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.telephony.PhoneNumberUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
+import com.veek.callblocker.MainActivity;
+import com.veek.callblocker.Model.Blacklist;
 import com.veek.callblocker.R;
 import com.veek.callblocker.Util.CallLogAdapter;
 import com.veek.callblocker.Util.DividerItemDecoration;
@@ -20,6 +24,8 @@ import java.util.List;
 
 import me.everything.providers.android.calllog.Call;
 import me.everything.providers.android.calllog.CallsProvider;
+import me.everything.providers.android.contacts.Contact;
+import me.everything.providers.android.contacts.ContactsProvider;
 
 /**
  * Crafted by veek on 04.07.16 with love ♥
@@ -29,6 +35,7 @@ public class CallLogFragment extends Fragment {
 
     View rootView;
     RecyclerView rvCallLog;
+    public static List<Call> calls;
 
     public CallLogFragment(){
 
@@ -47,7 +54,7 @@ public class CallLogFragment extends Fragment {
         RecyclerView.ItemDecoration dividerItemDecoration = new DividerItemDecoration(dividerDrawable);
 
         CallsProvider callsProvider = new CallsProvider(getActivity());
-        List<Call> calls = callsProvider.getCalls().getList();
+        calls = callsProvider.getCalls().getList();
         Collections.reverse(calls);
         CallLogAdapter adapter = new CallLogAdapter(calls, getActivity(), getActivity());
 
@@ -61,5 +68,36 @@ public class CallLogFragment extends Fragment {
         rvCallLog.setAdapter(adapter);
 
         return rootView;
+    }
+
+    public void lastIncoming(){
+        int i = 0;
+        for(Call call : calls) {
+            if ((call.type == Call.CallType.INCOMING || call.type == Call.CallType.MISSED) && call.number != null) {
+                i++;
+                if (MainActivity.blockList.contains(new Blacklist(call.number, call.name))) {
+                    Toast.makeText(getActivity(), R.string.alr_blocked, Toast.LENGTH_SHORT).show();
+                } else {
+                    String name = null;
+                    if (call.name == null) {
+                        ContactsProvider contactsProvider = new ContactsProvider(getActivity());
+                        List<Contact> contacts = contactsProvider.getContacts().getList();
+                        for (Contact contact : contacts) {
+                            if (PhoneNumberUtils.compare(contact.normilizedPhone, call.number)) {
+                                name = contact.displayName;
+                                break;
+                            }
+                        }
+                    } else name = call.name;
+                    MainActivity.blackListDao.create(new Blacklist(call.number, name));
+                    MainActivity.blockList = MainActivity.blackListDao.getAllBlacklist();
+                }
+
+                if (i == 0) {
+                    Toast.makeText(getActivity(), R.string.last_not_found, Toast.LENGTH_LONG).show();
+                }
+                break;
+            }
+        }
     }
 }

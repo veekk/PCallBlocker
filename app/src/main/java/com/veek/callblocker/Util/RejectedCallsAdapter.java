@@ -68,7 +68,7 @@ public class RejectedCallsAdapter extends RecyclerView.Adapter<RejectedCallsAdap
                 holder.tvType.setText(R.string.international_reject);
                 break;
             case "blacklist":
-                holder.tvType.setText(R.string.reject_type + " " + R.string.reject_black);
+                holder.tvType.setText(R.string.reject_black);
         }
         holder.lLay.setOnClickListener(new View.OnClickListener() {
             @Override

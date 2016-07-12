@@ -1,9 +1,11 @@
 package com.veek.callblocker;
 
 
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
 import com.dpizarro.pinview.library.PinView;
@@ -107,8 +110,60 @@ public class MainActivity extends AppCompatActivity {
             case R.id.action_settings1:
                 startActivity(new Intent(MainActivity.this, SettingsActivity.class));
                 break;
+            case R.id.action_feedback:
+                Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
+                        "mailto","abc@gmail.com", null));
+                emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Subject");
+                emailIntent.putExtra(Intent.EXTRA_TEXT, "Body");
+                startActivity(Intent.createChooser(emailIntent, "Send email..."));
+                break;
+            case R.id.action_share:
+                Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+                sharingIntent.setType("text/plain");
+                String shareBody = "Here is the share content body";
+                sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Subject Here");
+                sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
+                startActivity(Intent.createChooser(sharingIntent, "Share via"));
+                break;
+            case R.id.action_rate:
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                //Try Google play
+                intent.setData(Uri.parse("market://details?id=[Id]"));
+                if (!MyStartActivity(intent)) {
+                    //Market (Google play) app seems not installed, let's try to open a webbrowser
+                    intent.setData(Uri.parse("https://play.google.com/store/apps/details?[Id]"));
+                    if (!MyStartActivity(intent)) {
+                        //Well if this also fails, we have run out of options, inform the user.
+                        Toast.makeText(this, "Could not open Android market, please install the market app.", Toast.LENGTH_SHORT).show();
+                    }
+                }
+                break;
+            case R.id.action_about:
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle("about")
+                        .setMessage("about app")
+                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+
+                            }
+                        });
+                builder.create().show();
+                break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private boolean MyStartActivity(Intent aIntent) {
+        try
+        {
+            startActivity(aIntent);
+            return true;
+        }
+        catch (ActivityNotFoundException e)
+        {
+            return false;
+        }
     }
 
     @Override

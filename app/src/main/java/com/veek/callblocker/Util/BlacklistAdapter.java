@@ -45,61 +45,26 @@ public class BlacklistAdapter extends RecyclerView.Adapter<BlacklistAdapter.Blac
         holder.lLay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                builder.setItems(context.getResources().getStringArray(R.array.items_menu), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        switch (which){
-                            case 0:
-                                final View view = LayoutInflater.from(context).inflate(R.layout.dialog_add, null);
-                final EditText etNumber = (EditText) view.findViewById(R.id.etNumber);
-                final EditText etName = (EditText) view.findViewById(R.id.etName);
-                etNumber.setText(MainActivity.blockList.get(position).phoneNumber);
-                etName.setText(MainActivity.blockList.get(position).phoneName);
-                etNumber.setEnabled(false);
-                AlertDialog.Builder builderEdit = new AlertDialog.Builder(context);
-                builderEdit.setTitle(R.string.edit_title)
-                        .setView(view)
-                        .setPositiveButton(R.string.save, new DialogInterface.OnClickListener() {
+                AlertDialog.Builder builderDelete = new AlertDialog.Builder(context);
+                builderDelete.setTitle(R.string.delete_q)
+                        .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                MainActivity.blockList.get(position).phoneName = etName.getText().toString();
-                                MainActivity.blackListDao.update(MainActivity.blockList.get(position));
-                                notifyItemChanged(position);
+                                MainActivity.blackListDao.delete(MainActivity.blockList.get(position));
+                                MainActivity.blockList.remove(position);
+                                notifyItemRemoved(position);
+                                notifyDataSetChanged();
                             }
+                        })
+                        .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
 
-                        });
-                //.setCancelable(true);
-                alertEdit = builderEdit.create();
-                alertEdit.show();
-                                break;
-                            case 1:
-                                AlertDialog.Builder builderDelete = new AlertDialog.Builder(context);
-                                builderDelete.setTitle(R.string.delete_q)
-                                        .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-                                            @Override
-                                            public void onClick(DialogInterface dialog, int which) {
-                                                MainActivity.blackListDao.delete(MainActivity.blockList.get(position));
-                                                MainActivity.blockList.remove(position);
-                                                notifyItemRemoved(position);
-                                                notifyDataSetChanged();
-                                            }
-                                        })
-                                        .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
-                                            @Override
-                                            public void onClick(DialogInterface dialog, int which) {
-
-                                            }
-                                        })
-                                        .setCancelable(true);
-                                alertDelete = builderDelete.create();
-                                alertDelete.show();
-                                break;
-                        }
-                    }
-                });
-                alert = builder.create();
-                alert.show();
+                            }
+                        })
+                        .setCancelable(true);
+                alertDelete = builderDelete.create();
+                alertDelete.show();
 
 
             }

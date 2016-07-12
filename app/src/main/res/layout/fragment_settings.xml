@@ -16,29 +16,116 @@
         android:padding="20dp"
         android:textSize="30sp" />
 
-    <android.support.v7.widget.SwitchCompat
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/first_hidden"
-        android:padding="20dp"
-        style="@style/WelcomeScreenTheme.Light"
-        android:id="@+id/hidden" />
-    <android.support.v7.widget.SwitchCompat
+        android:gravity="center_vertical"
+        android:orientation="vertical"
+        android:paddingBottom="16dp"
+        android:paddingEnd="16dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:paddingStart="16dp">
+
+
+        <android.support.v7.widget.SwitchCompat
+            android:layout_width="match_parent"
+            android:checked="true"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_weight="0"
+            android:paddingEnd="1dp"
+            android:paddingLeft="1dp"
+            android:paddingRight="1dp"
+            android:paddingStart="1dp"
+            android:text="@string/first_hidden"
+            style="@style/WelcomeScreenTheme.Light"
+            android:id="@+id/hidden" />
+
+        <TextView
+            android:id="@+id/description_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/hidden_summary"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:layout_weight="1" />
+
+    </LinearLayout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/first_international"
-        android:padding="20dp"
-        style="@style/WelcomeScreenTheme.Light"
-        android:id="@+id/international"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
-    <android.support.v7.widget.SwitchCompat
+        android:gravity="center_vertical"
+        android:orientation="vertical"
+        android:paddingBottom="16dp"
+        android:paddingEnd="16dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:paddingStart="16dp">
+
+
+        <android.support.v7.widget.SwitchCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_weight="0"
+            android:paddingEnd="1dp"
+            android:paddingLeft="1dp"
+            android:paddingRight="1dp"
+            android:paddingStart="1dp"
+            android:text="@string/first_international"
+            style="@style/WelcomeScreenTheme.Light"
+            android:id="@+id/international"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/international_summary"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:layout_weight="1" />
+
+    </LinearLayout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/first_not_contact"
-        android:id="@+id/not_in"
-        android:padding="20dp"
-        style="@style/WelcomeScreenTheme.Light"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:gravity="center_vertical"
+        android:orientation="vertical"
+        android:paddingBottom="16dp"
+        android:paddingEnd="16dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:paddingStart="16dp">
+
+
+        <android.support.v7.widget.SwitchCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_weight="0"
+            android:paddingEnd="1dp"
+            android:paddingLeft="1dp"
+            android:paddingRight="1dp"
+            android:paddingStart="1dp"
+            android:text="@string/first_not_contact"
+            android:id="@+id/not_in"
+          />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/hidden_summary"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:layout_weight="1" />
+
+    </LinearLayout>
+
 </LinearLayout>
