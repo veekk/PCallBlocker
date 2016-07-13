@@ -1,4 +1,4 @@
-package com.veek.callblocker.Model;
+package com.veek.callblocker.model;
 
 import android.telephony.PhoneNumberUtils;
 

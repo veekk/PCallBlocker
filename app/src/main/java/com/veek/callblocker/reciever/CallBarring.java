@@ -1,4 +1,4 @@
-package com.veek.callblocker.Reciever;
+package com.veek.callblocker.reciever;
 
 import android.app.Service;
 import android.content.BroadcastReceiver;
@@ -10,10 +10,10 @@ import android.telephony.TelephonyManager;
 
 import com.android.internal.telephony.ITelephony;
 import com.veek.callblocker.MainActivity;
-import com.veek.callblocker.Model.Blacklist;
-import com.veek.callblocker.Model.RejectedCall;
+import com.veek.callblocker.model.Blacklist;
+import com.veek.callblocker.model.RejectedCall;
 import com.veek.callblocker.R;
-import com.veek.callblocker.Util.CustomPreferenceManager;
+import com.veek.callblocker.util.CustomPreferenceManager;
 
 import java.lang.reflect.Method;
 import java.util.Date;

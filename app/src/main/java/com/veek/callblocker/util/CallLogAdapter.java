@@ -1,27 +1,22 @@
-package com.veek.callblocker.Util;
+package com.veek.callblocker.util;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.telephony.PhoneNumberUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.GridLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 
-import com.veek.callblocker.DB.BlacklistDAO;
-import com.veek.callblocker.Fragment.BlacklistFragment;
 import com.veek.callblocker.MainActivity;
-import com.veek.callblocker.Model.Blacklist;
+import com.veek.callblocker.model.Blacklist;
 import com.veek.callblocker.R;
 
 import java.text.SimpleDateFormat;

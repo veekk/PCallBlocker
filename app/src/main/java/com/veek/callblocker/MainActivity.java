@@ -18,15 +18,15 @@ import android.widget.Toast;
 import com.crashlytics.android.Crashlytics;
 import com.dpizarro.pinview.library.PinView;
 import com.stephentuso.welcome.WelcomeScreenHelper;
-import com.veek.callblocker.DB.BlacklistDAO;
-import com.veek.callblocker.DB.RejectedCallsDAO;
-import com.veek.callblocker.Fragment.MainFragment;
-import com.veek.callblocker.Model.Blacklist;
-import com.veek.callblocker.Model.RejectedCall;
-import com.veek.callblocker.Service.NotifyService;
-import com.veek.callblocker.Util.BlacklistAdapter;
-import com.veek.callblocker.Util.CustomFragmentManager;
-import com.veek.callblocker.Util.CustomPreferenceManager;
+import com.veek.callblocker.db.BlacklistDAO;
+import com.veek.callblocker.db.RejectedCallsDAO;
+import com.veek.callblocker.fragment.MainFragment;
+import com.veek.callblocker.model.Blacklist;
+import com.veek.callblocker.model.RejectedCall;
+import com.veek.callblocker.service.NotifyService;
+import com.veek.callblocker.util.BlacklistAdapter;
+import com.veek.callblocker.util.CustomFragmentManager;
+import com.veek.callblocker.util.CustomPreferenceManager;
 
 import io.fabric.sdk.android.Fabric;
 

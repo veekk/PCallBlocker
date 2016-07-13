@@ -1,4 +1,4 @@
-package com.veek.callblocker.Fragment;
+package com.veek.callblocker.fragment;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -13,8 +13,8 @@ import android.widget.Toast;
 
 import com.dpizarro.pinview.library.PinView;
 import com.veek.callblocker.R;
-import com.veek.callblocker.Service.NotifyService;
-import com.veek.callblocker.Util.CustomPreferenceManager;
+import com.veek.callblocker.service.NotifyService;
+import com.veek.callblocker.util.CustomPreferenceManager;
 
 /**
  * Crafted by veek on 05.07.16 with love ♥

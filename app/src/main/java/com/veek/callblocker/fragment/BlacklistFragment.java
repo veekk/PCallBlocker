@@ -1,4 +1,4 @@
-package com.veek.callblocker.Fragment;
+package com.veek.callblocker.fragment;
 
 import android.graphics.drawable.Drawable;
 import android.support.v4.app.Fragment;
@@ -12,8 +12,8 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import com.veek.callblocker.MainActivity;
 import com.veek.callblocker.R;
-import com.veek.callblocker.Util.BlacklistAdapter;
-import com.veek.callblocker.Util.DividerItemDecoration;
+import com.veek.callblocker.util.BlacklistAdapter;
+import com.veek.callblocker.util.DividerItemDecoration;
 
 
 /**

@@ -5,11 +5,10 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 
-import com.veek.callblocker.Fragment.PreferenceFragment;
-import com.veek.callblocker.Util.CustomFragmentManager;
-import com.veek.callblocker.Util.CustomPreferenceManager;
+import com.veek.callblocker.fragment.PreferenceFragment;
+import com.veek.callblocker.util.CustomFragmentManager;
+import com.veek.callblocker.util.CustomPreferenceManager;
 
 public class SettingsActivity extends AppCompatActivity {
 

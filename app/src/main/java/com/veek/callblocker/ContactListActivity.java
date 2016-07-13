@@ -13,8 +13,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import com.veek.callblocker.Util.ContactListAdapter;
-import com.veek.callblocker.Util.DividerItemDecoration;
+import com.veek.callblocker.util.ContactListAdapter;
+import com.veek.callblocker.util.DividerItemDecoration;
 
 import java.util.ArrayList;
 import java.util.Collections;

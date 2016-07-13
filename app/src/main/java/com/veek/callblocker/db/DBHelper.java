@@ -1,4 +1,4 @@
-package com.veek.callblocker.DB;
+package com.veek.callblocker.db;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

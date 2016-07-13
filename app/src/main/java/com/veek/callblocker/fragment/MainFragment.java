@@ -1,9 +1,8 @@
-package com.veek.callblocker.Fragment;
+package com.veek.callblocker.fragment;
 
 import android.app.Fragment;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentManager;
@@ -21,15 +20,13 @@ import android.widget.EditText;
 import android.widget.Toast;
 import com.veek.callblocker.ContactListActivity;
 import com.veek.callblocker.MainActivity;
-import com.veek.callblocker.Model.Blacklist;
+import com.veek.callblocker.model.Blacklist;
 import com.veek.callblocker.R;
-import com.veek.callblocker.Util.CustomFragmentManager;
+import com.veek.callblocker.util.CustomFragmentManager;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import io.github.yavski.fabspeeddial.FabSpeedDial;
 import io.github.yavski.fabspeeddial.SimpleMenuListenerAdapter;
-import me.everything.providers.android.calllog.Call;
 import me.everything.providers.android.calllog.CallsProvider;
 import me.everything.providers.android.contacts.Contact;
 import me.everything.providers.android.contacts.ContactsProvider;

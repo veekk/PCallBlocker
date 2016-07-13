@@ -1,4 +1,4 @@
-package com.veek.callblocker.Fragment;
+package com.veek.callblocker.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -9,11 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.CompoundButton;
-import android.widget.Toast;
 
 import com.dpizarro.pinview.library.PinView;
 import com.veek.callblocker.R;
-import com.veek.callblocker.Util.CustomPreferenceManager;
+import com.veek.callblocker.util.CustomPreferenceManager;
 
 /**
  * Crafted by veek on 08.07.16 with love ♥

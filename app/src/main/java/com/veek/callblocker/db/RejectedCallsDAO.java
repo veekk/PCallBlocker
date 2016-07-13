@@ -1,4 +1,4 @@
-package com.veek.callblocker.DB;
+package com.veek.callblocker.db;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -6,7 +6,7 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.veek.callblocker.Model.RejectedCall;
+import com.veek.callblocker.model.RejectedCall;
 
 import java.util.ArrayList;
 import java.util.List;

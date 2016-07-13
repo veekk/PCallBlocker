@@ -28,7 +28,7 @@
             android:name=".MyWelcomeActivity"
             android:theme="@style/WelcomeScreenTheme" />
 
-        <receiver android:name=".Reciever.CallBarring">
+        <receiver android:name=".reciever.CallBarring">
             <intent-filter android:priority="100">
                 <action android:name="android.intent.action.PHONE_STATE" />
             </intent-filter>
@@ -52,7 +52,7 @@
 
         <service
 
-            android:name=".Service.NotifyService"
+            android:name=".service.NotifyService"
 
             android:process=":notifyservice" >
 

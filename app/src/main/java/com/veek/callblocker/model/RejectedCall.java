@@ -1,8 +1,7 @@
-package com.veek.callblocker.Model;
+package com.veek.callblocker.model;
 
 import android.telephony.PhoneNumberUtils;
 
-import java.sql.Time;
 import java.util.Calendar;
 import java.util.Date;
 

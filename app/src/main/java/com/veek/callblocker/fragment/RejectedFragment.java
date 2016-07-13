@@ -1,4 +1,4 @@
-package com.veek.callblocker.Fragment;
+package com.veek.callblocker.fragment;
 
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -12,18 +12,9 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.veek.callblocker.MainActivity;
-import com.veek.callblocker.Model.RejectedCall;
 import com.veek.callblocker.R;
-import com.veek.callblocker.Util.BlacklistAdapter;
-import com.veek.callblocker.Util.DividerItemDecoration;
-import com.veek.callblocker.Util.RejectedCallsAdapter;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-
-import me.everything.providers.android.contacts.Contact;
+import com.veek.callblocker.util.DividerItemDecoration;
+import com.veek.callblocker.util.RejectedCallsAdapter;
 
 /**
  * Crafted by veek on 21.06.16 with love ♥

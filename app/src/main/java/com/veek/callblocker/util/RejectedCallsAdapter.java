@@ -1,4 +1,4 @@
-package com.veek.callblocker.Util;
+package com.veek.callblocker.util;
 
 import android.Manifest;
 import android.content.Context;
@@ -12,15 +12,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.veek.callblocker.MainActivity;
-import com.veek.callblocker.Model.RejectedCall;
+import com.veek.callblocker.model.RejectedCall;
 import com.veek.callblocker.R;
-
-import org.w3c.dom.Text;
 
 import java.text.SimpleDateFormat;
 import java.util.Collections;

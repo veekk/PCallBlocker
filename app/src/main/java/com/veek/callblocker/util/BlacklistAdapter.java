@@ -1,4 +1,4 @@
-package com.veek.callblocker.Util;
+package com.veek.callblocker.util;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -7,11 +7,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.veek.callblocker.MainActivity;
-import com.veek.callblocker.Model.Blacklist;
+import com.veek.callblocker.model.Blacklist;
 import com.veek.callblocker.R;
 
 import java.util.List;

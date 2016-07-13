@@ -1,4 +1,4 @@
-package com.veek.callblocker.Util;
+package com.veek.callblocker.util;
 
 import android.app.Activity;
 import android.app.Fragment;

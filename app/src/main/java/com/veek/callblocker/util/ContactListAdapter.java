@@ -1,4 +1,4 @@
-package com.veek.callblocker.Util;
+package com.veek.callblocker.util;
 
 import android.app.Activity;
 import android.content.Context;
@@ -10,9 +10,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.veek.callblocker.DB.BlacklistDAO;
+import com.veek.callblocker.db.BlacklistDAO;
 import com.veek.callblocker.MainActivity;
-import com.veek.callblocker.Model.Blacklist;
+import com.veek.callblocker.model.Blacklist;
 import com.veek.callblocker.R;
 
 import java.util.List;

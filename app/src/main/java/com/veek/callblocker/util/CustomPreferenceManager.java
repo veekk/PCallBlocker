@@ -1,4 +1,4 @@
-package com.veek.callblocker.Util;
+package com.veek.callblocker.util;
 
 /**
  * Crafted by veek on 05.07.16 with love ♥

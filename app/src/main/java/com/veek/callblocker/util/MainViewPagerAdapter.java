@@ -1,12 +1,12 @@
-package com.veek.callblocker.Util;
+package com.veek.callblocker.util;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.view.ViewGroup;
-import com.veek.callblocker.Fragment.BlacklistFragment;
-import com.veek.callblocker.Fragment.CallLogFragment;
-import com.veek.callblocker.Fragment.RejectedFragment;
+import com.veek.callblocker.fragment.BlacklistFragment;
+import com.veek.callblocker.fragment.CallLogFragment;
+import com.veek.callblocker.fragment.RejectedFragment;
 
 /**
  * Crafted by veek on 05.07.16 with love ♥

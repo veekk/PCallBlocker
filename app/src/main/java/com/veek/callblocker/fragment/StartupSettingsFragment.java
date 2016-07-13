@@ -1,4 +1,4 @@
-package com.veek.callblocker.Fragment;
+package com.veek.callblocker.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.veek.callblocker.R;
-import com.veek.callblocker.Util.CustomPreferenceManager;
+import com.veek.callblocker.util.CustomPreferenceManager;
 
 /**
  * Crafted by veek on 08.07.16 with love ♥

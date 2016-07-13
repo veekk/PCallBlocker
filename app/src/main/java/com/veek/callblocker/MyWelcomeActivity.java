@@ -5,12 +5,10 @@ import android.os.PersistableBundle;
 import android.support.v4.app.Fragment;
 
 import com.stephentuso.welcome.WelcomeScreenBuilder;
-import com.stephentuso.welcome.ui.NextButton;
 import com.stephentuso.welcome.ui.WelcomeFragmentHolder;
 import com.stephentuso.welcome.util.WelcomeScreenConfiguration;
-import com.veek.callblocker.Fragment.PinFragment;
-import com.veek.callblocker.Fragment.StartupSettingsFragment;
-import com.veek.callblocker.Fragment.TermsFragment;
+import com.veek.callblocker.fragment.StartupSettingsFragment;
+import com.veek.callblocker.fragment.TermsFragment;
 
 /**
  * Crafted by veek on 08.07.16 with love ♥
