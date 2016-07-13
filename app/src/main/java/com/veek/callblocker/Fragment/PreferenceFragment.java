@@ -52,7 +52,7 @@ public class PreferenceFragment extends android.preference.PreferenceFragment{
         swPassword = (SwitchPreference) findPreference("password_on");
         swNotification = (SwitchPreference) findPreference("notification_on");
 
-        pin = (Preference) findPreference("pin");
+        pin =  findPreference("pin");
 
         swEnaled.setChecked(preferenceManager.getState("block_enabled"));
         swHidden.setChecked(preferenceManager.getState("hidden"));
@@ -105,7 +105,7 @@ public class PreferenceFragment extends android.preference.PreferenceFragment{
             public boolean onPreferenceChange(Preference preference, Object o) {
                 if (swPassword.isChecked()) pinDisablingDialog();
                 else {
-                    if (preferenceManager.getString("pin").equals("")) pinChangeDialog();
+                    if (preferenceManager.getString("pin").equals("")) pinSetupDialog();
                     else {
                         preferenceManager.putState("password_on", !swPassword.isChecked());
                         pin.setEnabled(!swPassword.isChecked());
@@ -234,6 +234,36 @@ public class PreferenceFragment extends android.preference.PreferenceFragment{
                             imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
                             Toast.makeText(getActivity(), R.string.pin_change_succ, Toast.LENGTH_LONG).show();
+
+                    }
+                });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    private void pinSetupDialog(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        final View view = View.inflate(getActivity(), R.layout.dialog_pin, null);
+        builder.setTitle(R.string.pin_new)
+                .setView(view)
+                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+
+                    }
+                })
+                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        PinView pinView = (PinView) view.findViewById(R.id.pinView);
+                        pin.setEnabled(true);
+                        preferenceManager.putState("password_on", true);
+                        preferenceManager.putString("pin", pinView.getPinResults());
+                        imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+                        Toast.makeText(getActivity(), R.string.pin_setup_succ, Toast.LENGTH_LONG).show();
 
                     }
                 });

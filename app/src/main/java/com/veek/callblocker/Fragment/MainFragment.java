@@ -111,7 +111,7 @@ public class MainFragment extends Fragment {
                                 })
                                 .setCancelable(true);
                         alertManual = builder.create();
-                        alertManual.show();
+                        if (!alertManual.isShowing()) alertManual.show();
                         break;
                     case R.id.action_contact_add:
                         startActivity(new Intent(activity, ContactListActivity.class));
@@ -205,7 +205,7 @@ public class MainFragment extends Fragment {
                                 })
                                 .setCancelable(true);
                         alertContains = mBuilder.create();
-                        alertContains.show();
+                        if (!alertContains.isShowing()) alertContains.show();
                         break;
 
                 }
@@ -222,6 +222,7 @@ public class MainFragment extends Fragment {
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
+                viewPager.setCurrentItem(tab.getPosition());
                 switch (tab.getPosition()) {
                     case 0:
                         try {
@@ -238,6 +239,14 @@ public class MainFragment extends Fragment {
                         fab.hide();
                         break;
                     case 2:
+                        try {
+                            RejectedFragment fragment = (RejectedFragment) adapter.getItem(2);
+                            if (fragment != null) {
+                                fragment.reCast();
+                            }
+                        } catch (Exception e) {
+
+                        }
                         fab.hide();
                         break;
 

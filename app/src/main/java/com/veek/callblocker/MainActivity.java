@@ -186,7 +186,6 @@ public class MainActivity extends AppCompatActivity {
 
         if (requestCode == WelcomeScreenHelper.DEFAULT_WELCOME_SCREEN_REQUEST) {
             // The key of the welcome screen is in the Intent
-            String welcomeKey = data.getStringExtra(MyWelcomeActivity.WELCOME_SCREEN_KEY);
 
             if (resultCode == RESULT_OK) {
                 preferenceManager.putState("notFirst", true);

@@ -39,6 +39,7 @@ public class StartupSettingsFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
+        preferenceManager.putState("block_enabled", true);
         preferenceManager.putState("hidden", swHidden.isChecked());
         preferenceManager.putState("international", swInt.isChecked());
         preferenceManager.putState("not_contacts", swNotIn.isChecked());

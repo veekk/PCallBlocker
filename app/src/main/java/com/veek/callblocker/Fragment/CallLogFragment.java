@@ -50,24 +50,15 @@ public class CallLogFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_call_log, null);
 
-        Drawable dividerDrawable = ContextCompat.getDrawable(getActivity(), R.drawable.divider);
-        RecyclerView.ItemDecoration dividerItemDecoration = new DividerItemDecoration(dividerDrawable);
-
-        CallsProvider callsProvider = new CallsProvider(getActivity());
-        calls = callsProvider.getCalls().getList();
-        Collections.reverse(calls);
-        CallLogAdapter adapter = new CallLogAdapter(calls, getActivity(), getActivity());
-
-        LinearLayoutManager llm = new LinearLayoutManager(getActivity());
-        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-
-        rvCallLog = (RecyclerView) rootView.findViewById(R.id.rvCallLog);
-        rvCallLog.addItemDecoration(dividerItemDecoration);
-        rvCallLog.setLayoutParams(lp);
-        rvCallLog.setLayoutManager(llm);
-        rvCallLog.setAdapter(adapter);
+        reCast();
 
         return rootView;
+    }
+
+    @Override
+    public void onResume() {
+        if (rootView != null) reCast();
+        super.onResume();
     }
 
     public void lastIncoming(){
@@ -99,5 +90,24 @@ public class CallLogFragment extends Fragment {
                 break;
             }
         }
+    }
+
+    public void reCast(){
+        Drawable dividerDrawable = ContextCompat.getDrawable(getActivity(), R.drawable.divider);
+        RecyclerView.ItemDecoration dividerItemDecoration = new DividerItemDecoration(dividerDrawable);
+
+        CallsProvider callsProvider = new CallsProvider(getActivity());
+        calls = callsProvider.getCalls().getList();
+        Collections.reverse(calls);
+        CallLogAdapter adapter = new CallLogAdapter(calls, getActivity(), getActivity());
+
+        LinearLayoutManager llm = new LinearLayoutManager(getActivity());
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+
+        rvCallLog = (RecyclerView) rootView.findViewById(R.id.rvCallLog);
+        rvCallLog.addItemDecoration(dividerItemDecoration);
+        rvCallLog.setLayoutParams(lp);
+        rvCallLog.setLayoutManager(llm);
+        rvCallLog.swapAdapter(adapter, false);
     }
 }

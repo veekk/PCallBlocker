@@ -64,7 +64,7 @@ public class BlacklistAdapter extends RecyclerView.Adapter<BlacklistAdapter.Blac
                         })
                         .setCancelable(true);
                 alertDelete = builderDelete.create();
-                alertDelete.show();
+                if (!alertDelete.isShowing()) alertDelete.show();
 
 
             }
@@ -88,6 +88,7 @@ public class BlacklistAdapter extends RecyclerView.Adapter<BlacklistAdapter.Blac
         this.blacklist = blacklist;
         this.context = context;
     }
+
 
     @Override
     public int getItemCount() {

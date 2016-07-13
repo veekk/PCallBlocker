@@ -57,13 +57,22 @@ public class CallLogAdapter extends RecyclerView.Adapter<CallLogAdapter.CallLogV
 
     @Override
     public void onBindViewHolder(CallLogViewHolder holder, final int position) {
-        if (calls.get(position).name != null) holder.tvName.setText(calls.get(position).name);
-        else if (calls.get(position).number == null || Long.parseLong(calls.get(position).number) < 10) {
+        if (calls.get(position).number == null) {
             holder.tvName.setText(R.string.unknown_number);
-        } else holder.tvName.setText(calls.get(position).number);
-        if (calls.get(position).number == null || Long.parseLong(calls.get(position).number) < 10) {
             holder.tvNumber.setText(R.string.unknown_number);
-        } else holder.tvNumber.setText(calls.get(position).number);
+        }
+        else if (calls.get(position).number.equals("")) {
+            holder.tvName.setText(R.string.unknown_number);
+            holder.tvNumber.setText(R.string.unknown_number);        }
+        else if (calls.get(position).number.length() < 3) {
+            holder.tvName.setText(R.string.unknown_number);
+            holder.tvNumber.setText(R.string.unknown_number);        }
+        else {
+            holder.tvNumber.setText(calls.get(position).number);
+            if (calls.get(position).name != null) holder.tvName.setText(calls.get(position).name);
+            else holder.tvName.setText(calls.get(position).number);
+        }
+
         holder.tvTime.setText(sdf.format(calls.get(position).callDate));
         switch (calls.get(position).type) {
             case INCOMING:
@@ -82,9 +91,13 @@ public class CallLogAdapter extends RecyclerView.Adapter<CallLogAdapter.CallLogV
         holder.lLay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (calls.get(position).number == null || Long.parseLong(calls.get(position).number) < 10){
-                    Toast.makeText(activity, R.string.cant_unknow, Toast.LENGTH_LONG);
-                } else
+                if (calls.get(position).number == null)
+                    Toast.makeText(context, R.string.cant_unknow, Toast.LENGTH_LONG).show();
+                else if (calls.get(position).number.equals(""))
+                    Toast.makeText(context, R.string.cant_unknow, Toast.LENGTH_LONG).show();
+                else if (calls.get(position).number.length() < 3)
+                    Toast.makeText(context, R.string.cant_unknow, Toast.LENGTH_LONG).show();
+                else
                 if (MainActivity.blockList.contains(new Blacklist(calls.get(position).number, calls.get(position).name))) {
                     Toast.makeText(activity, R.string.alr_blocked, Toast.LENGTH_SHORT).show();
                 } else {
@@ -116,7 +129,7 @@ public class CallLogAdapter extends RecyclerView.Adapter<CallLogAdapter.CallLogV
                                 }
                             });
                     confirmDialog = builder.create();
-                    confirmDialog.show();
+                    if (!confirmDialog.isShowing()) confirmDialog.show();
 
                 }
             }
@@ -146,4 +159,5 @@ public class CallLogAdapter extends RecyclerView.Adapter<CallLogAdapter.CallLogV
             lLay = (RelativeLayout) itemView.findViewById(R.id.lLay);
         }
     }
+
 }

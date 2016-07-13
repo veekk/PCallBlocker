@@ -45,20 +45,19 @@ public class RejectedFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.fragment_rejected, null);
-        rvRejectedCalls = (RecyclerView) rootView.findViewById(R.id.rvRejectedCalls);
-        LinearLayoutManager llm = new LinearLayoutManager(getActivity());
-        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-        rvRejectedCalls.setLayoutParams(lp);
-        rvRejectedCalls.setLayoutManager(llm);
-        adapter = new RejectedCallsAdapter(getActivity(), MainActivity.rejectedCalls);
-        rvRejectedCalls.setAdapter(adapter);
+            rootView = inflater.inflate(R.layout.fragment_rejected, null);
+            reCast();
         return rootView;
     }
 
     @Override
     public void onResume() {
+        if (rootView != null) reCast();
         super.onResume();
+
+    }
+
+    public void reCast(){
         rvRejectedCalls = (RecyclerView) rootView.findViewById(R.id.rvRejectedCalls);
         LinearLayoutManager llm = new LinearLayoutManager(getActivity());
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);

@@ -25,9 +25,9 @@
         <item>Call</item>
         <item>Delete</item>
     </string-array>
-    <string name="missed_call">Missed call</string>
-    <string name="outgoing_call">Outgoing call</string>
-    <string name="incoming_call">Incoming call</string>
+    <string name="missed_call">Missed</string>
+    <string name="outgoing_call">Outgoing</string>
+    <string name="incoming_call">Incoming</string>
     <string-array name="add_from">
         <item>Manual</item>
         <item>From call log</item>
@@ -295,5 +295,6 @@
     <string name="last_not_found">Incoming number not found</string>
     <string name="unknown_number">Unknown number</string>
     <string name="cant_unknow">Can\'t add unknown number</string>
+    <string name="pin_setup_succ">Pin setup succesfull</string>
 
 </resources>
