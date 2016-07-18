@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#fafafa">
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbarCL"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:layout_scrollFlags="scroll|enterAlways"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
+    </android.support.design.widget.AppBarLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:paddingLeft="18dp"
+        android:paddingRight="18dp"
+        android:layout_height="match_parent">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/app_name"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textSize="16sp"
+            android:paddingTop="14dp"
+            android:paddingLeft="8dp"
+            android:paddingBottom="14dp" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingLeft="6dp"
+            android:paddingRight="6dp"
+            android:paddingTop="14dp"
+            android:paddingBottom="14dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textSize="16sp"
+                android:text="@string/version_text"
+                android:padding="6dp" />
+            <TextView
+                android:paddingLeft="0dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="@string/version"
+                android:paddingTop="6dp"
+                android:paddingRight="6dp"
+                android:paddingBottom="6dp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/divider"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:paddingLeft="18dp"
+            android:paddingRight="18dp"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/contact_us"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textSize="16sp"
+                android:paddingLeft="8dp"
+                android:paddingTop="14dp"
+                android:paddingBottom="14dp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:longClickable="true"
+                android:background="?android:attr/selectableItemBackground"
+                android:orientation="horizontal"
+                android:paddingLeft="6dp"
+                android:paddingRight="6dp"
+                android:paddingBottom="14dp"
+                android:paddingTop="14dp"
+                android:id="@+id/visit_web">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/web"
+                    android:padding="4dp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textSize="16sp"
+                    android:text="@string/visit_web"
+                    android:padding="6dp" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/divider"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:paddingLeft="18dp"
+            android:paddingRight="18dp"
+            android:layout_height="match_parent">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/legal"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textSize="16sp"
+                android:paddingLeft="8dp"
+                android:paddingTop="14dp"
+                android:paddingBottom="14dp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:longClickable="true"
+                android:background="?android:attr/selectableItemBackground"
+                android:orientation="horizontal"
+                android:paddingLeft="6dp"
+                android:paddingRight="6dp"
+                android:paddingTop="14dp"
+                android:paddingBottom="14dp"
+                android:id="@+id/terms">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/file_document"
+                    android:padding="4dp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textSize="16sp"
+                    android:text="@string/terms_of_use"
+                    android:padding="6dp" />
+            </LinearLayout>
+            <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+                android:clickable="true"
+            android:longClickable="true"
+            android:background="?android:attr/selectableItemBackground"
+            android:orientation="horizontal"
+                android:paddingLeft="6dp"
+                android:paddingRight="6dp"
+                android:paddingTop="14dp"
+                android:paddingBottom="14dp"
+                android:id="@+id/privacy">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:src="@drawable/lock_v"
+                android:padding="4dp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textSize="16sp"
+                android:text="@string/privacy_policy"
+                android:padding="6dp" />
+        </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+
+</LinearLayout>

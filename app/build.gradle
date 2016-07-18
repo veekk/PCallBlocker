@@ -31,7 +31,6 @@ android {
         minSdkVersion 16
         targetSdkVersion 23
         versionCode 1
-        versionName "1.0"
     }
     buildTypes {
         release {
@@ -52,7 +51,7 @@ dependencies {
     compile 'com.stephentuso:welcome:0.7.2'
     compile 'me.drozdzynski.library.steppers:steppers:0.3.3-SNAPSHOT'
     compile 'com.github.davidpizarro:pinview:1.0.0'
-    compile('com.crashlytics.sdk.android:crashlytics:2.6.0@aar') {
+    compile('com.crashlytics.sdk.android:crashlytics:2.5.7@aar') {
         transitive = true;
     }
 }

@@ -638,8 +638,8 @@ public interface ITelephony extends android.os.IInterface
                 return _result;
             }
             /**
-             * Check if the SIM pin lock is enabled.
-             * @return true if the SIM pin lock is enabled.
+             * Check if the SIM pin lock_v is enabled.
+             * @return true if the SIM pin lock_v is enabled.
              */
             public boolean isSimPinEnabled() throws android.os.RemoteException
             {
@@ -1298,8 +1298,8 @@ public interface ITelephony extends android.os.IInterface
      */
     public boolean isRadioOn() throws android.os.RemoteException;
     /**
-     * Check if the SIM pin lock is enabled.
-     * @return true if the SIM pin lock is enabled.
+     * Check if the SIM pin lock_v is enabled.
+     * @return true if the SIM pin lock_v is enabled.
      */
     public boolean isSimPinEnabled() throws android.os.RemoteException;
     /**

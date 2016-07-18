@@ -9,7 +9,7 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:src="@drawable/lock"
+        android:src="@drawable/lock_v"
         android:layout_height="300dp"
         android:layout_width="300dp"
         android:layout_gravity="center_horizontal" />
