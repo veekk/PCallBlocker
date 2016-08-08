@@ -4,6 +4,7 @@ import android.app.Fragment;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -39,12 +40,12 @@ public class MainFragment extends Fragment {
     View rootView;
 
 
-    CustomFragmentManager fragmentManager = CustomFragmentManager.getInstance();
 
     private Toolbar toolbar;
     private TabLayout tabLayout;
     public static ViewPager viewPager;
-    private FabSpeedDial fab;
+    private FabSpeedDial fabMenu;
+    //private FloatingActionButton fab;
 
     public static AlertDialog alertManual;
     public static AlertDialog alertContains;
@@ -66,8 +67,11 @@ public class MainFragment extends Fragment {
         activity.setSupportActionBar(toolbar);
         activity.getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
 
-        fab = (FabSpeedDial) rootView.findViewById(R.id.fabSpeedDial);
-        fab.setMenuListener(new SimpleMenuListenerAdapter() {
+        fabMenu = (FabSpeedDial) rootView.findViewById(R.id.fabSpeedDial);
+        //fab = (FloatingActionButton) rootView.findViewById(R.id.fab);
+        //fab.hide();
+
+        fabMenu.setMenuListener(new SimpleMenuListenerAdapter() {
             @Override
             public boolean onMenuItemSelected(MenuItem menuItem) {
                 switch (menuItem.getItemId()) {
@@ -209,6 +213,19 @@ public class MainFragment extends Fragment {
             }
         });
 
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                try {
+//                    CallLogFragment fragment = (CallLogFragment) adapter.getItem(1);
+//                    if (fragment != null) {
+//                        fragment.reCast(true);
+//                    }
+//                } catch (Exception e) {
+//
+//                }
+//            }
+//        });
 
         viewPager = (ViewPager) rootView.findViewById(R.id.viewpager);
         setupViewPager(viewPager);
@@ -229,10 +246,12 @@ public class MainFragment extends Fragment {
                         } catch (Exception e) {
 
                         }
-                        fab.show();
+                        fabMenu.show();
+                        //fab.hide();
                         break;
                     case 1:
-                        fab.hide();
+                        fabMenu.hide();
+                        //fab.show();
                         break;
                     case 2:
                         try {
@@ -243,7 +262,8 @@ public class MainFragment extends Fragment {
                         } catch (Exception e) {
 
                         }
-                        fab.hide();
+                        fabMenu.hide();
+                        //fab.hide();
                         break;
 
                 }

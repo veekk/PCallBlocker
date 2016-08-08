@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Call Blocker</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Настройки</string>
     <string name="yes">Да</string>
@@ -57,7 +56,7 @@
     <string name="first_hidden">Блокировать скрытые номера?</string>
     <string name="first_international">Блокировать международные номера?</string>
     <string name="first_not_contact">Блокировать номера не из контактов?</string>
-    <string name="first_title">Выбери свою судьбу!</string>
+    <string name="first_title">Выберите тип номеров которые Вы хотите блокировать</string>
     <string name="skip">Пропустить</string>
     <string name="security_settings">Настройки безопасности</string>
     <string name="first_password">Создать пароль?</string>
@@ -95,6 +94,7 @@
     <string name="legal">Законы</string>
     <string name="privacy_policy">Политика приватности</string>
     <string name="terms_of_use">Правила пользования</string>
+    <string name="reject_hidden">Скрытый номер</string>
 
 
 </resources>

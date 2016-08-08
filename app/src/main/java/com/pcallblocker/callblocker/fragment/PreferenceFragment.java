@@ -271,4 +271,15 @@ public class PreferenceFragment extends android.preference.PreferenceFragment{
         dialog.show();
     }
 
+    @Override
+    public void onPause() {
+        preferenceManager.putState("block_enabled", swEnaled.isChecked());
+        preferenceManager.putState("hidden", swHidden.isChecked());
+        preferenceManager.putState("international", swInternational.isChecked());
+        preferenceManager.putState("not_contacts", swNotContacts.isChecked());
+        preferenceManager.putState("all_numbers", swAllNumbers.isChecked());
+        preferenceManager.putState("password_on", swPassword.isChecked());
+        preferenceManager.putState("notification_on", swNotification.isChecked());
+        super.onPause();
+    }
 }

@@ -66,11 +66,46 @@ public class RejectedCallsAdapter extends RecyclerView.Adapter<RejectedCallsAdap
                 break;
             case "blacklist":
                 holder.tvType.setText(R.string.reject_black);
+                break;
+            case "hidden":
+                holder.tvType.setText(R.string.reject_hidden);
+                holder.tvNumber.setText(R.string.unknown_number);
+                holder.tvName.setText(R.string.unknown_number);
+                holder.tvAmount.setVisibility(View.INVISIBLE);
+                holder.tvAmountText.setVisibility(View.INVISIBLE);
+                break;
         }
-        holder.lLay.setOnClickListener(new View.OnClickListener() {
+        if (rejectedCalls.get(position).type.equals("hidden")) {
+            holder.lLay.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    AlertDialog.Builder builderDelete = new AlertDialog.Builder(context);
+                    builderDelete.setTitle(R.string.delete_q)
+                            .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    MainActivity.rejectedCallsDAO.delete(MainActivity.rejectedCalls.get(position));
+                                    MainActivity.rejectedCalls.remove(position);
+                                    notifyItemRemoved(position);
+                                    notifyDataSetChanged();
+                                }
+                            })
+                            .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                }
+                            })
+                            .setCancelable(true);
+                    alertDelete = builderDelete.create();
+                    alertDelete.show();
+                }
+            });
+
+        } else holder.lLay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                final AlertDialog.Builder builder = new AlertDialog.Builder(context);
                 builder.setItems(context.getResources().getStringArray(R.array.rejected_menu), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -132,12 +167,14 @@ public class RejectedCallsAdapter extends RecyclerView.Adapter<RejectedCallsAdap
         TextView tvAmount;
         TextView tvTime;
         TextView tvType;
+        TextView tvAmountText;
         RelativeLayout lLay;
         public RejectedCallsViewHolder(View itemView) {
             super(itemView);
             tvNumber = (TextView) itemView.findViewById(R.id.tvNumberR);
             tvName = (TextView) itemView.findViewById(R.id.tvNameR);
             tvAmount = (TextView) itemView.findViewById(R.id.tvAmountR);
+            tvAmountText = (TextView) itemView.findViewById(R.id.tvAmountRText);
             tvTime = (TextView) itemView.findViewById(R.id.tvTime);
             tvType = (TextView) itemView.findViewById(R.id.blockType);
             lLay = (RelativeLayout) itemView.findViewById(R.id.lLay);

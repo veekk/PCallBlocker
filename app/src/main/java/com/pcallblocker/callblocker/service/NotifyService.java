@@ -32,16 +32,6 @@ public class NotifyService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        try {
-
-            TimeUnit.SECONDS.sleep(5);
-
-        } catch (InterruptedException e) {
-
-            e.printStackTrace();
-
-        }
-
         sendNotif();
 
         return super.onStartCommand(intent, flags, startId);
@@ -51,8 +41,8 @@ public class NotifyService extends Service {
     void sendNotif(){
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
         builder.setSmallIcon(R.mipmap.ic_launcher);
-        builder.setContentTitle("title");
-        builder.setContentText("text");
+        builder.setContentTitle(getResources().getString(R.string.app_name));
+        builder.setContentText("");
         builder.setOngoing(true);
 
         Intent resultIntent = new Intent(this, MainActivity.class);

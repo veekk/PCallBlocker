@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.pcallblocker.callblocker.MainActivity;
 import com.pcallblocker.callblocker.R;
@@ -22,6 +23,7 @@ import com.pcallblocker.callblocker.util.RejectedCallsAdapter;
 public class RejectedFragment extends Fragment {
 
     public RecyclerView rvRejectedCalls;
+    TextView tvEmpty;
     public RejectedCallsAdapter adapter;
     View rootView;
 
@@ -50,6 +52,7 @@ public class RejectedFragment extends Fragment {
 
     public void reCast(){
         rvRejectedCalls = (RecyclerView) rootView.findViewById(R.id.rvRejectedCalls);
+        tvEmpty = (TextView) rootView.findViewById(R.id.empty_view);
         LinearLayoutManager llm = new LinearLayoutManager(getActivity());
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         rvRejectedCalls.setLayoutParams(lp);
@@ -58,6 +61,9 @@ public class RejectedFragment extends Fragment {
         RecyclerView.ItemDecoration dividerItemDecoration = new DividerItemDecoration(dividerDrawable);
         rvRejectedCalls.addItemDecoration(dividerItemDecoration);
         adapter = new RejectedCallsAdapter(getActivity(), MainActivity.rejectedCalls);
+        if (MainActivity.rejectedCalls.isEmpty()) {
+            tvEmpty.setVisibility(View.VISIBLE);
+        } else tvEmpty.setVisibility(View.GONE);
         rvRejectedCalls.setAdapter(adapter);
     }
 

@@ -109,7 +109,7 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:src="@drawable/web"
+                    app:srcCompat="@drawable/web"
                     android:padding="4dp" />
                 <TextView
                     android:layout_width="wrap_content"
@@ -163,7 +163,7 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:src="@drawable/file_document"
+                    app:srcCompat="@drawable/file_document"
                     android:padding="4dp" />
                 <TextView
                     android:layout_width="wrap_content"
@@ -189,7 +189,7 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:src="@drawable/lock_v"
+                app:srcCompat="@drawable/lock_v"
                 android:padding="4dp" />
             <TextView
                 android:layout_width="wrap_content"

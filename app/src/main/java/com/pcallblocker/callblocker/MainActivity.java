@@ -17,6 +17,9 @@ import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
 import com.dpizarro.pinview.library.PinView;
+import com.pcallblocker.callblocker.db.UnknownDAO;
+import com.pcallblocker.callblocker.model.UnknownNumber;
+import com.pcallblocker.callblocker.service.SyncService;
 import com.stephentuso.welcome.WelcomeScreenHelper;
 import com.pcallblocker.callblocker.db.BlacklistDAO;
 import com.pcallblocker.callblocker.db.RejectedCallsDAO;
@@ -44,6 +47,8 @@ public class MainActivity extends AppCompatActivity {
     public static BlacklistDAO blackListDao;
     public static List<Blacklist> blockList;
 
+    public static UnknownDAO unknownDAO;
+
     public static RejectedCallsDAO rejectedCallsDAO;
     public static List<RejectedCall> rejectedCalls;
 
@@ -58,7 +63,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         Fabric.with(this, new Crashlytics());
         setContentView(R.layout.activity_main);
-
         fragmentManager.init(this, R.id.cLay);
         preferenceManager.init(this, "settings");
 
@@ -71,12 +75,14 @@ public class MainActivity extends AppCompatActivity {
             welcomeScreen = new WelcomeScreenHelper(this, MyWelcomeActivity.class);
             welcomeScreen.forceShow();
         } else {
+            startService(new Intent(this, SyncService.class));
             if (!preferenceManager.getState("password_on")) {
                 fragmentManager.setFragment(new MainFragment(), false);
             } else {
                 pinCheckingDialog();
             }
         }
+
 
 
     }
@@ -112,9 +118,9 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.action_feedback:
                 Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
-                        "mailto","support@pcallblocker.com", null));
-                emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Private Call Blocker feedback");
-                emailIntent.putExtra(Intent.EXTRA_TEXT, "");
+                        "mailto","pcallblocker@gmail.com", null));
+                emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Problem with P Call Blocker (" + android.os.Build.VERSION.SDK_INT + ")");
+                emailIntent.putExtra(Intent.EXTRA_TEXT, "Please describe your problem and we will try to help. ");
                 startActivity(Intent.createChooser(emailIntent, getResources().getString(R.string.send_email)));
                 break;
             case R.id.action_share:
@@ -228,4 +234,6 @@ public class MainActivity extends AppCompatActivity {
         AlertDialog dialog = builder.create();
         dialog.show();
     }
+
+
 }

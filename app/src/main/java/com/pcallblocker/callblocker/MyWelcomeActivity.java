@@ -21,28 +21,19 @@ public class MyWelcomeActivity extends com.stephentuso.welcome.ui.WelcomeActivit
         return new WelcomeScreenBuilder(this)
                 .theme(R.style.WelcomeScreenTheme)
                 .defaultBackgroundColor(R.color.primary)
-//                .titlePage(R.drawable.pencil, "Title", R.color.primary)
                 .page(new WelcomeFragmentHolder() {
                     @Override
                     protected Fragment fragment() {
                         return new TermsFragment();
                     }
                 }, R.color.primary)
-//                .basicPage(R.drawable.phone_incoming, "Header", "More text.", R.color.primary)
-//                .basicPage(R.drawable.phone_missed, "Header 2", "More text 2", R.color.primary)
                 .page(new WelcomeFragmentHolder() {
                     @Override
                     protected Fragment fragment() {
                         return new StartupSettingsFragment();
                     }
                 }, R.color.primary)
-//                .page(new WelcomeFragmentHolder() {
-//                    @Override
-//                    protected Fragment fragment() {
-//                        return new PinFragment();
-//                    }
-//                }, R.color.primary)
-                .basicPage(R.drawable.check, "You're welcome", "Let's start!", R.color.primary)
+                .swipeToDismiss(true)
                 .canSkip(false)
                 .build();
 

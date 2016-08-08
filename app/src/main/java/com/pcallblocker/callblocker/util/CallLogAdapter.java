@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.telephony.PhoneNumberUtils;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,23 +53,26 @@ public class CallLogAdapter extends RecyclerView.Adapter<CallLogAdapter.CallLogV
 
     @Override
     public void onBindViewHolder(CallLogViewHolder holder, final int position) {
-        if (calls.get(position).number == null) {
+        final String number = calls.get(position).number;
+        final String name = calls.get(position).name;
+
+        if (TextUtils.isEmpty(number) || number.length() < 3) {
             holder.tvName.setText(R.string.unknown_number);
-            holder.tvNumber.setText(R.string.unknown_number);
-        }
-        else if (calls.get(position).number.equals("")) {
-            holder.tvName.setText(R.string.unknown_number);
-            holder.tvNumber.setText(R.string.unknown_number);        }
-        else if (calls.get(position).number.length() < 3) {
-            holder.tvName.setText(R.string.unknown_number);
-            holder.tvNumber.setText(R.string.unknown_number);        }
+            holder.tvNumber.setText(R.string.unknown_number);}
         else {
-            holder.tvNumber.setText(calls.get(position).number);
-            if (calls.get(position).name != null) holder.tvName.setText(calls.get(position).name);
-            else holder.tvName.setText(calls.get(position).number);
+            holder.tvNumber.setText(number);
+            if (!TextUtils.isEmpty(name)){
+                holder.tvName.setText(name);
+            }
+            else holder.tvName.setText(number);
         }
 
         holder.tvTime.setText(sdf.format(calls.get(position).callDate));
+        if (calls.get(position).type == null) {
+
+            holder.ivStatus.setImageResource(R.drawable.call_recieved);
+            holder.tvCallType.setText(R.string.incoming_call);
+        } else
         switch (calls.get(position).type) {
             case INCOMING:
                 holder.ivStatus.setImageResource(R.drawable.call_recieved);
@@ -86,14 +90,9 @@ public class CallLogAdapter extends RecyclerView.Adapter<CallLogAdapter.CallLogV
         holder.lLay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (calls.get(position).number == null)
+                if (TextUtils.isEmpty(number) || number.length() < 3)
                     Toast.makeText(context, R.string.cant_unknow, Toast.LENGTH_LONG).show();
-                else if (calls.get(position).number.equals(""))
-                    Toast.makeText(context, R.string.cant_unknow, Toast.LENGTH_LONG).show();
-                else if (calls.get(position).number.length() < 3)
-                    Toast.makeText(context, R.string.cant_unknow, Toast.LENGTH_LONG).show();
-                else
-                if (MainActivity.blockList.contains(new Blacklist(calls.get(position).number, calls.get(position).name))) {
+                else if (MainActivity.blockList.contains(new Blacklist(number, name))) {
                     Toast.makeText(activity, R.string.alr_blocked, Toast.LENGTH_SHORT).show();
                 } else {
                     AlertDialog.Builder builder = new AlertDialog.Builder(context);
@@ -101,18 +100,18 @@ public class CallLogAdapter extends RecyclerView.Adapter<CallLogAdapter.CallLogV
                             .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
-                                    String name = null;
-                                    if (calls.get(position).name == null) {
+                                    String name_ = null;
+                                    if (name == null) {
                                         ContactsProvider contactsProvider = new ContactsProvider(context);
                                         List<Contact> contacts = contactsProvider.getContacts().getList();
                                         for (Contact contact : contacts){
-                                            if (PhoneNumberUtils.compare(contact.normilizedPhone, calls.get(position).number)){
-                                                name = contact.displayName;
+                                            if (PhoneNumberUtils.compare(contact.normilizedPhone, number)){
+                                                name_ = contact.displayName;
                                                 break;
                                             }
                                         }
-                                    } else name = calls.get(position).name;
-                                    MainActivity.blackListDao.create(new Blacklist(calls.get(position).number, name));
+                                    } else name_ = name;
+                                    MainActivity.blackListDao.create(new Blacklist(calls.get(position).number, name_));
                                     MainActivity.blockList = MainActivity.blackListDao.getAllBlacklist();
                                     Toast.makeText(context, R.string.call_log_succ, Toast.LENGTH_SHORT).show();
                                 }
@@ -153,6 +152,17 @@ public class CallLogAdapter extends RecyclerView.Adapter<CallLogAdapter.CallLogV
             ivStatus = (ImageView) itemView.findViewById(R.id.ivCallLogStatus);
             lLay = (RelativeLayout) itemView.findViewById(R.id.lLay);
         }
+    }
+
+    public void clear() {
+        calls.clear();
+        notifyDataSetChanged();
+    }
+
+    // Add a list of items
+    public void addAll(List<Call> list) {
+        calls.addAll(list);
+        notifyDataSetChanged();
     }
 
 }

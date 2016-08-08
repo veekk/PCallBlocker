@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Personal Call Blocker</string>
+    <string name="app_name" translatable="false">Personal Call Blocker</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="yes">Yes</string>
@@ -264,7 +264,7 @@
     <string name="first_hidden">Block hidden number?</string>
     <string name="first_international">Block international?</string>
     <string name="first_not_contact">Block not in contacts?</string>
-    <string name="first_title">Choose your destiny!</string>
+    <string name="first_title">Select which type of numbers you want to block</string>
     <string name="done">Done</string>
     <string name="skip">Skip</string>
     <string name="security_settings">Security settings</string>
@@ -305,8 +305,10 @@
     <string name="legal">Legal</string>
     <string name="terms_of_use">Terms of use</string>
     <string name="privacy_policy">Privacy policy</string>
-    <string name="startup_terms">Terms terms terms terms terms terms terms terms terms terms terms terms terms terms terms terms terms terms terms terms</string>
+    <string name="startup_terms">Info about spam calls will be synced so you always have latest backup of your settings</string>
     <string name="startup_terms_title">Avoid unwanted and dangerous numbers</string>
-    <string name="share_body">Here is the share content body</string>
+    <string name="share_body">Personal Call Blocker helps you to block spam or discomfort calls http://play.google.com/</string>
+    <string name="reject_hidden">Hidden number</string>
+    <string name="rejected_empty">Rejected calls will be here</string>
 
 </resources>

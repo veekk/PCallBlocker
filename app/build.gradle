@@ -43,14 +43,18 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:23.3.0'
-    compile 'com.android.support:design:23.3.0'
-    compile 'com.android.support:recyclerview-v7:23.3.0'
+    compile 'com.android.support:appcompat-v7:23.2.3'
+    compile 'com.android.support:design:23.2.3'
+    compile 'com.android.support:recyclerview-v7:23.2.3'
     compile 'me.everything:providers-android:1.0.1'
     compile 'io.github.yavski:fab-speed-dial:1.0.4'
     compile 'com.stephentuso:welcome:0.7.2'
-    compile 'me.drozdzynski.library.steppers:steppers:0.3.3-SNAPSHOT'
     compile 'com.github.davidpizarro:pinview:1.0.0'
+    compile 'com.google.code.gson:gson:2.6.2'
+    compile 'com.squareup.retrofit2:retrofit:2.1.0'
+    compile 'com.squareup.okhttp:okhttp:2.4.0'
+    compile 'com.squareup.retrofit2:converter-gson:2.1.0'
+    compile 'com.loopj.android:android-async-http:1.4.9'
     compile('com.crashlytics.sdk.android:crashlytics:2.5.7@aar') {
         transitive = true;
     }

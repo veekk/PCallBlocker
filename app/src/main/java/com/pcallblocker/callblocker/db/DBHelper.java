@@ -29,6 +29,13 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String TABLE_CREATE_REJECTED = "create table "  + TABLE_REJECTED_CALLS + "( id "
             + " integer primary key autoincrement, phone_number  text not null, " + "phone_name text, " + "amount_calls integer," + "time integer," +"reject_type text);";
 
+    // Define the SQLite Table name to create
+    public static final String TABLE_UNKNOWN = "unknown";
+
+    // Table creation SQL statement
+    private static final String TABLE_CREATE_UNKNOWN = "create table "  + TABLE_UNKNOWN + "( id "
+            + " integer primary key autoincrement, phone_my  text not null, " + "phone_unknown text not null);";
+
     public DBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
@@ -39,6 +46,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(TABLE_CREATE);
         db.execSQL(TABLE_CREATE_REJECTED);
+        db.execSQL(TABLE_CREATE_UNKNOWN);
     }
 
     @Override
