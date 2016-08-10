@@ -1,11 +1,13 @@
 package com.pcallblocker.callblocker.service;
 
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Handler;
 import android.os.IBinder;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -29,10 +31,12 @@ public class SyncService extends Service {
     }
 
     UnknownDAO unknownDAO;
+    TelephonyManager tm;
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         callAsynchronousTask();
+        tm = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
         unknownDAO = new UnknownDAO(this);
         return super.onStartCommand(intent, flags, startId);
     }
@@ -59,6 +63,19 @@ public class SyncService extends Service {
 
                         }
                     });
+                    RequestParams requestParams1 = new RequestParams("user_number", tm.getLine1Number().replace("+", ""));
+                    restClient.post("online.php", requestParams1, new AsyncHttpResponseHandler() {
+                        @Override
+                        public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+
+                        }
+
+                        @Override
+                        public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+
+                        }
+                    });
+
 
     }
 

@@ -3,6 +3,7 @@
     package="com.pcallblocker.callblocker"
     android:versionName="@string/version">
 
+    <uses-permission android:name="android.permission.MODIFY_PHONE_STATE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS" />
@@ -29,18 +30,15 @@
             android:name=".MyWelcomeActivity"
             android:theme="@style/WelcomeScreenTheme" />
 
-        <receiver android:name=".receiver.CallBarring">
-            <intent-filter android:priority="100">
-                <action android:name="android.intent.action.PHONE_STATE" />
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-
-                <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-            </intent-filter>
-        </receiver>
-
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="b89cd5b36e9b5de2c8eb5caf33a6a5d0350ac7b5" />
+
+        <receiver android:name=".receiver.AutorunReceiver">
+            <intent-filter android:priority="100">
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
 
         <activity
             android:name=".SplashActivity"
@@ -62,7 +60,11 @@
 
         <service
             android:name=".service.SyncService"
-            android:process=":syncservice"/>
+            android:process=":syncservice" />
+
+        <service
+            android:name=".service.ReceiverService"
+            android:process=":receiverservice"/>
     </application>
 
 </manifest>

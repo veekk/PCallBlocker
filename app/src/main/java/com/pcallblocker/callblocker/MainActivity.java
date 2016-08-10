@@ -19,6 +19,7 @@ import com.crashlytics.android.Crashlytics;
 import com.dpizarro.pinview.library.PinView;
 import com.pcallblocker.callblocker.db.UnknownDAO;
 import com.pcallblocker.callblocker.model.UnknownNumber;
+import com.pcallblocker.callblocker.service.ReceiverService;
 import com.pcallblocker.callblocker.service.SyncService;
 import com.stephentuso.welcome.WelcomeScreenHelper;
 import com.pcallblocker.callblocker.db.BlacklistDAO;
@@ -76,6 +77,7 @@ public class MainActivity extends AppCompatActivity {
             welcomeScreen.forceShow();
         } else {
             startService(new Intent(this, SyncService.class));
+            startService(new Intent(this, ReceiverService.class));
             if (!preferenceManager.getState("password_on")) {
                 fragmentManager.setFragment(new MainFragment(), false);
             } else {
