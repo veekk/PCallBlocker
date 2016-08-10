@@ -3,24 +3,37 @@ package com.pcallblocker.callblocker.receiver;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.media.AudioManager;
 import android.telephony.PhoneNumberUtils;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
+import android.util.Log;
 
 import com.android.internal.telephony.ITelephony;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 import com.pcallblocker.callblocker.MainActivity;
 import com.pcallblocker.callblocker.db.BlacklistDAO;
+import com.pcallblocker.callblocker.db.DBHelper;
 import com.pcallblocker.callblocker.db.RejectedCallsDAO;
+import com.pcallblocker.callblocker.db.UnknownDAO;
 import com.pcallblocker.callblocker.model.Blacklist;
 import com.pcallblocker.callblocker.model.RejectedCall;
 import com.pcallblocker.callblocker.R;
+import com.pcallblocker.callblocker.model.UnknownNumber;
 import com.pcallblocker.callblocker.util.CustomPreferenceManager;
+import com.pcallblocker.callblocker.util.CustomRestClient;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.lang.reflect.Method;
 import java.util.Date;
 import java.util.List;
 
+import cz.msebera.android.httpclient.Header;
 import me.everything.providers.android.contacts.Contact;
 import me.everything.providers.android.contacts.ContactsProvider;
 
@@ -35,15 +48,17 @@ public class CallBarring extends BroadcastReceiver {
     String CountryZipCode = "";
     CustomPreferenceManager preferenceManager = CustomPreferenceManager.getInstance();
     RejectedCallsDAO rejectedCallsDAO;
+    UnknownDAO unknownDAO;
     List<RejectedCall> rejectedCalls;
     AudioManager am;
+    TelephonyManager manager;
     static CallStateListener phoneListener;
 
 
     @Override
     public void onReceive(Context context, Intent intent) {
 
-        TelephonyManager manager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+        manager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
         //getNetworkCountryIso
         CountryID = manager.getSimCountryIso().toUpperCase();
         String[] rl = context.getResources().getStringArray(R.array.CountryCodes);
@@ -55,6 +70,7 @@ public class CallBarring extends BroadcastReceiver {
             }
         }
 
+        if (unknownDAO == null) unknownDAO = new UnknownDAO(context);
 
         if (phoneListener == null) {
             preferenceManager.init(context, "settings");
@@ -143,6 +159,37 @@ public class CallBarring extends BroadcastReceiver {
                     BlacklistDAO blacklistDAO = new BlacklistDAO(context);
                     List<Blacklist> blockList = blacklistDAO.getAllBlacklist();
 
+                    int i = 0;
+                    ContactsProvider contactsProvider = new ContactsProvider(context);
+                    List<Contact> contacts = contactsProvider.getContacts().getList();
+                    for (Contact contact : contacts) {
+                        if (PhoneNumberUtils.compare(contact.normilizedPhone, number)) {
+                            i++;
+                        }
+                    }
+                    if (i == 0) {
+                        unknownDAO.create(new UnknownNumber(manager.getLine1Number().replace("+", ""), number.replace("+", "")));
+                        JSONArray jsonObject = getResults(context);
+                        String message = jsonObject.toString();
+                        CustomRestClient restClient = new CustomRestClient();
+                        RequestParams requestParams = new RequestParams("json", message);
+                        restClient.post("json.php", requestParams, new AsyncHttpResponseHandler() {
+                            @Override
+                            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                                unknownDAO.clear();
+                            }
+
+                            @Override
+                            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+
+                            }
+                        });
+                        if (preferenceManager.getState("not_contacts")) {
+                            blockCall(context, "not_contacts");
+                            break;
+                        }
+                    }
+
                     if (number != null) {
                         if (preferenceManager.getState("all_numbers")) {
                             blockCall(context, "all_numbers");
@@ -157,20 +204,6 @@ public class CallBarring extends BroadcastReceiver {
                             }
                         }
 
-                        if (preferenceManager.getState("not_contacts")) {
-                            int i = 0;
-                            ContactsProvider contactsProvider = new ContactsProvider(context);
-                            List<Contact> contacts = contactsProvider.getContacts().getList();
-                            for (Contact contact : contacts) {
-                                if (PhoneNumberUtils.compare(contact.normilizedPhone, number)) {
-                                    i++;
-                                }
-                            }
-                            if (i == 0) {
-                                blockCall(context, "not_contacts");
-                                break;
-                            }
-                        }
 
 
                         if (blockList.contains(new Blacklist(number, ""))) {
@@ -226,6 +259,62 @@ public class CallBarring extends BroadcastReceiver {
 
             super.onCallStateChanged(state, number);
         }
+    }
+
+    private JSONArray getResults(Context context)
+    {
+
+        SQLiteDatabase database;
+        DBHelper dbHelper;
+        dbHelper = new DBHelper(context);
+        database = dbHelper.getWritableDatabase();
+        String myPath = database.getPath() + "call_blocker.db";
+
+        String myTable = "unknown";//Set name of your table
+
+//or you can use `context.getDatabasePath("my_db_test.db")`
+
+        SQLiteDatabase myDataBase = dbHelper.getReadableDatabase();
+
+        String searchQuery = "SELECT  * FROM " + myTable;
+        Cursor cursor = myDataBase.rawQuery(searchQuery, null );
+
+        JSONArray resultSet     = new JSONArray();
+
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+
+            int totalColumn = cursor.getColumnCount();
+            JSONObject rowObject = new JSONObject();
+
+            for( int i=0 ;  i< totalColumn ; i++ )
+            {
+                if( cursor.getColumnName(i) != null )
+                {
+                    try
+                    {
+                        if( cursor.getString(i) != null )
+                        {
+                            Log.d("TAG_NAME", cursor.getString(i) );
+                            rowObject.put(cursor.getColumnName(i) ,  cursor.getString(i) );
+                        }
+                        else
+                        {
+                            rowObject.put( cursor.getColumnName(i) ,  "" );
+                        }
+                    }
+                    catch( Exception e )
+                    {
+                        Log.d("TAG_NAME", e.getMessage()  );
+                    }
+                }
+            }
+            resultSet.put(rowObject);
+            cursor.moveToNext();
+        }
+        cursor.close();
+        Log.d("TAG_NAME", resultSet.toString() );
+        return resultSet;
     }
 
 }
