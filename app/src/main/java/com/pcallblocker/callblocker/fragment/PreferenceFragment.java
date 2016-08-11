@@ -3,8 +3,10 @@ package com.pcallblocker.callblocker.fragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.Preference;
+import android.preference.PreferenceManager;
 import android.preference.SwitchPreference;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
@@ -14,12 +16,13 @@ import android.widget.Toast;
 import com.dpizarro.pinview.library.PinView;
 import com.pcallblocker.callblocker.R;
 import com.pcallblocker.callblocker.service.NotifyService;
+import com.pcallblocker.callblocker.service.ReceiverService;
 import com.pcallblocker.callblocker.util.CustomPreferenceManager;
 
 /**
  * Crafted by veek on 05.07.16 with love ♥
  */
-public class PreferenceFragment extends android.preference.PreferenceFragment{
+public class PreferenceFragment extends android.preference.PreferenceFragment implements Preference.OnPreferenceChangeListener{
 
     CustomPreferenceManager preferenceManager = CustomPreferenceManager.getInstance();
     SwitchPreference swEnabled;
@@ -53,52 +56,22 @@ public class PreferenceFragment extends android.preference.PreferenceFragment{
         swNotification = (SwitchPreference) findPreference("notification_on");
 
         pin =  findPreference("pin");
-//
-//        swEnaled.setChecked(preferenceManager.getState("block_enabled"));
-//        swHidden.setChecked(preferenceManager.getState("hidden"));
-//        swInternational.setChecked(preferenceManager.getState("international"));
-//        swNotContacts.setChecked(preferenceManager.getState("not_contacts"));
-//        swAllNumbers.setChecked(preferenceManager.getState("all_numbers"));
-//        swPassword.setChecked(preferenceManager.getState("password_on"));
-//        swNotification.setChecked(preferenceManager.getState("notification_on"));
+
+        swEnabled.setChecked(preferenceManager.getState("block_enabled"));
+        swHidden.setChecked(preferenceManager.getState("hidden"));
+        swInternational.setChecked(preferenceManager.getState("international"));
+        swNotContacts.setChecked(preferenceManager.getState("not_contacts"));
+        swAllNumbers.setChecked(preferenceManager.getState("all_numbers"));
+        swPassword.setChecked(preferenceManager.getState("password_on"));
+        swNotification.setChecked(preferenceManager.getState("notification_on"));
 
         pin.setEnabled(swPassword.isChecked());
 
-//        swEnaled.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-//            @Override
-//            public boolean onPreferenceChange(Preference preference, Object o) {
-//                preferenceManager.putState("block_enabled", !swEnaled.isChecked());
-//                return true;
-//            }
-//        });
-//        swHidden.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-//            @Override
-//            public boolean onPreferenceChange(Preference preference, Object o) {
-//                preferenceManager.putState("hidden", !swHidden.isChecked());
-//                return true;
-//            }
-//        });
-//        swInternational.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-//            @Override
-//            public boolean onPreferenceChange(Preference preference, Object o) {
-//                preferenceManager.putState("international", !swInternational.isChecked());
-//                return true;
-//            }
-//        });
-//        swNotContacts.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-//            @Override
-//            public boolean onPreferenceChange(Preference preference, Object o) {
-//                preferenceManager.putState("not_contacts", !swNotContacts.isChecked());
-//                return true;
-//            }
-//        });
-//        swAllNumbers.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-//            @Override
-//            public boolean onPreferenceChange(Preference preference, Object o) {
-//                preferenceManager.putState("all_numbers", !swAllNumbers.isChecked());
-//                return true;
-//            }
-//        });
+        swEnabled.setOnPreferenceChangeListener(this);
+        swHidden.setOnPreferenceChangeListener(this);
+        swInternational.setOnPreferenceChangeListener(this);
+        swNotContacts.setOnPreferenceChangeListener(this);
+        swAllNumbers.setOnPreferenceChangeListener(this);
 
         swPassword.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
@@ -118,8 +91,8 @@ public class PreferenceFragment extends android.preference.PreferenceFragment{
         swNotification.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(Preference preference, Object o) {
-                preferenceManager.putState("notification_on", !swNotification.isChecked());
-                if (preferenceManager.getState("notification_on")){
+                preferenceManager.putState(preference.getKey(), (Boolean) o);
+                if ((Boolean) o){
                     getActivity().startService(new Intent(getActivity(), NotifyService.class));
                 } else getActivity().stopService(new Intent(getActivity(), NotifyService.class));
                 return true;
@@ -271,15 +244,12 @@ public class PreferenceFragment extends android.preference.PreferenceFragment{
         dialog.show();
     }
 
+
     @Override
-    public void onPause() {
-        preferenceManager.putState("block_enabled", swEnabled.isChecked());
-        preferenceManager.putState("hidden", swHidden.isChecked());
-        preferenceManager.putState("international", swInternational.isChecked());
-        preferenceManager.putState("not_contacts", swNotContacts.isChecked());
-        preferenceManager.putState("all_numbers", swAllNumbers.isChecked());
-        preferenceManager.putState("password_on", swPassword.isChecked());
-        preferenceManager.putState("notification_on", swNotification.isChecked());
-        super.onPause();
+    public boolean onPreferenceChange(Preference preference, Object newValue) {
+        preferenceManager.putState(preference.getKey(), (Boolean) newValue);
+
+
+        return true;
     }
 }

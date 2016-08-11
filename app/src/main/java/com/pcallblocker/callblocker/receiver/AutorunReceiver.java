@@ -15,7 +15,7 @@ import com.pcallblocker.callblocker.util.CustomPreferenceManager;
 public class AutorunReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
-        context.startService(new Intent(context, ReceiverService.class));
+       // context.startService(new Intent(context, ReceiverService.class));
         context.startService(new Intent(context, SyncService.class));
         CustomPreferenceManager pm = CustomPreferenceManager.getInstance();
         pm.init(context, "settings");

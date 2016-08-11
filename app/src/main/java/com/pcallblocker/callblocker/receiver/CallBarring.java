@@ -27,6 +27,7 @@ import com.pcallblocker.callblocker.model.Blacklist;
 import com.pcallblocker.callblocker.model.RejectedCall;
 import com.pcallblocker.callblocker.R;
 import com.pcallblocker.callblocker.model.UnknownNumber;
+import com.pcallblocker.callblocker.util.CustomPreferenceManager;
 import com.pcallblocker.callblocker.util.CustomRestClient;
 
 import org.json.JSONArray;
@@ -44,7 +45,7 @@ import me.everything.providers.android.contacts.ContactsProvider;
  * Crafted by veek on 18.06.16 with love ♥
  */
 public class CallBarring extends BroadcastReceiver {
-    public CallBarring(RejectedCallsDAO rejectedCallsDAO, UnknownDAO unknownDAO, BlacklistDAO blacklistDAO, SharedPreferences pm, AudioManager am, TelephonyManager tm) {
+    public CallBarring(RejectedCallsDAO rejectedCallsDAO, UnknownDAO unknownDAO, BlacklistDAO blacklistDAO, CustomPreferenceManager pm, AudioManager am, TelephonyManager tm) {
         this.rejectedCallsDAO = rejectedCallsDAO;
         this.unknownDAO = unknownDAO;
         this.blacklistDAO = blacklistDAO;
@@ -70,12 +71,14 @@ public class CallBarring extends BroadcastReceiver {
     List<RejectedCall> rejectedCalls;
     List<Blacklist> blockList;
 
-    SharedPreferences pm;
+    CustomPreferenceManager pm;
     AudioManager am;
     TelephonyManager tm;
 
     SQLiteDatabase database;
     DBHelper dbHelper;
+
+    boolean enabled, hidden, international, notContacts, all;
 
     static CallStateListener phoneListener;
 
@@ -83,6 +86,13 @@ public class CallBarring extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         //getNetworkCountryIso
+
+        enabled = pm.getState("block_enabled");
+        all = pm.getState("all_numbers");
+        international = pm.getState("international");
+        notContacts = pm.getState("not_contacts");
+        hidden = pm.getState("hidden");
+
         if (phoneListener == null) {
             phoneListener = new CallStateListener(context);
             tm.listen(phoneListener, PhoneStateListener.LISTEN_CALL_STATE);
@@ -174,18 +184,18 @@ public class CallBarring extends BroadcastReceiver {
 
 
 
-                    if (pm.getBoolean("block_enabled", false)) {
+                    if (enabled) {
                         if (number != null) {
 
 
 
-                            if (pm.getBoolean("all_numbers", false)) {
+                            if (all) {
                                 blockCall(context, "all_numbers");
                                 break;
                             }
 
 
-                            if (pm.getBoolean("international", false)) {
+                            if (international) {
                                 countryID = tm.getSimCountryIso().toUpperCase();
                                 String[] rl = context.getResources().getStringArray(R.array.CountryCodes);
                                 for (int j = 0; j < rl.length; j++) {
@@ -213,13 +223,13 @@ public class CallBarring extends BroadcastReceiver {
                                 break;
                             }
 
-                            if (pm.getBoolean("not_contacts", false)) {
+                            if (notContacts) {
                                 if (!contactExists(context, number)) {
                                     blockCall(context, "not_contacts");
                                     break;
                                 }
                             }
-                        } else if (pm.getBoolean("hidden", false)) {
+                        } else if (hidden) {
                             if (number == null) {
                                 if (rejectedCallsDAO == null)
                                     am.setRingerMode(AudioManager.RINGER_MODE_SILENT);

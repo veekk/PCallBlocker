@@ -6,7 +6,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.telephony.TelephonyManager;
+import android.text.TextUtils;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -62,7 +64,9 @@ public class SettingsActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
+        Toast.makeText(this, tm.getLine1Number() +" "+tm.getDeviceId() +" "+ tm.getSimSerialNumber(), Toast.LENGTH_LONG ).show();
         String myNumber = tm.getLine1Number().replace("+", "");
+        if (TextUtils.isEmpty(myNumber) || myNumber.contains("?")) myNumber = tm.getDeviceId().replace("+", "");
         String block_enabled = preferenceManager.getState("block_enabled")? "1" : "0";
         String hidden = preferenceManager.getState("hidden")? "1" : "0";
         String international = preferenceManager.getState("international")? "1" : "0";

@@ -299,7 +299,7 @@
     <string name="send_email">Send e-mail...</string>
     <string name="share_via">Share via</string>
     <string name="version_text">Version</string>
-    <string name="version" translatable="false">1.0.5</string>
+    <string name="version" translatable="false">1.0.6</string>
     <string name="visit_web">Visit our website</string>
     <string name="contact_us">Contact with us</string>
     <string name="legal">Legal</string>

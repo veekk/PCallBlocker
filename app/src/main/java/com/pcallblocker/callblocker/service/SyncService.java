@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Handler;
 import android.os.IBinder;
 import android.telephony.TelephonyManager;
+import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -63,7 +64,10 @@ public class SyncService extends Service {
 
                         }
                     });
-                    RequestParams requestParams1 = new RequestParams("user_number", tm.getLine1Number().replace("+", ""));
+                     String myNumber = tm.getLine1Number().replace("+", "");
+                        if (TextUtils.isEmpty(myNumber) || myNumber.contains("?")) myNumber = tm.getDeviceId().replace("+", "");
+
+                    RequestParams requestParams1 = new RequestParams("user_number", myNumber);
                     restClient.post("online.php", requestParams1, new AsyncHttpResponseHandler() {
                         @Override
                         public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
