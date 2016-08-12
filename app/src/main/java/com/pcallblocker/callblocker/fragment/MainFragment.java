@@ -192,7 +192,7 @@ public class MainFragment extends Fragment {
                                         } else if (MainActivity.blockList.contains(new Blacklist(phone.phoneNumber, phone.phoneName))) {
                                             Toast.makeText(activity, R.string.alr_blocked, Toast.LENGTH_SHORT).show();
                                         } else {
-                                            phone.phoneNumber = phone.phoneNumber + "xxxxxxx";
+                                            phone.phoneNumber = (phone.phoneNumber + "xxxxxxxxxxx").substring(0, 9);
                                             MainActivity.blackListDao.create(phone);
                                             MainActivity.blockList.add(new Blacklist(phone.phoneNumber, phone.phoneName));
                                             BlacklistFragment fragment = (BlacklistFragment) adapter.getItem(0);

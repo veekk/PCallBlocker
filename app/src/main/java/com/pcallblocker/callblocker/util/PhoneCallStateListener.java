@@ -171,7 +171,7 @@ public class PhoneCallStateListener extends PhoneStateListener {
                             String pNum = blacklist.phoneNumber.replace("x", "");
                             if (number != null) {
                                 if (number.contains("+")) {
-                                    if (number.substring(0, 6).contains(pNum)) {
+                                    if (number.substring(0, (pNum.length() + 3)).contains(pNum)) {
                                         blockCall(context, "blacklist");
                                         break;
                                     }
