@@ -22,7 +22,7 @@ public class CustomPreferenceManager {
     private SharedPreferences preferences;
 
     public void init(Context context, String username) {
-        preferences = context.getSharedPreferences(username, Context.MODE_MULTI_PROCESS);
+        preferences = context.getSharedPreferences(username, Context.MODE_PRIVATE);
     }
 
     public String getString(String prefKey) {

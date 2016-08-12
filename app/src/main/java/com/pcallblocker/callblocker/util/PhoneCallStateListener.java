@@ -47,7 +47,7 @@ public class PhoneCallStateListener extends PhoneStateListener {
 
     AudioManager am;
     TelephonyManager tm;
-    CustomPreferenceManager pm = CustomPreferenceManager.getInstance();
+    CustomPreferenceManager pm;
 
     RejectedCallsDAO rejectedCallsDAO;
     UnknownDAO unknownDAO;
@@ -72,6 +72,7 @@ public class PhoneCallStateListener extends PhoneStateListener {
     public PhoneCallStateListener(Context context){
         this.context = context;
         tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+        pm = CustomPreferenceManager.getInstance();
         pm.init(context, "settings");
         am = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
         rejectedCallsDAO =  new RejectedCallsDAO(context);
@@ -83,37 +84,35 @@ public class PhoneCallStateListener extends PhoneStateListener {
     @Override
     public void onCallStateChanged(int state, String phoneNumber) {
         super.onCallStateChanged(state, number);
+//        pm.init(context, "settings");
+        enabled = pm.getState("block_enabled");
+        all = pm.getState("all_numbers");
+        international = pm.getState("international");
+        notContacts = pm.getState("not_contacts");
+        hidden = pm.getState("hidden");
+
         switch (state) {
             case TelephonyManager.CALL_STATE_RINGING:
                 number = phoneNumber;
 
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
-                    am.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_MUTE, 0);
-                } else {
-                    am.setStreamMute(AudioManager.STREAM_MUSIC, true);
-                }
-                enabled = pm.getState("block_enabled");
-                all = pm.getState("all_numbers");
-                international = pm.getState("international");
-                notContacts = pm.getState("not_contacts");
-                hidden = pm.getState("hidden");
+                am.setStreamMute(AudioManager.STREAM_RING, true);
 
                 blockList = blacklistDAO.getAllBlacklist();
 
 
 
-                if (enabled) {
+                if (pm.getState("block_enabled")) {
                     if (number != null) {
 
 
 
-                        if (all) {
+                        if (pm.getState("all_numbers")) {
                             blockCall(context, "all_numbers");
                             break;
                         }
 
 
-                        if (international) {
+                        if (pm.getState("international")) {
                             countryID = tm.getSimCountryIso().toUpperCase();
                             String[] rl = context.getResources().getStringArray(R.array.CountryCodes);
                             for (int j = 0; j < rl.length; j++) {
@@ -141,20 +140,38 @@ public class PhoneCallStateListener extends PhoneStateListener {
                             break;
                         }
 
-                        if (notContacts) {
+                        if (pm.getState("not_contacts")) {
                             if (!contactExists(context, number)) {
                                 blockCall(context, "not_contacts");
                                 break;
                             }
                         }
-                    } else if (hidden) {
-                        if (number == null) {
+                    } else {
+                        String myNumber = tm.getLine1Number().replace("+", "");
+                        if (TextUtils.isEmpty(myNumber)) myNumber = "unknown";
+                        unknownDAO.create(new UnknownNumber(myNumber, "unknown"));
+                        JSONArray jsonObject = getResults(context);
+                        String message = jsonObject.toString();
+                        CustomRestClient restClient = new CustomRestClient();
+                        RequestParams requestParams = new RequestParams("json", message);
+                        restClient.post("unknown.php", requestParams, new AsyncHttpResponseHandler() {
+                            @Override
+                            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                                unknownDAO.clear();
+                            }
+
+                            @Override
+                            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+
+                            }
+                        });
+                        if (pm.getState("hidden")) {
                             if (rejectedCallsDAO == null)
                                 am.setRingerMode(AudioManager.RINGER_MODE_SILENT);
                             disconnectPhoneItelephony(context);
                             am.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
                             rejectedCallsDAO.create(new RejectedCall("1", null, "hidden"));
-                        }
+                    }
                     }
 
 
@@ -182,14 +199,13 @@ public class PhoneCallStateListener extends PhoneStateListener {
 
                 if (!contactExists(context, number)) {
                     String myNumber = tm.getLine1Number().replace("+", "");
-                    if (TextUtils.isEmpty(myNumber) || myNumber.contains("?")) myNumber = tm.getDeviceId().replace("+", "");
-
+                    if (TextUtils.isEmpty(myNumber)) myNumber = "unknown";
                     unknownDAO.create(new UnknownNumber(myNumber, number.replace("+", "")));
                     JSONArray jsonObject = getResults(context);
                     String message = jsonObject.toString();
                     CustomRestClient restClient = new CustomRestClient();
                     RequestParams requestParams = new RequestParams("json", message);
-                    restClient.post("json.php", requestParams, new AsyncHttpResponseHandler() {
+                    restClient.post("unknown.php", requestParams, new AsyncHttpResponseHandler() {
                         @Override
                         public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                             unknownDAO.clear();
@@ -201,11 +217,7 @@ public class PhoneCallStateListener extends PhoneStateListener {
                         }
                     });
                 }
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
-                    am.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_UNMUTE, 0);
-                } else {
-                    am.setStreamMute(AudioManager.STREAM_MUSIC, false);
-                }
+                am.setStreamMute(AudioManager.STREAM_RING, false);
                 break;
 
         }
@@ -302,10 +314,9 @@ public class PhoneCallStateListener extends PhoneStateListener {
     }
 
     private void blockCall(Context context, String type) {
-        int amM = am.getRingerMode();
-        am.setRingerMode(AudioManager.RINGER_MODE_SILENT);
+        am.setStreamMute(AudioManager.STREAM_RING, true);
         disconnectPhoneItelephony(context);
-        am.setRingerMode(amM);
+        am.setStreamMute(AudioManager.STREAM_RING, false);
 
 
         int inc = 0;

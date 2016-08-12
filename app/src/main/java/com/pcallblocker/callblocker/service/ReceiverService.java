@@ -12,7 +12,7 @@ import android.telephony.TelephonyManager;
 import com.pcallblocker.callblocker.db.BlacklistDAO;
 import com.pcallblocker.callblocker.db.RejectedCallsDAO;
 import com.pcallblocker.callblocker.db.UnknownDAO;
-import com.pcallblocker.callblocker.receiver.CallBarring;
+//import com.pcallblocker.callblocker.receiver.CallBarring;
 import com.pcallblocker.callblocker.util.CustomPreferenceManager;
 
 /**
@@ -26,7 +26,7 @@ public class ReceiverService extends Service {
     RejectedCallsDAO rejectedCallsDAO;
     UnknownDAO unknownDAO;
     BlacklistDAO blacklistDAO;
-    CallBarring callBarring;
+    //CallBarring callBarring;
 
     @Nullable
     @Override
@@ -46,16 +46,16 @@ public class ReceiverService extends Service {
         rejectedCallsDAO =  new RejectedCallsDAO(this);
         unknownDAO = new UnknownDAO(this);
         blacklistDAO = new BlacklistDAO(this);
-        callBarring = new CallBarring(rejectedCallsDAO, unknownDAO, blacklistDAO, pm, am, tm);
+        //callBarring = new CallBarring(rejectedCallsDAO, unknownDAO, blacklistDAO, pm, am, tm);
 
         IntentFilter filter = new IntentFilter();
         filter.addAction(TelephonyManager.ACTION_PHONE_STATE_CHANGED);
-        registerReceiver(callBarring, filter);
+        //registerReceiver(callBarring, filter);
     }
 
     @Override
     public void onDestroy() {
-        unregisterReceiver(callBarring);
+        //unregisterReceiver(callBarring);
         super.onDestroy();
     }
 }

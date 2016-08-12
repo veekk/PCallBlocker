@@ -1,6 +1,7 @@
 package com.pcallblocker.callblocker.fragment;
 
 import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
@@ -30,6 +31,7 @@ import com.pcallblocker.callblocker.util.DividerItemDecoration;
 
 import org.json.JSONArray;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -42,14 +44,15 @@ import me.everything.providers.android.contacts.ContactsProvider;
 /**
  * Crafted by veek on 04.07.16 with love ♥
  */
-public class CallLogFragment extends Fragment {
+public class CallLogFragment extends Fragment{
 
 
     View rootView;
     RecyclerView rvCallLog;
     CallLogAdapter adapter;
+    CallsProvider callsProvider;
     private SwipeRefreshLayout swipeContainer;
-    public static List<Call> calls;
+    public static List<Call> calls = new ArrayList<>();
 
     public CallLogFragment(){
 
@@ -63,25 +66,18 @@ public class CallLogFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_call_log, null);
-        if (calls == null)
-        reCast(true); else  reCast(false);
 
         swipeContainer = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeRefreshLayout);
+        callsProvider = new CallsProvider(getActivity());
+        if (calls.size() == 0)
+        reCast(true); else  reCast(false);
+
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                adapter.clear();
-                CallsProvider callsProvider = new CallsProvider(getActivity());
-                calls = callsProvider.getCalls().getList();
-                Collections.sort(calls, new Comparator<Call>() {
-                    @Override
-                    public int compare(Call call1, Call call2) {
-                        return Long.valueOf(call1.callDate).compareTo(call2.callDate);
-                    }
-                });
-                Collections.reverse(calls);
-                adapter.addAll(calls);
-                swipeContainer.setRefreshing(false);
+
+                RetrieveData retrieveData = new RetrieveData();
+                retrieveData.execute();
             }
         });
         // Configure the refreshing colors
@@ -92,6 +88,38 @@ public class CallLogFragment extends Fragment {
 
 
         return rootView;
+    }
+
+
+    class RetrieveData extends AsyncTask<Void, Void, Void>{
+
+        @Override
+        protected void onPreExecute() {
+            swipeContainer.setRefreshing(true);
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            calls = callsProvider.getCalls().getList();
+            Collections.sort(calls, new Comparator<Call>() {
+                @Override
+                public int compare(Call call1, Call call2) {
+                    return Long.valueOf(call1.callDate).compareTo(call2.callDate);
+                }
+            });
+            Collections.reverse(calls);
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            adapter.clear();
+            adapter.addAll(calls);
+            swipeContainer.setRefreshing(false);
+            super.onPostExecute(aVoid);
+        }
     }
 
     public void lastIncoming(){
@@ -131,40 +159,23 @@ public class CallLogFragment extends Fragment {
         Drawable dividerDrawable = ContextCompat.getDrawable(getActivity(), R.drawable.divider);
         RecyclerView.ItemDecoration dividerItemDecoration = new DividerItemDecoration(dividerDrawable);
 
+        adapter = new CallLogAdapter(calls, getActivity(), getActivity());
         if (refresh){
-        CallsProvider callsProvider = new CallsProvider(getActivity());
-        calls = callsProvider.getCalls().getList();
-            Collections.sort(calls, new Comparator<Call>() {
-                @Override
-                public int compare(Call call1, Call call2) {
-                    return Long.valueOf(call1.callDate).compareTo(call2.callDate);
-                }
-            });
-            Collections.reverse(calls);
+            RetrieveData retrieveData = new RetrieveData();
+            retrieveData.execute();
         }
-        adapter= new CallLogAdapter(calls, getActivity(), getActivity());
 
-        AnimationSet set = new AnimationSet(true);
 
-        Animation animation = new AlphaAnimation(0.0f, 1.0f);
-        animation.setDuration(5);
-        set.addAnimation(animation);
-
-        animation = AnimationUtils.loadAnimation(getActivity(), R.anim.fade_in);
-        animation.setDuration(60);
-        set.addAnimation(animation);
-
-        LayoutAnimationController controller = new LayoutAnimationController(set, 1.0f);
 
         LinearLayoutManager llm = new LinearLayoutManager(getActivity());
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         rvCallLog = (RecyclerView) rootView.findViewById(R.id.rvContactList);
-        rvCallLog.setLayoutAnimation(controller);
         rvCallLog.addItemDecoration(dividerItemDecoration);
         rvCallLog.setLayoutParams(lp);
         rvCallLog.setLayoutManager(llm);
         rvCallLog.swapAdapter(adapter, false);
     }
+
 
 
 }

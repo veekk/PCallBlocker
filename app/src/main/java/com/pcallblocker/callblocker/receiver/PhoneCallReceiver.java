@@ -17,15 +17,16 @@ import com.pcallblocker.callblocker.util.PhoneCallStateListener;
 public class PhoneCallReceiver extends BroadcastReceiver {
 
 
-    TelephonyManager telephony;
+
     static PhoneCallStateListener customPhoneListener;
+    static TelephonyManager telephony;
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        if (telephony == null) telephony = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+        telephony = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
         if (customPhoneListener == null) {
             customPhoneListener = new PhoneCallStateListener(context);
-            telephony.listen(customPhoneListener, PhoneStateListener.LISTEN_CALL_STATE);
+            telephony.listen(customPhoneListener,  android.telephony.PhoneStateListener.LISTEN_CALL_STATE);
         }
     }
 }
