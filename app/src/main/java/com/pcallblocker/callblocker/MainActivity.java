@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
             welcomeScreen.forceShow();
         } else {
             startService(new Intent(this, SyncService.class));
-            startService(new Intent(this, ReceiverService.class));
+//                startService(new Intent(this, ReceiverService.class));
             if (!preferenceManager.getState("password_on")) {
                 fragmentManager.setFragment(new MainFragment(), false);
             } else {

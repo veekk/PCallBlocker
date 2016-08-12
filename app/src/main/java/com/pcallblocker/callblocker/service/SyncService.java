@@ -16,6 +16,7 @@ import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.pcallblocker.callblocker.db.DBHelper;
 import com.pcallblocker.callblocker.db.UnknownDAO;
+import com.pcallblocker.callblocker.util.CustomPreferenceManager;
 import com.pcallblocker.callblocker.util.CustomRestClient;
 
 import org.json.JSONArray;
@@ -61,7 +62,6 @@ public class SyncService extends Service {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-
             }
         });
         String myNumber = tm.getLine1Number().replace("+", "");

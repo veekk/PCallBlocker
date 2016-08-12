@@ -45,7 +45,7 @@ public class PreferenceFragment extends android.preference.PreferenceFragment im
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.prefrences);
 
-        preferenceManager.init(getActivity(), "settings");
+        preferenceManager.init(getActivity().getApplicationContext(), "settings");
 
         swEnabled = (SwitchPreference) findPreference("block_enabled");
         swHidden = (SwitchPreference) findPreference("hidden");
@@ -248,8 +248,7 @@ public class PreferenceFragment extends android.preference.PreferenceFragment im
     @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
         preferenceManager.putState(preference.getKey(), (Boolean) newValue);
-
-
+        //getActivity().stopService(new Intent(getActivity(), ReceiverService.class));
         return true;
     }
 }

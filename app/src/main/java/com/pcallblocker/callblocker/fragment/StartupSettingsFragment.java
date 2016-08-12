@@ -30,7 +30,7 @@ public class StartupSettingsFragment extends Fragment implements CompoundButton.
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_settings, null);
-        preferenceManager.init(getActivity(), "settings");
+        preferenceManager.init(getActivity().getApplicationContext(), "settings");
 
         preferenceManager.putState("block_enabled", true);
         preferenceManager.putState("hidden", true);

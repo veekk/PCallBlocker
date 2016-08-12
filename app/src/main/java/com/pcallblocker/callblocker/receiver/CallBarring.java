@@ -10,12 +10,12 @@
 //import android.net.Uri;
 //import android.preference.PreferenceManager;
 //import android.provider.ContactsContract;
-//import android.telephony.PhoneNumberUtils;
-//import android.telephony.PhoneStateListener;
-//import android.telephony.TelephonyManager;
+//import android.tm.PhoneNumberUtils;
+//import android.tm.PhoneStateListener;
+//import android.tm.TelephonyManager;
 //import android.util.Log;
 //
-//import com.android.internal.telephony.ITelephony;
+//import com.android.internal.tm.ITelephony;
 //import com.loopj.android.http.AsyncHttpResponseHandler;
 //import com.loopj.android.http.RequestParams;
 //import com.pcallblocker.callblocker.MainActivity;
