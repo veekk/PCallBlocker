@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.pcallblocker.callblocker.service.NotifyService;
-import com.pcallblocker.callblocker.service.ReceiverService;
 import com.pcallblocker.callblocker.service.SyncService;
 import com.pcallblocker.callblocker.util.CustomPreferenceManager;
 

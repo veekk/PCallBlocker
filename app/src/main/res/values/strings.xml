@@ -291,7 +291,7 @@
     <string name="notification_on">Enable notification</string>
     <string name="notification_sum">Enabling/disabling notification</string>
     <string name="add_start_from">Starting from...</string>
-    <string name="phone_number_contains">Phone number code (3 symbols max.)</string>
+    <string name="phone_number_contains">Phone number code (6 symbols max.)</string>
     <string name="last_not_found">Incoming number not found</string>
     <string name="unknown_number">Unknown number</string>
     <string name="cant_unknow">Can\'t add unknown number</string>

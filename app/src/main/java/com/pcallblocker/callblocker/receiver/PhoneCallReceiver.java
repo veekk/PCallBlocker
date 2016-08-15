@@ -97,9 +97,7 @@ public class PhoneCallReceiver extends BroadcastReceiver {
 
 
 
-                        //if (pm.getState("block_enabled")) {
                         if (pm.getState("block_enabled")){
-                            //  am.setStreamMute(AudioManager.STREAM_RING, true);
                             if (number != null) {
 
 
@@ -138,7 +136,6 @@ public class PhoneCallReceiver extends BroadcastReceiver {
                                     break;
                                 }
 
-                                //if (pm.getState("not_contacts")) {
                                 if (pm.getState("not_contacts")){
                                     if (!contactExists(context, number)) {
                                         blockCall(context, "not_contacts");
@@ -192,7 +189,6 @@ public class PhoneCallReceiver extends BroadcastReceiver {
             Method m = c.getDeclaredMethod("getITelephony");
             m.setAccessible(true);
             telephonyService = (ITelephony) m.invoke(tm);
-            //telephonyService.silenceRinger();
             telephonyService.endCall();
         } catch (Exception e) {
             e.printStackTrace();

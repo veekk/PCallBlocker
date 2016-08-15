@@ -14,7 +14,6 @@ public class RejectedCall {
     public String phoneName;
     public String type;
     public long amountCalls;
-    Calendar c = Calendar.getInstance();
     Date date = new Date();
     public Long time;
 

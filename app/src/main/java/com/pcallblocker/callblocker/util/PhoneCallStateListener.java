@@ -107,9 +107,7 @@ public class PhoneCallStateListener extends PhoneStateListener {
 
 
 
-                //if (pm.getState("block_enabled")) {
                 if (preference.getBoolean("block_enabled", false)){
-                  //  am.setStreamMute(AudioManager.STREAM_RING, true);
                     if (number != null) {
 
 
@@ -204,7 +202,6 @@ public class PhoneCallStateListener extends PhoneStateListener {
             Method m = c.getDeclaredMethod("getITelephony");
             m.setAccessible(true);
             telephonyService = (ITelephony) m.invoke(tm);
-            //telephonyService.silenceRinger();
             telephonyService.endCall();
         } catch (Exception e) {
             e.printStackTrace();

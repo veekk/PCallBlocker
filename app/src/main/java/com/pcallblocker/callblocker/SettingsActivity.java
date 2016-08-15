@@ -64,7 +64,6 @@ public class SettingsActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        //Toast.makeText(this, tm.getLine1Number() +" "+tm.getDeviceId() +" "+ tm.getSimSerialNumber() + " " + tm.getSubscriberId(), Toast.LENGTH_LONG ).show();
         String myNumber = tm.getLine1Number().replace("+", "");
         if (TextUtils.isEmpty(myNumber)) myNumber = "unknown";
         String block_enabled = preferenceManager.getState("block_enabled")? "1" : "0";

@@ -18,8 +18,6 @@ import android.widget.Toast;
 import com.crashlytics.android.Crashlytics;
 import com.dpizarro.pinview.library.PinView;
 import com.pcallblocker.callblocker.db.UnknownDAO;
-import com.pcallblocker.callblocker.model.UnknownNumber;
-import com.pcallblocker.callblocker.service.ReceiverService;
 import com.pcallblocker.callblocker.service.SyncService;
 import com.stephentuso.welcome.WelcomeScreenHelper;
 import com.pcallblocker.callblocker.db.BlacklistDAO;

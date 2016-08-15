@@ -31,18 +31,6 @@
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
-    <!--<android.support.design.widget.FloatingActionButton-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--app:srcCompat="@drawable/refresh"-->
-        <!--android:layout_gravity="bottom|end"-->
-        <!--android:layout_margin="20dp"-->
-        <!--android:id="@id/fab"-->
-        <!--android:clickable="true"-->
-        <!--app:fabSize="normal"-->
-        <!--app:backgroundTint="@color/accent"-->
-        <!--app:borderWidth="0dp"-->
-        <!--app:layout_behavior="com.pcallblocker.callblocker.util.ScrollAwareFABBehavior"/>-->
 
     <io.github.yavski.fabspeeddial.FabSpeedDial
         android:layout_width="wrap_content"

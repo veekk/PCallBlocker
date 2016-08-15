@@ -68,9 +68,6 @@
             android:name=".service.SyncService"
             android:process=":syncservice" />
 
-        <service
-            android:name=".service.ReceiverService"
-            android:process=":receiverservice"/>
     </application>
 
 </manifest>

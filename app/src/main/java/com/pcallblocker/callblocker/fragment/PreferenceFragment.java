@@ -3,10 +3,8 @@ package com.pcallblocker.callblocker.fragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.Preference;
-import android.preference.PreferenceManager;
 import android.preference.SwitchPreference;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
@@ -16,7 +14,6 @@ import android.widget.Toast;
 import com.dpizarro.pinview.library.PinView;
 import com.pcallblocker.callblocker.R;
 import com.pcallblocker.callblocker.service.NotifyService;
-import com.pcallblocker.callblocker.service.ReceiverService;
 import com.pcallblocker.callblocker.util.CustomPreferenceManager;
 
 /**
@@ -248,7 +245,6 @@ public class PreferenceFragment extends android.preference.PreferenceFragment im
     @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
         preferenceManager.putState(preference.getKey(), (Boolean) newValue);
-        //getActivity().stopService(new Intent(getActivity(), ReceiverService.class));
         return true;
     }
 }

@@ -117,49 +117,6 @@ public class MainFragment extends Fragment {
                         startActivity(new Intent(activity, ContactListActivity.class));
                         break;
                     case R.id.action_last_incoming:
-//                        CallsProvider callsProvider = new CallsProvider(getActivity());
-//                        int i = 0;
-//                        int size = callsProvider.getCalls().getList().size();
-//                        List<Call> calls;
-//                        if (size > 30) {
-//                            calls = callsProvider.getCalls().getList().subList((size - 30), size);
-//                        } else calls = callsProvider.getCalls().getList();
-//                        Collections.reverse(calls);
-//                        for(Call call : calls) {
-//                            if ((call.type == Call.CallType.INCOMING || call.type == Call.CallType.MISSED) && call.number != null) {
-//                                i++;
-//                                if (MainActivity.blockList.contains(new Blacklist(call.number, call.name))) {
-//                                    Toast.makeText(activity, R.string.alr_blocked, Toast.LENGTH_SHORT).show();
-//                                } else {
-//                                    String name = null;
-//                                    if (call.name == null) {
-//                                        ContactsProvider contactsProvider = new ContactsProvider(getActivity());
-//                                        List<Contact> contacts = contactsProvider.getContacts().getList();
-//                                        for (Contact contact : contacts) {
-//                                            if (PhoneNumberUtils.compare(contact.normilizedPhone, call.number)) {
-//                                                name = contact.displayName;
-//                                                break;
-//                                            }
-//                                        }
-//                                    } else name = call.name;
-//                                    MainActivity.blackListDao.create(new Blacklist(call.number, name));
-//                                    MainActivity.blockList = MainActivity.blackListDao.getAllBlacklist();
-//                                }
-//                                try {
-//                                    BlacklistFragment fragment = (BlacklistFragment) adapter.getItem(0);
-//                                    if (fragment != null) {
-//                                        fragment.reCast();
-//                                    }
-//                                } catch (Exception e) {
-//
-//                                }
-//                                if (i == 0) {
-//                                    Toast.makeText(getActivity(), R.string.last_not_found, Toast.LENGTH_LONG);
-//                                }
-//                                break;
-//                            }
-//                        }
-
                         try {
                             CallLogFragment callFragment = (CallLogFragment) adapter.getItem(1);
                             if (callFragment != null){
@@ -213,19 +170,7 @@ public class MainFragment extends Fragment {
             }
         });
 
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                try {
-//                    CallLogFragment fragment = (CallLogFragment) adapter.getItem(1);
-//                    if (fragment != null) {
-//                        fragment.reCast(true);
-//                    }
-//                } catch (Exception e) {
-//
-//                }
-//            }
-//        });
+
 
         viewPager = (ViewPager) rootView.findViewById(R.id.viewpager);
         setupViewPager(viewPager);
