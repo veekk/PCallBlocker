@@ -28,7 +28,8 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".MyWelcomeActivity"
-            android:theme="@style/WelcomeScreenTheme" />
+            android:theme="@style/WelcomeScreenTheme"
+            android:screenOrientation="portrait" />
 
         <meta-data
             android:name="io.fabric.ApiKey"
@@ -48,15 +49,18 @@
 
         <activity
             android:name=".SplashActivity"
-            android:theme="@style/SplashTheme">
+            android:theme="@style/SplashTheme"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ContactListActivity" />
-        <activity android:name=".SettingsActivity" />
+        <activity android:name=".ContactListActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".SettingsActivity"
+            android:screenOrientation="portrait" />
 
         <service
             android:name=".service.NotifyService"

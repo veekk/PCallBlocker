@@ -39,6 +39,12 @@ public class CustomPreferenceManager {
         return result;
     }
 
+    public void putString(String prefKey, String prefValue) {
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString(prefKey, prefValue);
+        editor.apply();
+    }
+
     public void putState(String prefKey, boolean prefValue) {
         SharedPreferences.Editor editor = preferences.edit();
         editor.putBoolean(prefKey, prefValue);
