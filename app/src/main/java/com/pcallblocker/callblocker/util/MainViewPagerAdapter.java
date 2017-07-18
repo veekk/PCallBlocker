@@ -38,10 +38,6 @@ public class MainViewPagerAdapter extends FragmentStatePagerAdapter {
         return 3;
     }
 
-//    @Override
-//    public int getItemPosition(Object object) {
-//        return POSITION_NONE;
-//    }
 
 
     public Fragment getCurrentFragment() {

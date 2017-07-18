@@ -19,7 +19,7 @@
             android:id="@+id/etNumber"
             android:layout_gravity="center_horizontal"
             android:padding="8dp"
-            android:maxLength="3" />
+            android:maxLength="6" />
     </android.support.design.widget.TextInputLayout>
 
 </LinearLayout>

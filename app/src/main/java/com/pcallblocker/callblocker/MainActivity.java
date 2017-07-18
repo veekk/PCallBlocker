@@ -1,12 +1,17 @@
 package com.pcallblocker.callblocker;
 
 
+import android.Manifest;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -18,7 +23,6 @@ import android.widget.Toast;
 import com.crashlytics.android.Crashlytics;
 import com.dpizarro.pinview.library.PinView;
 import com.pcallblocker.callblocker.db.UnknownDAO;
-import com.pcallblocker.callblocker.model.UnknownNumber;
 import com.pcallblocker.callblocker.service.SyncService;
 import com.stephentuso.welcome.WelcomeScreenHelper;
 import com.pcallblocker.callblocker.db.BlacklistDAO;
@@ -52,6 +56,8 @@ public class MainActivity extends AppCompatActivity {
     public static RejectedCallsDAO rejectedCallsDAO;
     public static List<RejectedCall> rejectedCalls;
 
+    public static int MY_REQUEST = 1;
+
     WelcomeScreenHelper welcomeScreen;
 
 
@@ -66,23 +72,18 @@ public class MainActivity extends AppCompatActivity {
         fragmentManager.init(this, R.id.cLay);
         preferenceManager.init(this, "settings");
 
-        if (preferenceManager.getState("notification_on")){
-            startService(new Intent(this, NotifyService.class));
-        }
-
-        if (!preferenceManager.getState("notFirst")) {
-            preferenceManager.putState("block_enabled", true);
-            welcomeScreen = new WelcomeScreenHelper(this, MyWelcomeActivity.class);
-            welcomeScreen.forceShow();
-        } else {
-            startService(new Intent(this, SyncService.class));
-            if (!preferenceManager.getState("password_on")) {
-                fragmentManager.setFragment(new MainFragment(), false);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS) !=
+                    PackageManager.PERMISSION_GRANTED ||
+                    ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) !=
+                    PackageManager.PERMISSION_GRANTED ||
+                    ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CALL_LOG) !=
+                            PackageManager.PERMISSION_GRANTED) {
+                requestPermissions(new String[]{Manifest.permission.READ_CONTACTS, Manifest.permission.READ_PHONE_STATE, Manifest.permission.READ_CALL_LOG}, MY_REQUEST);
             } else {
-                pinCheckingDialog();
-            }
-        }
-
+                initContent();
+                   }
+        } else initContent();
 
 
     }
@@ -100,6 +101,26 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
+    void initContent(){
+        if (preferenceManager.getState("notification_on")){
+            startService(new Intent(this, NotifyService.class));
+        }
+
+        if (!preferenceManager.getState("notFirst")) {
+            preferenceManager.putState("block_enabled", true);
+            welcomeScreen = new WelcomeScreenHelper(this, MyWelcomeActivity.class);
+            welcomeScreen.forceShow();
+        } else {
+            startService(new Intent(this, SyncService.class));
+            if (!preferenceManager.getState("password_on")) {
+                fragmentManager.setFragment(new MainFragment(), false);
+            } else {
+                pinCheckingDialog();
+            }
+
+        }
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -187,6 +208,7 @@ public class MainActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 preferenceManager.putState("notFirst", true);
                 fragmentManager.setFragment(new MainFragment(), false);
+                startService(new Intent(this, SyncService.class));
             } else {
                 finish();
             }
@@ -235,5 +257,21 @@ public class MainActivity extends AppCompatActivity {
         dialog.show();
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
 
+        if (requestCode == MY_REQUEST){
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED &&
+                    grantResults[1] == PackageManager.PERMISSION_GRANTED){
+                Toast.makeText(this, "Permission granted", Toast.LENGTH_SHORT).show();
+                initContent();
+            } else {
+//
+//                        Toast.makeText(this, "Permission not granted", Toast.LENGTH_SHORT).show();
+//                        finish()
+            }
+        }
+
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
 }

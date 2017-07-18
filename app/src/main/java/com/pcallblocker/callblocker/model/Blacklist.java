@@ -42,4 +42,9 @@ public class Blacklist {
         }
         return false;
     }
+
+    @Override
+    public int hashCode() {
+        return phoneNumber.hashCode();
+    }
 }

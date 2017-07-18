@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name" translatable="false">Personal Call Blocker</string>
+    <string name="app_name" translatable="false">PCallBlocker</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="yes">Yes</string>
@@ -291,7 +291,7 @@
     <string name="notification_on">Enable notification</string>
     <string name="notification_sum">Enabling/disabling notification</string>
     <string name="add_start_from">Starting from...</string>
-    <string name="phone_number_contains">Phone number code (3 symbols max.)</string>
+    <string name="phone_number_contains">Phone number code (6 symbols max.)</string>
     <string name="last_not_found">Incoming number not found</string>
     <string name="unknown_number">Unknown number</string>
     <string name="cant_unknow">Can\'t add unknown number</string>
@@ -299,7 +299,7 @@
     <string name="send_email">Send e-mail...</string>
     <string name="share_via">Share via</string>
     <string name="version_text">Version</string>
-    <string name="version" translatable="false">1.0.5</string>
+    <string name="version" translatable="false">1.0.6</string>
     <string name="visit_web">Visit our website</string>
     <string name="contact_us">Contact with us</string>
     <string name="legal">Legal</string>

@@ -81,7 +81,7 @@
     <string name="notification_on">Уведомления включены</string>
     <string name="notification_sum">Включить/выключить уведомления</string>
     <string name="add_start_from">Начинается с...</string>
-    <string name="phone_number_contains">Код номера телефона (максимум 3 символа)</string>
+    <string name="phone_number_contains">Код номера телефона (максимум 6 символов)</string>
     <string name="last_not_found">Входящий номер не найден</string>
     <string name="unknown_number">Неизвестный</string>
     <string name="cant_unknow">Нельзя добавить неизвестный</string>

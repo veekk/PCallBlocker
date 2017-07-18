@@ -13,6 +13,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+
+import com.pcallblocker.callblocker.db.UnknownDAO;
 import com.pcallblocker.callblocker.util.ContactListAdapter;
 import com.pcallblocker.callblocker.util.DividerItemDecoration;
 
@@ -114,4 +116,9 @@ public class ContactListActivity extends AppCompatActivity {
     };
 
 
+    @Override
+    protected void onPause() {
+
+        super.onPause();
+    }
 }
