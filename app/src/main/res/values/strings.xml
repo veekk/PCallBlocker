@@ -25,6 +25,31 @@
         <item>Call</item>
         <item>Delete</item>
     </string-array>
+    <string-array name="day_of_week">
+        <item>Monday</item>
+        <item>Tuesday</item>
+        <item>Wednesday</item>
+        <item>Thursday</item>
+        <item>Friday</item>
+        <item>Saturday</item>
+        <item>Sunday</item>
+    </string-array>
+    <string-array name="empty_array"/>
+    <string-array name="stores">
+        <item>Monday</item>
+        <item>Tuesday</item>
+        <item>Wednesday</item>
+        <item>Thursday</item>
+        <item>Friday</item>
+        <item>Saturday</item>
+        <item>Sunday</item>
+    </string-array>
+    <string name="by_day_title">Blocking by day</string>
+    <string name="by_day_sum">Block only for chosen days</string>
+    <string name="days_title">Days of week</string>
+    <string name="days_sum">Choose days when block should work</string>
+    <string name="mute_title">Block type</string>
+    <string name="mute_sum">On - mute only, Off - end call</string>
     <string name="missed_call">Missed</string>
     <string name="outgoing_call">Outgoing</string>
     <string name="incoming_call">Incoming</string>
@@ -299,7 +324,7 @@
     <string name="send_email">Send e-mail...</string>
     <string name="share_via">Share via</string>
     <string name="version_text">Version</string>
-    <string name="version" translatable="false">1.0.6</string>
+    <string name="version" translatable="false">1.0.7</string>
     <string name="visit_web">Visit our website</string>
     <string name="contact_us">Contact with us</string>
     <string name="legal">Legal</string>

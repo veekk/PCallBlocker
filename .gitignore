@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 CallBlocker.iml
 local.properties
 .gradle/2.10/taskArtifacts/cache.properties
@@ -18,3 +19,13 @@ local.properties
 .gradle/2.14.1/taskArtifacts/taskArtifacts.bin
 app/app.iml
 build/generated/mockable-android-25.jar
+=======
+*.iml
+.gradle
+/local.properties
+/.idea/workspace.xml
+/.idea/libraries
+.DS_Store
+/build
+/captures
+>>>>>>> valiko

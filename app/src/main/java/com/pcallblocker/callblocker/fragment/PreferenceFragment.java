@@ -4,13 +4,13 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.preference.MultiSelectListPreference;
 import android.preference.Preference;
 import android.preference.SwitchPreference;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
-
 import com.dpizarro.pinview.library.PinView;
 import com.pcallblocker.callblocker.R;
 import com.pcallblocker.callblocker.service.NotifyService;
@@ -28,6 +28,7 @@ public class PreferenceFragment extends android.preference.PreferenceFragment im
     SwitchPreference swNotContacts;
     SwitchPreference swAllNumbers;
     SwitchPreference swNotification;
+    MultiSelectListPreference msDay;
 
 
     InputMethodManager imm;
@@ -51,6 +52,8 @@ public class PreferenceFragment extends android.preference.PreferenceFragment im
         swAllNumbers = (SwitchPreference) findPreference("all_numbers");
         swPassword = (SwitchPreference) findPreference("password_on");
         swNotification = (SwitchPreference) findPreference("notification_on");
+        msDay = (MultiSelectListPreference) findPreference("day_of_week");
+
 
         pin =  findPreference("pin");
 
@@ -61,8 +64,6 @@ public class PreferenceFragment extends android.preference.PreferenceFragment im
         swAllNumbers.setChecked(preferenceManager.getState("all_numbers"));
         swPassword.setChecked(preferenceManager.getState("password_on"));
         swNotification.setChecked(preferenceManager.getState("notification_on"));
-
-        pin.setEnabled(swPassword.isChecked());
 
         swEnabled.setOnPreferenceChangeListener(this);
         swHidden.setOnPreferenceChangeListener(this);
@@ -160,7 +161,6 @@ public class PreferenceFragment extends android.preference.PreferenceFragment im
                             imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
                             preferenceManager.putState("password_on", false);
-                            pin.setEnabled(false);
                         } else {
                             imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
@@ -198,7 +198,6 @@ public class PreferenceFragment extends android.preference.PreferenceFragment im
                     public void onClick(DialogInterface dialogInterface, int i) {
                         PinView pinView = (PinView) view.findViewById(R.id.pinView);
                         if (preferenceManager.getString("pin").equals("")) {
-                            pin.setEnabled(true);
                             preferenceManager.putState("password_on", !swPassword.isChecked());}
                             preferenceManager.putString("pin", pinView.getPinResults());
                             imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -228,7 +227,6 @@ public class PreferenceFragment extends android.preference.PreferenceFragment im
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         PinView pinView = (PinView) view.findViewById(R.id.pinView);
-                        pin.setEnabled(true);
                         preferenceManager.putState("password_on", true);
                         preferenceManager.putString("pin", pinView.getPinResults());
                         imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);

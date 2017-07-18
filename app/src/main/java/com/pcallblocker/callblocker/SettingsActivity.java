@@ -1,15 +1,12 @@
 package com.pcallblocker.callblocker;
 
 import android.content.Context;
-import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.view.MenuItem;
-import android.widget.Toast;
-
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.pcallblocker.callblocker.db.DBHelper;
@@ -17,13 +14,6 @@ import com.pcallblocker.callblocker.fragment.PreferenceFragment;
 import com.pcallblocker.callblocker.util.CustomFragmentManager;
 import com.pcallblocker.callblocker.util.CustomPreferenceManager;
 import com.pcallblocker.callblocker.util.CustomRestClient;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
-
 import cz.msebera.android.httpclient.Header;
 
 public class SettingsActivity extends AppCompatActivity {
