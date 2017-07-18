@@ -1,0 +1,793 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>com.pcallblocker.callblocker.fragment.StartupSettingsFragment</OriginalElement>
+  <nodes>
+    <node x="6085.0" y="2425.0">com.pcallblocker.callblocker.util.BlacklistAdapter</node>
+    <node x="3720.5" y="3465.0">com.pcallblocker.callblocker.db.RejectedCallsDAO</node>
+    <node x="350.0" y="-15.0">android.content.ComponentCallbacks</node>
+    <node x="7668.0" y="865.0">android.view.LayoutInflater.Factory2</node>
+    <node x="1051.5" y="425.0">android.widget.CompoundButton.OnCheckedChangeListener</node>
+    <node x="1611.5" y="3985.0">com.pcallblocker.callblocker.fragment.MainFragment</node>
+    <node x="567.0" y="305.0">com.pcallblocker.callblocker.fragment.TermsFragment</node>
+    <node x="3244.5" y="3385.0">android.support.v4.app.ActivityCompatApi23.RequestPermissionsRequestCodeValidator</node>
+    <node x="7469.5" y="865.0">android.view.Window.Callback</node>
+    <node x="3978.0" y="3665.0">com.pcallblocker.callblocker.model.RejectedCall</node>
+    <node x="4549.5" y="1945.0">com.pcallblocker.callblocker.model.Blacklist</node>
+    <node x="3395.0" y="2905.0">android.telephony.PhoneStateListener</node>
+    <node x="5813.0" y="2905.0">com.pcallblocker.callblocker.AboutActivity</node>
+    <node x="7943.5" y="985.0">android.view.ContextThemeWrapper</node>
+    <node x="4215.5" y="1745.0">com.pcallblocker.callblocker.db.BlacklistDAO</node>
+    <node x="5797.5" y="3025.0">android.support.v4.app.TaskStackBuilder.SupportParentable</node>
+    <node x="8369.0" y="785.0">android.support.v4.app.BaseFragmentActivityDonut</node>
+    <node x="6840.0" y="265.0">android.view.View.OnCreateContextMenuListener</node>
+    <node x="8454.0" y="665.0">com.pcallblocker.callblocker.service.NotifyService</node>
+    <node x="5190.0" y="3665.0">com.pcallblocker.callblocker.util.RejectedCallsAdapter</node>
+    <node x="5230.5" y="2105.0">android.support.v7.widget.RecyclerView.Adapter</node>
+    <node x="3259.5" y="3145.0">android.support.v4.app.ActivityCompat.OnRequestPermissionsResultCallback</node>
+    <node x="6433.0" y="545.0">com.pcallblocker.callblocker.fragment.PreferenceFragment</node>
+    <node x="8273.0" y="665.0">android.app.Service</node>
+    <node x="386.0" y="145.0">android.support.v4.app.Fragment</node>
+    <node x="8351.0" y="4025.0">android.support.v4.app.BaseFragmentActivityHoneycomb</node>
+    <node x="4838.0" y="2625.0">android.content.BroadcastReceiver</node>
+    <node x="5555.5" y="2705.0">android.support.v7.app.AppCompatActivity</node>
+    <node x="6286.5" y="985.0">com.pcallblocker.callblocker.SettingsActivity</node>
+    <node x="4358.5" y="2345.0">android.database.sqlite.SQLiteOpenHelper</node>
+    <node x="3323.0" y="3265.0">android.support.v4.app.FragmentActivity</node>
+    <node x="6433.0" y="425.0">android.preference.PreferenceFragment</node>
+    <node x="2200.0" y="1425.0">com.pcallblocker.callblocker.util.CustomRestClient</node>
+    <node x="795.0" y="305.0">com.pcallblocker.callblocker.MyWelcomeActivity</node>
+    <node x="1959.0" y="3025.0">com.pcallblocker.callblocker.receiver.PhoneCallReceiver</node>
+    <node x="1600.0" y="4225.0">com.pcallblocker.callblocker.fragment.RejectedFragment</node>
+    <node x="4670.5" y="2345.0">android.content.Context</node>
+    <node x="5208.0" y="785.0">com.pcallblocker.callblocker.util.CallLogAdapter</node>
+    <node x="7269.5" y="865.0">android.view.KeyEvent.Callback</node>
+    <node x="5556.5" y="2265.0">com.pcallblocker.callblocker.ContactListActivity</node>
+    <node x="1280.5" y="4505.0">com.pcallblocker.callblocker.fragment.BlacklistFragment</node>
+    <node x="5347.5" y="4225.0">com.pcallblocker.callblocker.util.DividerItemDecoration</node>
+    <node x="1057.5" y="305.0">com.pcallblocker.callblocker.fragment.StartupSettingsFragment</node>
+    <node x="2651.5" y="2905.0">com.pcallblocker.callblocker.db.UnknownDAO</node>
+    <node x="2418.0" y="1425.0">com.pcallblocker.callblocker.service.SyncService</node>
+    <node x="1603.5" y="1025.0">com.pcallblocker.callblocker.fragment.CallLogFragment</node>
+    <node x="7015.5" y="985.0">com.pcallblocker.callblocker.util.CustomFragmentManager</node>
+    <node x="4844.0" y="2505.0">com.pcallblocker.callblocker.receiver.AutorunReceiver</node>
+    <node x="8244.0" y="2025.0">android.content.ContextWrapper</node>
+    <node x="2881.0" y="3105.0">com.pcallblocker.callblocker.model.UnknownNumber</node>
+    <node x="6466.0" y="265.0">android.app.Fragment</node>
+    <node x="5803.0" y="2785.0">android.support.v7.app.ActionBarDrawerToggle.DelegateProvider</node>
+    <node x="5793.0" y="3145.0">android.support.v7.app.AppCompatCallback</node>
+    <node x="5368.5" y="4105.0">android.support.v7.widget.RecyclerView.ItemDecoration</node>
+    <node x="1264.0" y="4305.0">com.pcallblocker.callblocker.util.MainViewPagerAdapter</node>
+    <node x="4915.0" y="2185.0">com.pcallblocker.callblocker.util.ContactListAdapter</node>
+    <node x="133.0" y="4425.0">android.support.v4.view.PagerAdapter</node>
+    <node x="6685.0" y="545.0">android.preference.Preference.OnPreferenceChangeListener</node>
+    <node x="3104.0" y="2825.0">com.pcallblocker.callblocker.util.PhoneCallStateListener</node>
+    <node x="6426.0" y="-15.0">android.content.ComponentCallbacks2</node>
+    <node x="88.0" y="4305.0">android.support.v4.app.FragmentStatePagerAdapter</node>
+    <node x="7872.0" y="865.0">android.view.LayoutInflater.Factory</node>
+    <node x="1096.5" y="545.0">com.pcallblocker.callblocker.fragment.PinFragment</node>
+    <node x="1931.5" y="545.0">com.pcallblocker.callblocker.util.CustomPreferenceManager</node>
+    <node x="3866.0" y="1545.0">com.pcallblocker.callblocker.db.DBHelper</node>
+    <node x="5331.5" y="2625.0">com.pcallblocker.callblocker.SplashActivity</node>
+    <node x="7072.0" y="785.0">android.app.Activity</node>
+    <node x="4537.5" y="3745.0">com.pcallblocker.callblocker.MainActivity</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="com.pcallblocker.callblocker.receiver.AutorunReceiver" target="android.content.BroadcastReceiver">
+      <point x="0.0" y="15.0" />
+      <point x="0.0" y="-15.0" />
+    </edge>
+    <edge source="com.pcallblocker.callblocker.util.RejectedCallsAdapter" target="android.support.v7.widget.RecyclerView.Adapter">
+      <point x="0.0" y="-15.0" />
+      <point x="0.0" y="15.0" />
+    </edge>
+    <edge source="com.pcallblocker.callblocker.fragment.CallLogFragment" target="com.pcallblocker.callblocker.model.Blacklist">
+      <point x="76.5" y="-0.0" />
+      <point x="4593.333333333333" y="1040.0" />
+      <point x="-6.66666666666697" y="-15.0" />
+    </edge>
+    <edge source="com.pcallblocker.callblocker.util.CallLogAdapter" target="android.support.v7.widget.RecyclerView.Adapter">
+      <point x="0.0" y="15.0" />
+      <point x="0.0" y="-15.0" />
+    </edge>
+    <edge source="com.pcallblocker.callblocker.util.PhoneCallStateListener" target="com.pcallblocker.callblocker.model.UnknownNumber">
+      <point x="-40.0" y="15.0" />
+      <point x="3160.0" y="3120.0" />
+      <point x="79.0" y="-0.0" />
+    </edge>
+    <edge source="android.app.Activity" target="android.view.View.OnCreateContextMenuListener">
+      <point x="-48.0" y="-5.0" />
+      <point x="6960.0" y="795.0" />
+      <point x="0.0" y="15.0" />
+    </edge>
+    <edge source="com.pcallblocker.callblocker.fragment.TermsFragment" target="android.support.v4.app.Fragment">
+      <point x="-73.0" y="-0.0" />
+      <point x="472.0" y="320.0" />
+      <point x="32.0" y="15.0" />
+    </edge>
+    <edge source="com.pcallblocker.callblocker.util.ContactListAdapter" target="android.support.v7.widget.RecyclerView.Adapter">
+      <point x="40.0" y="-15.0" />
+      <point x="5040.0" y="2120.0" />
+      <point x="-49.5" y="-0.0" />
+    </edge>
+    <edge source="android.database.sqlite.SQLiteOpenHelper" target="android.content.Context">
+      <point x="81.5" y="-0.0" />
+      <point x="-49.5" y="-0.0" />
+    </edge>
+    <edge source="com.pcallblocker.callblocker.util.PhoneCallStateListener" target="com.pcallblocker.callblocker.db.BlacklistDAO">
+      <point x="13.333333333333485" y="-15.0" />
+      <point x="3213.3333333333335" y="1680.0" />
+      <point x="4240.0" y="1680.0" />
+      <point x="-40.0" y="-15.0" />
+    </edge>
+    <edge source="android.support.v4.app.Fragment" target="android.support.v4.app.Fragment">
+      <point x="54.0" y="-10.0" />
+      <point x="560.0" y="150.0" />
+      <point x="560.0" y="80.0" />
+      <point x="480.0" y="80.0" />
+      <point x="40.0" y="-15.0" />
+    </edge>
+    <edge source="com.pcallblocker.callblocker.model.RejectedCall" target="com.pcallblocker.callblocker.model.Blacklist">
+      <point x="0.0" y="-15.0" />
+      <point x="4040.0" y="2160.0" />
+      <point x="4560.0" y="2160.0" />
+      <point x="-40.0" y="15.0" />
+    </edge>
+    <edge source="com.pcallblocker.callblocker.fragment.RejectedFragment" target="com.pcallblocker.callblocker.util.RejectedCallsAdapter">
+      <point x="80.0" y="-5.0" />
+      <point x="5280.0" y="4235.0" />
+      <point x="0.0" y="15.0" />
+    </edge>
+    <edge source="android.app.Activity" target="android.view.ContextThemeWrapper">
+      <point x="48.0" y="2.5" />
+      <point x="8040.0" y="802.5" />
+      <point x="0.0" y="-15.0" />
+    </edge>
+    <edge source="com.pcallblocker.callblocker.MainActivity" target="com.pcallblocker.callblocker.util.CustomFragmentManager">
+      <point x="0.0" y="15.0" />
+      <point x="4600.0" y="3960.0" />
+      <point x="7120.0" y="3960.0" />
+      <point x="0.0" y="15.0" />
+    </edge>
+    <edge source="android.support.v4.app.FragmentActivity" target="android.support.v4.app.ActivityCompat.OnRequestPermissionsResultCallback">
+      <point x="0.0" y="-15.0" />
+      <point x="0.0" y="15.0" />
+    </edge>
+    <edge source="android.app.Activity" target="android.view.Window.Callback">
+      <point x="48.0" y="7.5" />
+      <point x="7520.0" y="807.5" />
+      <point x="0.0" y="-15.0" />
+    </edge>
+    <edge source="com.pcallblocker.callblocker.MainActivity" target="com.pcallblocker.callblocker.db.RejectedCallsDAO">
+      <point x="-62.5" y="-4.0" />
+      <point x="3920.0" y="3756.0" />
+      <point x="3920.0" y="3490.0" />
+      <point x="79.5" y="10.0" />
+    </edge>
+    <edge source="android.app.Activity" target="android.content.ComponentCallbacks2">
+      <point x="0.0" y="-15.0" />
+      <point x="7120.0" y="10.0" />
+      <point x="94.0" y="10.0" />
+    </edge>
+    <edge source="com.pcallblocker.callblocker.util.RejectedCallsAdapter" target="android.content.Context">
+      <point x="-40.0" y="-15.0" />
+      <point x="5240.0" y="3600.0" />
+      <point x="4720.0" y="3600.0" />
+      <point x="0.0" y="15.0" />
+    </edge>
+    <edge source="android.view.LayoutInflater.Factory2" target="android.view.LayoutInflater.Factory">
+      <point x="52.0" y="-0.0" />
+      <point x="-48.0" y="-0.0" />
+    </edge>
+    <edge source="com.pcallblocker.callblocker.fragment.PinFragment" target="com.pcallblocker.callblocker.util.CustomPreferenceManager">
+      <point x="63.5" y="-0.0" />
+      <point x="-108.5" y="-0.0" />
+    </edge>
+    <edge source="android.support.v7.app.AppCompatActivity" target="android.support.v7.app.ActionBarDrawerToggle.DelegateProvider">
+      <point x="40.0" y="15.0" />
+      <point x="5680.0" y="2800.0" />
+      <point x="-77.0" y="-0.0" />
+    </edge>
+    <edge source="com.pcallblocker.callblocker.receiver.PhoneCallReceiver" target="com.pcallblocker.callblocker.db.RejectedCallsDAO">
+      <point x="26.666666666666515" y="15.0" />
+      <point x="2066.6666666666665" y="3480.0" />
+      <point x="-79.5" y="-0.0" />
+    </edge>
+    <edge source="com.pcallblocker.callblocker.util.PhoneCallStateListener" target="com.pcallblocker.callblocker.model.Blacklist">
+      <point x="53.333333333333485" y="-15.0" />
+      <point x="3253.3333333333335" y="1960.0" />
+      <point x="-50.5" y="-0.0" />
+    </edge>
+    <edge source="com.pcallblocker.callblocker.AboutActivity" target="android.support.v7.app.AppCompatActivity">
+      <point x="-67.0" y="-0.0" />
+      <point x="5670.0" y="2920.0" />
+      <point x="30.0" y="15.0" />
+    </edge>
+    <edge source="android.app.Activity" target="android.view.KeyEvent.Callback">
+      <point x="48.0" y="10.0" />
+      <point x="7320.0" y="810.0" />
+      <point x="0.0" y="-15.0" />
+    </edge>
+    <edge source="com.pcallblocker.callblocker.SettingsActivity" target="com.pcallblocker.callblocker.fragment.PreferenceFragment">
+      <point x="73.5" y="-10.0" />
+      <point x="6520.0" y="990.0" />
+      <point x="0.0" y="15.0" />
+    </edge>
+    <edge source="com.pcallblocker.callblocker.util.CustomFragmentManager" target="android.app.Activity">
+      <point x="0.0" y="-15.0" />
+      <point x="0.0" y="15.0" />
+    </edge>
+    <edge source="android.support.v7.app.AppCompatActivity" target="android.support.v4.app.TaskStackBuilder.SupportParentable">
+      <point x="20.0" y="15.0" />
+      <point x="5660.0" y="3040.0" />
+      <point x="-82.5" y="-0.0" />
+    </edge>
+    <edge source="com.pcallblocker.callblocker.db.DBHelper" target="android.database.sqlite.SQLiteOpenHelper">
+      <point x="0.0" y="15.0" />
+      <point x="3920.0" y="1840.0" />
+      <point x="4440.0" y="1840.0" />
+      <point x="0.0" y="-15.0" />
+    </edge>
+    <edge source="com.pcallblocker.callblocker.fragment.MainFragment" target="com.pcallblocker.callblocker.fragment.BlacklistFragment">
+      <point x="-68.5" y="10.0" />
+      <point x="1560.0" y="4010.0" />
+      <point x="1560.0" y="4510.0" />
+      <point x="79.5" y="-10.0" />
+    </edge>
+    <edge source="com.pcallblocker.callblocker.SplashActivity" target="android.support.v7.app.AppCompatActivity">
+      <point x="0.0" y="15.0" />
+      <point x="5400.0" y="2710.0" />
+      <point x="-84.5" y="-10.0" />
+    </edge>
+    <edge source="android.content.BroadcastReceiver" target="android.content.Context">
+      <point x="-82.0" y="-0.0" />
+      <point x="4740.0" y="2640.0" />
+      <point x="20.0" y="15.0" />
+    </edge>
+    <edge source="com.pcallblocker.callblocker.service.SyncService" target="android.app.Service">
+      <point x="0.0" y="-15.0" />
+      <point x="2480.0" y="680.0" />
+      <point x="-47.0" y="-0.0" />
+    </edge>
+    <edge source="com.pcallblocker.callblocker.service.SyncService" target="com.pcallblocker.callblocker.util.CustomRestClient">
+      <point x="-62.0" y="-0.0" />
+      <point x="80.0" y="-0.0" />
+    </edge>
+    <edge source="com.pcallblocker.callblocker.util.ContactListAdapter" target="android.content.Context">
+      <point x="-40.0" y="15.0" />
+      <point x="4960.0" y="2353.3333333333335" />
+      <point x="49.5" y="-6.666666666666515" />
+    </edge>
+    <edge source="android.app.Fragment" target="android.app.Fragment">
+      <point x="40.0" y="15.0" />
+      <point x="6560.0" y="360.0" />
+      <point x="6640.0" y="360.0" />
+      <point x="6640.0" y="290.0" />
+      <point x="54.0" y="10.0" />
+    </edge>
+    <edge source="com.pcallblocker.callblocker.fragment.MainFragment" target="android.app.Fragment">
+      <point x="-68.5" y="-0.0" />
+      <point x="1320.0" y="4000.0" />
+      <point x="1320.0" y="280.0" />
+      <point x="-54.0" y="-0.0" />
+    </edge>
+    <edge source="com.pcallblocker.callblocker.receiver.PhoneCallReceiver" target="com.pcallblocker.callblocker.model.RejectedCall">
+      <point x="6.6666666666667425" y="15.0" />
+      <point x="2046.6666666666667" y="3680.0" />
+      <point x="-62.0" y="-0.0" />
+    </edge>
+    <edge source="com.pcallblocker.callblocker.util.PhoneCallStateListener" target="com.pcallblocker.callblocker.util.CustomRestClient">
+      <point x="-66.66666666666652" y="15.0" />
+      <point x="3133.3333333333335" y="3000.0" />
+      <point x="2280.0" y="3000.0" />
+      <point x="0.0" y="15.0" />
+    </edge>
+    <edge source="com.pcallblocker.callblocker.fragment.CallLogFragment" target="com.pcallblocker.callblocker.util.DividerItemDecoration">
+      <point x="-76.5" y="10.0" />
+      <point x="1520.0" y="1050.0" />
+      <point x="1520.0" y="4360.0" />
+      <point x="5400.0" y="4360.0" />
+      <point x="-40.0" y="15.0" />
+    </edge>
+    <edge source="com.pcallblocker.callblocker.db.RejectedCallsDAO" target="com.pcallblocker.callblocker.db.DBHelper">
+      <point x="0.0" y="-15.0" />
+      <point x="3800.0" y="1570.0" />
+      <point x="-54.0" y="10.0" />
+    </edge>
+    <edge source="com.pcallblocker.callblocker.fragment.MainFragment" target="android.support.v7.app.AppCompatActivity">
+      <point x="68.5" y="-0.0" />
+      <point x="5640.0" y="4000.0" />
+      <point x="0.0" y="15.0" />
+    </edge>
+    <edge source="android.app.Service" target="android.content.ComponentCallbacks2">
+      <point x="0.0" y="-15.0" />
+      <point x="8320.0" y="0.0" />
+      <point x="94.0" y="-0.0" />
+    </edge>
+    <edge source="android.support.v4.app.FragmentActivity" target="android.support.v4.app.ActivityCompatApi23.RequestPermissionsRequestCodeValidator">
+      <point x="0.0" y="15.0" />
+      <point x="0.0" y="-15.0" />
+    </edge>
+    <edge source="com.pcallblocker.callblocker.MainActivity" target="com.pcallblocker.callblocker.fragment.MainFragment">
+      <point x="-20.0" y="15.0" />
+      <point x="4580.0" y="3880.0" />
+      <point x="1720.0" y="3880.0" />
+      <point x="40.0" y="-15.0" />
+    </edge>
+    <edge source="com.pcallblocker.callblocker.receiver.PhoneCallReceiver" target="com.pcallblocker.callblocker.util.CustomPreferenceManager">
+      <point x="0.0" y="-15.0" />
+      <point x="0.0" y="15.0" />
+    </edge>
+    <edge source="com.pcallblocker.callblocker.util.ContactListAdapter" target="com.pcallblocker.callblocker.db.BlacklistDAO">
+      <point x="-85.0" y="-0.0" />
+      <point x="4480.0" y="2200.0" />
+      <point x="4480.0" y="1770.0" />
+      <point x="64.5" y="10.0" />
+    </edge>
+    <edge source="com.pcallblocker.callblocker.util.CallLogAdapter" target="com.pcallblocker.callblocker.model.Blacklist">
+      <point x="-72.0" y="5.0" />
+      <point x="4600.0" y="805.0" />
+      <point x="0.0" y="-15.0" />
+    </edge>
+    <edge source="android.app.Service" target="android.content.ContextWrapper">
+      <point x="0.0" y="15.0" />
+      <point x="0.0" y="-15.0" />
+    </edge>
+    <edge source="com.pcallblocker.callblocker.fragment.StartupSettingsFragment" target="android.support.v4.app.Fragment">
+      <point x="0.0" y="-15.0" />
+      <point x="1160.0" y="240.0" />
+      <point x="480.0" y="240.0" />
+      <point x="40.0" y="15.0" />
+    </edge>
+    <edge source="com.pcallblocker.callblocker.SettingsActivity" target="com.pcallblocker.callblocker.util.CustomFragmentManager">
+      <point x="73.5" y="-0.0" />
+      <point x="-104.5" y="-0.0" />
+    </edge>
+    <edge source="com.pcallblocker.callblocker.util.CallLogAdapter" target="android.content.Context">
+      <point x="-72.0" y="10.0" />
+      <point x="4720.0" y="810.0" />
+      <point x="0.0" y="-15.0" />
+    </edge>
+    <edge source="com.pcallblocker.callblocker.util.BlacklistAdapter" target="com.pcallblocker.callblocker.model.Blacklist">
+      <point x="75.0" y="-0.0" />
+      <point x="6320.0" y="2440.0" />
+      <point x="6320.0" y="1960.0" />
+      <point x="50.5" y="-0.0" />
+    </edge>
+    <edge source="com.pcallblocker.callblocker.fragment.RejectedFragment" target="android.support.v4.app.Fragment">
+      <point x="-80.0" y="-0.0" />
+      <point x="448.0" y="4240.0" />
+      <point x="8.0" y="15.0" />
+    </edge>
+    <edge source="com.pcallblocker.callblocker.receiver.PhoneCallReceiver" target="com.pcallblocker.callblocker.db.UnknownDAO">
+      <point x="81.0" y="-10.0" />
+      <point x="2720.0" y="3030.0" />
+      <point x="0.0" y="15.0" />
+    </edge>
+    <edge source="com.pcallblocker.callblocker.fragment.PinFragment" target="android.support.v4.app.Fragment">
+      <point x="-63.5" y="-0.0" />
+      <point x="464.0" y="560.0" />
+      <point x="24.0" y="15.0" />
+    </edge>
+    <edge source="com.pcallblocker.callblocker.service.SyncService" target="com.pcallblocker.callblocker.db.DBHelper">
+      <point x="62.0" y="-0.0" />
+      <point x="3890.0" y="1440.0" />
+      <point x="-30.0" y="-15.0" />
+    </edge>
+    <edge source="android.support.v4.app.Fragment" target="android.view.View.OnCreateContextMenuListener">
+      <point x="54.0" y="-0.0" />
+      <point x="6960.0" y="160.0" />
+      <point x="0.0" y="-15.0" />
+    </edge>
+    <edge source="com.pcallblocker.callblocker.ContactListActivity" target="android.support.v7.app.AppCompatActivity">
+      <point x="0.0" y="15.0" />
+      <point x="0.0" y="-15.0" />
+    </edge>
+    <edge source="com.pcallblocker.callblocker.fragment.PinFragment" target="android.widget.CompoundButton.OnCheckedChangeListener">
+      <point x="0.0" y="-15.0" />
+      <point x="0.0" y="15.0" />
+    </edge>
+    <edge source="com.pcallblocker.callblocker.util.PhoneCallStateListener" target="com.pcallblocker.callblocker.db.DBHelper">
+      <point x="-96.0" y="-0.0" />
+      <point x="3040.0" y="2840.0" />
+      <point x="3040.0" y="1562.5" />
+      <point x="-54.0" y="2.5" />
+    </edge>
+    <edge source="com.pcallblocker.callblocker.util.MainViewPagerAdapter" target="android.support.v4.app.Fragment">
+      <point x="-96.0" y="-10.0" />
+      <point x="440.0" y="4310.0" />
+      <point x="0.0" y="15.0" />
+    </edge>
+    <edge source="com.pcallblocker.callblocker.util.CallLogAdapter" target="android.app.Activity">
+      <point x="72.0" y="-0.0" />
+      <point x="-48.0" y="-0.0" />
+    </edge>
+    <edge source="android.support.v7.app.AppCompatActivity" target="android.support.v7.app.AppCompatCallback">
+      <point x="10.0" y="15.0" />
+      <point x="5650.0" y="3160.0" />
+      <point x="-87.0" y="-0.0" />
+    </edge>
+    <edge source="com.pcallblocker.callblocker.fragment.MainFragment" target="com.pcallblocker.callblocker.model.Blacklist">
+      <point x="20.0" y="-15.0" />
+      <point x="1700.0" y="1120.0" />
+      <point x="4586.666666666667" y="1120.0" />
+      <point x="-13.33333333333303" y="-15.0" />
+    </edge>
+    <edge source="com.pcallblocker.callblocker.SettingsActivity" target="com.pcallblocker.callblocker.util.CustomPreferenceManager">
+      <point x="0.0" y="-15.0" />
+      <point x="6360.0" y="565.0" />
+      <point x="108.5" y="5.0" />
+    </edge>
+    <edge source="com.pcallblocker.callblocker.receiver.PhoneCallReceiver" target="android.content.BroadcastReceiver">
+      <point x="0.0" y="15.0" />
+      <point x="2040.0" y="3920.0" />
+      <point x="4920.0" y="3920.0" />
+      <point x="0.0" y="15.0" />
+    </edge>
+    <edge source="com.pcallblocker.callblocker.util.CustomPreferenceManager" target="android.content.Context">
+      <point x="108.5" y="10.0" />
+      <point x="6200.0" y="570.0" />
+      <point x="6200.0" y="1920.0" />
+      <point x="4840.0" y="1920.0" />
+      <point x="4840.0" y="2350.0" />
+      <point x="49.5" y="-10.0" />
+    </edge>
+    <edge source="com.pcallblocker.callblocker.SettingsActivity" target="com.pcallblocker.callblocker.util.CustomRestClient">
+      <point x="-20.0" y="-15.0" />
+      <point x="6340.0" y="880.0" />
+      <point x="2280.0" y="880.0" />
+      <point x="0.0" y="-15.0" />
+    </edge>
+    <edge source="android.support.v7.app.AppCompatActivity" target="android.support.v4.app.FragmentActivity">
+      <point x="-84.5" y="-0.0" />
+      <point x="3960.0" y="2720.0" />
+      <point x="3960.0" y="3280.0" />
+      <point x="77.0" y="-0.0" />
+    </edge>
+    <edge source="com.pcallblocker.callblocker.receiver.PhoneCallReceiver" target="com.pcallblocker.callblocker.model.UnknownNumber">
+      <point x="40.0" y="15.0" />
+      <point x="2080.0" y="3120.0" />
+      <point x="-79.0" y="-0.0" />
+    </edge>
+    <edge source="android.support.v4.app.FragmentStatePagerAdapter" target="android.support.v4.view.PagerAdapter">
+      <point x="0.0" y="15.0" />
+      <point x="0.0" y="-15.0" />
+    </edge>
+    <edge source="com.pcallblocker.callblocker.fragment.RejectedFragment" target="com.pcallblocker.callblocker.util.DividerItemDecoration">
+      <point x="80.0" y="-0.0" />
+      <point x="-92.5" y="-0.0" />
+    </edge>
+    <edge source="com.pcallblocker.callblocker.util.MainViewPagerAdapter" target="com.pcallblocker.callblocker.fragment.CallLogFragment">
+      <point x="0.0" y="-15.0" />
+      <point x="1360.0" y="1045.0" />
+      <point x="-76.5" y="5.0" />
+    </edge>
+    <edge source="com.pcallblocker.callblocker.MainActivity" target="android.support.v7.app.AppCompatActivity">
+      <point x="62.5" y="-0.0" />
+      <point x="5600.0" y="3760.0" />
+      <point x="-40.0" y="15.0" />
+    </edge>
+    <edge source="com.pcallblocker.callblocker.util.DividerItemDecoration" target="android.support.v7.widget.RecyclerView.ItemDecoration">
+      <point x="0.0" y="-15.0" />
+      <point x="0.0" y="15.0" />
+    </edge>
+    <edge source="com.pcallblocker.callblocker.receiver.PhoneCallReceiver" target="com.pcallblocker.callblocker.util.PhoneCallStateListener">
+      <point x="33.333333333333485" y="15.0" />
+      <point x="2073.3333333333335" y="3200.0" />
+      <point x="3173.3333333333335" y="3200.0" />
+      <point x="-26.666666666666515" y="15.0" />
+    </edge>
+    <edge source="android.preference.PreferenceFragment" target="android.app.Fragment">
+      <point x="0.0" y="-15.0" />
+      <point x="0.0" y="15.0" />
+    </edge>
+    <edge source="com.pcallblocker.callblocker.util.PhoneCallStateListener" target="android.content.Context">
+      <point x="66.66666666666652" y="-15.0" />
+      <point x="3266.6666666666665" y="2440.0" />
+      <point x="4680.0" y="2440.0" />
+      <point x="-40.0" y="15.0" />
+    </edge>
+    <edge source="android.app.Activity" target="android.view.LayoutInflater.Factory2">
+      <point x="48.0" y="5.0" />
+      <point x="7720.0" y="805.0" />
+      <point x="0.0" y="-15.0" />
+    </edge>
+    <edge source="com.pcallblocker.callblocker.MainActivity" target="com.pcallblocker.callblocker.db.BlacklistDAO">
+      <point x="-62.5" y="-8.0" />
+      <point x="4160.0" y="3752.0" />
+      <point x="4160.0" y="1770.0" />
+      <point x="-64.5" y="10.0" />
+    </edge>
+    <edge source="com.pcallblocker.callblocker.MainActivity" target="com.pcallblocker.callblocker.model.Blacklist">
+      <point x="0.0" y="-15.0" />
+      <point x="0.0" y="15.0" />
+    </edge>
+    <edge source="com.pcallblocker.callblocker.util.BlacklistAdapter" target="android.support.v7.widget.RecyclerView.Adapter">
+      <point x="0.0" y="-15.0" />
+      <point x="6160.0" y="2120.0" />
+      <point x="49.5" y="-0.0" />
+    </edge>
+    <edge source="com.pcallblocker.callblocker.fragment.StartupSettingsFragment" target="android.widget.CompoundButton.OnCheckedChangeListener">
+      <point x="0.0" y="15.0" />
+      <point x="0.0" y="-15.0" />
+    </edge>
+    <edge source="com.pcallblocker.callblocker.fragment.CallLogFragment" target="android.support.v4.app.Fragment">
+      <point x="-76.5" y="-0.0" />
+      <point x="456.0" y="1040.0" />
+      <point x="16.0" y="15.0" />
+    </edge>
+    <edge source="com.pcallblocker.callblocker.receiver.PhoneCallReceiver" target="com.pcallblocker.callblocker.model.Blacklist">
+      <point x="10.0" y="-15.0" />
+      <point x="2050.0" y="1200.0" />
+      <point x="4573.333333333333" y="1200.0" />
+      <point x="-26.66666666666697" y="-15.0" />
+    </edge>
+    <edge source="com.pcallblocker.callblocker.MyWelcomeActivity" target="com.pcallblocker.callblocker.fragment.TermsFragment">
+      <point x="-85.0" y="-0.0" />
+      <point x="73.0" y="-0.0" />
+    </edge>
+    <edge source="com.pcallblocker.callblocker.SettingsActivity" target="android.support.v7.app.AppCompatActivity">
+      <point x="0.0" y="15.0" />
+      <point x="6360.0" y="2720.0" />
+      <point x="84.5" y="-0.0" />
+    </edge>
+    <edge source="android.support.v4.app.FragmentActivity" target="android.support.v4.app.BaseFragmentActivityHoneycomb">
+      <point x="-77.0" y="-0.0" />
+      <point x="3160.0" y="3280.0" />
+      <point x="3160.0" y="4040.0" />
+      <point x="-129.0" y="-0.0" />
+    </edge>
+    <edge source="com.pcallblocker.callblocker.util.BlacklistAdapter" target="android.content.Context">
+      <point x="-75.0" y="-0.0" />
+      <point x="4760.0" y="2440.0" />
+      <point x="40.0" y="15.0" />
+    </edge>
+    <edge source="com.pcallblocker.callblocker.ContactListActivity" target="com.pcallblocker.callblocker.util.DividerItemDecoration">
+      <point x="83.5" y="-0.0" />
+      <point x="6040.0" y="2280.0" />
+      <point x="6040.0" y="4240.0" />
+      <point x="92.5" y="-0.0" />
+    </edge>
+    <edge source="android.support.v4.app.FragmentStatePagerAdapter" target="android.support.v4.app.Fragment">
+      <point x="-112.0" y="-0.0" />
+      <point x="40.0" y="4320.0" />
+      <point x="40.0" y="165.0" />
+      <point x="-54.0" y="5.0" />
+    </edge>
+    <edge source="com.pcallblocker.callblocker.util.PhoneCallStateListener" target="com.pcallblocker.callblocker.db.RejectedCallsDAO">
+      <point x="0.0" y="15.0" />
+      <point x="3200.0" y="3476.666666666667" />
+      <point x="-79.5" y="-3.3333333333332575" />
+    </edge>
+    <edge source="com.pcallblocker.callblocker.fragment.BlacklistFragment" target="android.support.v4.app.Fragment">
+      <point x="-79.5" y="-0.0" />
+      <point x="0.0" y="4520.0" />
+      <point x="0.0" y="160.0" />
+      <point x="-54.0" y="-0.0" />
+    </edge>
+    <edge source="com.pcallblocker.callblocker.util.RejectedCallsAdapter" target="com.pcallblocker.callblocker.model.RejectedCall">
+      <point x="-90.0" y="-0.0" />
+      <point x="62.0" y="-0.0" />
+    </edge>
+    <edge source="com.pcallblocker.callblocker.fragment.PreferenceFragment" target="android.preference.PreferenceFragment">
+      <point x="0.0" y="-15.0" />
+      <point x="0.0" y="15.0" />
+    </edge>
+    <edge source="com.pcallblocker.callblocker.receiver.PhoneCallReceiver" target="com.pcallblocker.callblocker.db.BlacklistDAO">
+      <point x="15.0" y="-15.0" />
+      <point x="2055.0" y="1240.0" />
+      <point x="4280.0" y="1240.0" />
+      <point x="0.0" y="-15.0" />
+    </edge>
+    <edge source="com.pcallblocker.callblocker.fragment.BlacklistFragment" target="com.pcallblocker.callblocker.util.DividerItemDecoration">
+      <point x="79.5" y="-6.666666666666664" />
+      <point x="5440.0" y="4513.333333333333" />
+      <point x="0.0" y="15.0" />
+    </edge>
+    <edge source="com.pcallblocker.callblocker.util.MainViewPagerAdapter" target="android.support.v4.app.FragmentStatePagerAdapter">
+      <point x="-96.0" y="-0.0" />
+      <point x="112.0" y="-0.0" />
+    </edge>
+    <edge source="com.pcallblocker.callblocker.db.UnknownDAO" target="com.pcallblocker.callblocker.db.DBHelper">
+      <point x="0.0" y="-15.0" />
+      <point x="2720.0" y="1480.0" />
+      <point x="3880.0" y="1480.0" />
+      <point x="-40.0" y="-15.0" />
+    </edge>
+    <edge source="android.app.Activity" target="android.app.Activity">
+      <point x="-40.0" y="-15.0" />
+      <point x="7080.0" y="720.0" />
+      <point x="7000.0" y="720.0" />
+      <point x="7000.0" y="790.0" />
+      <point x="-48.0" y="-10.0" />
+    </edge>
+    <edge source="com.pcallblocker.callblocker.db.BlacklistDAO" target="com.pcallblocker.callblocker.db.DBHelper">
+      <point x="-20.0" y="-15.0" />
+      <point x="4260.0" y="1570.0" />
+      <point x="54.0" y="10.0" />
+    </edge>
+    <edge source="com.pcallblocker.callblocker.util.ContactListAdapter" target="android.app.Activity">
+      <point x="0.0" y="-15.0" />
+      <point x="5000.0" y="2000.0" />
+      <point x="6920.0" y="2000.0" />
+      <point x="6920.0" y="810.0" />
+      <point x="-48.0" y="10.0" />
+    </edge>
+    <edge source="com.pcallblocker.callblocker.MyWelcomeActivity" target="com.pcallblocker.callblocker.fragment.StartupSettingsFragment">
+      <point x="85.0" y="-0.0" />
+      <point x="-102.5" y="-0.0" />
+    </edge>
+    <edge source="com.pcallblocker.callblocker.db.RejectedCallsDAO" target="com.pcallblocker.callblocker.model.RejectedCall">
+      <point x="79.5" y="-0.0" />
+      <point x="4010.0" y="3480.0" />
+      <point x="-30.0" y="-15.0" />
+    </edge>
+    <edge source="com.pcallblocker.callblocker.util.PhoneCallStateListener" target="android.telephony.PhoneStateListener">
+      <point x="96.0" y="10.0" />
+      <point x="3480.0" y="2850.0" />
+      <point x="0.0" y="-15.0" />
+    </edge>
+    <edge source="android.view.ContextThemeWrapper" target="android.content.ContextWrapper">
+      <point x="96.5" y="-0.0" />
+      <point x="8280.0" y="1000.0" />
+      <point x="-40.0" y="-15.0" />
+    </edge>
+    <edge source="com.pcallblocker.callblocker.receiver.PhoneCallReceiver" target="com.pcallblocker.callblocker.db.DBHelper">
+      <point x="30.0" y="-15.0" />
+      <point x="2070.0" y="1360.0" />
+      <point x="3900.0" y="1360.0" />
+      <point x="-20.0" y="-15.0" />
+    </edge>
+    <edge source="com.pcallblocker.callblocker.service.NotifyService" target="android.app.Service">
+      <point x="-66.0" y="-0.0" />
+      <point x="47.0" y="-0.0" />
+    </edge>
+    <edge source="com.pcallblocker.callblocker.util.PhoneCallStateListener" target="com.pcallblocker.callblocker.util.CustomPreferenceManager">
+      <point x="-13.333333333333485" y="15.0" />
+      <point x="3186.6666666666665" y="3240.0" />
+      <point x="2200.0" y="3240.0" />
+      <point x="2200.0" y="3720.0" />
+      <point x="1880.0" y="3720.0" />
+      <point x="1880.0" y="570.0" />
+      <point x="-108.5" y="10.0" />
+    </edge>
+    <edge source="android.support.v4.app.Fragment" target="android.content.ComponentCallbacks">
+      <point x="0.0" y="-15.0" />
+      <point x="0.0" y="15.0" />
+    </edge>
+    <edge source="com.pcallblocker.callblocker.MainActivity" target="com.pcallblocker.callblocker.model.RejectedCall">
+      <point x="-62.5" y="-6.0" />
+      <point x="4040.0" y="3754.0" />
+      <point x="0.0" y="15.0" />
+    </edge>
+    <edge source="android.app.Fragment" target="android.content.ComponentCallbacks2">
+      <point x="0.0" y="-15.0" />
+      <point x="0.0" y="15.0" />
+    </edge>
+    <edge source="com.pcallblocker.callblocker.ContactListActivity" target="com.pcallblocker.callblocker.util.ContactListAdapter">
+      <point x="0.0" y="-15.0" />
+      <point x="5640.0" y="2200.0" />
+      <point x="85.0" y="-0.0" />
+    </edge>
+    <edge source="android.content.ComponentCallbacks2" target="android.content.ComponentCallbacks">
+      <point x="-94.0" y="-0.0" />
+      <point x="90.0" y="-0.0" />
+    </edge>
+    <edge source="android.support.v4.app.BaseFragmentActivityHoneycomb" target="android.support.v4.app.BaseFragmentActivityDonut">
+      <point x="0.0" y="-15.0" />
+      <point x="0.0" y="15.0" />
+    </edge>
+    <edge source="com.pcallblocker.callblocker.db.BlacklistDAO" target="com.pcallblocker.callblocker.model.Blacklist">
+      <point x="64.5" y="-0.0" />
+      <point x="4566.666666666667" y="1760.0" />
+      <point x="-33.33333333333303" y="-15.0" />
+    </edge>
+    <edge source="com.pcallblocker.callblocker.fragment.CallLogFragment" target="com.pcallblocker.callblocker.util.CallLogAdapter">
+      <point x="0.0" y="-15.0" />
+      <point x="1680.0" y="720.0" />
+      <point x="5280.0" y="720.0" />
+      <point x="0.0" y="-15.0" />
+    </edge>
+    <edge source="com.pcallblocker.callblocker.MainActivity" target="com.pcallblocker.callblocker.db.UnknownDAO">
+      <point x="-62.5" y="-0.0" />
+      <point x="2840.0" y="3760.0" />
+      <point x="2840.0" y="2930.0" />
+      <point x="68.5" y="10.0" />
+    </edge>
+    <edge source="com.pcallblocker.callblocker.receiver.PhoneCallReceiver" target="com.pcallblocker.callblocker.util.CustomRestClient">
+      <point x="35.0" y="-15.0" />
+      <point x="2075.0" y="1440.0" />
+      <point x="-80.0" y="-0.0" />
+    </edge>
+    <edge source="com.pcallblocker.callblocker.util.PhoneCallStateListener" target="com.pcallblocker.callblocker.model.RejectedCall">
+      <point x="96.0" y="-0.0" />
+      <point x="4020.0" y="2840.0" />
+      <point x="-20.0" y="-15.0" />
+    </edge>
+    <edge source="com.pcallblocker.callblocker.service.SyncService" target="com.pcallblocker.callblocker.db.UnknownDAO">
+      <point x="62.0" y="10.0" />
+      <point x="2680.0" y="1450.0" />
+      <point x="-40.0" y="-15.0" />
+    </edge>
+    <edge source="android.app.Fragment" target="android.view.View.OnCreateContextMenuListener">
+      <point x="54.0" y="-0.0" />
+      <point x="-120.0" y="-0.0" />
+    </edge>
+    <edge source="android.content.ContextWrapper" target="android.content.Context">
+      <point x="0.0" y="15.0" />
+      <point x="8320.0" y="2360.0" />
+      <point x="49.5" y="-0.0" />
+    </edge>
+    <edge source="com.pcallblocker.callblocker.fragment.MainFragment" target="com.pcallblocker.callblocker.fragment.RejectedFragment">
+      <point x="0.0" y="15.0" />
+      <point x="0.0" y="-15.0" />
+    </edge>
+    <edge source="com.pcallblocker.callblocker.util.ContactListAdapter" target="com.pcallblocker.callblocker.model.Blacklist">
+      <point x="-40.0" y="-15.0" />
+      <point x="4960.0" y="2040.0" />
+      <point x="4640.0" y="2040.0" />
+      <point x="40.0" y="15.0" />
+    </edge>
+    <edge source="com.pcallblocker.callblocker.fragment.StartupSettingsFragment" target="com.pcallblocker.callblocker.util.CustomPreferenceManager">
+      <point x="102.5" y="-0.0" />
+      <point x="2040.0" y="320.0" />
+      <point x="0.0" y="-15.0" />
+    </edge>
+    <edge source="com.pcallblocker.callblocker.util.MainViewPagerAdapter" target="com.pcallblocker.callblocker.fragment.BlacklistFragment">
+      <point x="0.0" y="15.0" />
+      <point x="0.0" y="-15.0" />
+    </edge>
+    <edge source="com.pcallblocker.callblocker.util.PhoneCallStateListener" target="com.pcallblocker.callblocker.db.UnknownDAO">
+      <point x="-96.0" y="10.0" />
+      <point x="2760.0" y="2850.0" />
+      <point x="40.0" y="-15.0" />
+    </edge>
+    <edge source="com.pcallblocker.callblocker.fragment.PreferenceFragment" target="android.preference.Preference.OnPreferenceChangeListener">
+      <point x="87.0" y="-0.0" />
+      <point x="-115.0" y="-0.0" />
+    </edge>
+    <edge source="com.pcallblocker.callblocker.fragment.MainFragment" target="com.pcallblocker.callblocker.fragment.CallLogFragment">
+      <point x="0.0" y="-15.0" />
+      <point x="0.0" y="15.0" />
+    </edge>
+    <edge source="android.support.v4.app.BaseFragmentActivityDonut" target="android.app.Activity">
+      <point x="-111.0" y="-0.0" />
+      <point x="48.0" y="-0.0" />
+    </edge>
+    <edge source="com.pcallblocker.callblocker.SettingsActivity" target="com.pcallblocker.callblocker.db.DBHelper">
+      <point x="-40.0" y="-15.0" />
+      <point x="6320.0" y="920.0" />
+      <point x="3920.0" y="920.0" />
+      <point x="0.0" y="-15.0" />
+    </edge>
+    <edge source="com.pcallblocker.callblocker.MainActivity" target="com.pcallblocker.callblocker.util.CustomPreferenceManager">
+      <point x="-40.0" y="15.0" />
+      <point x="4560.0" y="3840.0" />
+      <point x="1840.0" y="3840.0" />
+      <point x="1840.0" y="565.0" />
+      <point x="-108.5" y="5.0" />
+    </edge>
+    <edge source="com.pcallblocker.callblocker.fragment.BlacklistFragment" target="com.pcallblocker.callblocker.util.BlacklistAdapter">
+      <point x="79.5" y="-0.0" />
+      <point x="6280.0" y="4520.0" />
+      <point x="6280.0" y="2450.0" />
+      <point x="75.0" y="10.0" />
+    </edge>
+    <edge source="com.pcallblocker.callblocker.util.MainViewPagerAdapter" target="com.pcallblocker.callblocker.fragment.RejectedFragment">
+      <point x="96.0" y="-0.0" />
+      <point x="1680.0" y="4320.0" />
+      <point x="0.0" y="15.0" />
+    </edge>
+    <edge source="com.pcallblocker.callblocker.fragment.PreferenceFragment" target="com.pcallblocker.callblocker.util.CustomPreferenceManager">
+      <point x="-87.0" y="-0.0" />
+      <point x="108.5" y="-0.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.1276365152099726" x="4053.9647290130906" y="1678.4239059622923" />
+  <SelectedNodes />
+  <Categories />
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

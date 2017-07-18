@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.media.AudioManager;
 import android.net.Uri;
+import android.preference.PreferenceManager;
 import android.provider.ContactsContract;
 import android.telephony.PhoneNumberUtils;
 import android.telephony.PhoneStateListener;
@@ -30,8 +31,11 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.lang.reflect.Method;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import cz.msebera.android.httpclient.Header;
 import me.everything.providers.android.contacts.Contact;
@@ -64,6 +68,9 @@ public class PhoneCallStateListener extends PhoneStateListener {
     String countryID = "";
     String zipCode = "";
 
+    Calendar calendar = Calendar.getInstance();
+
+   // SharedPreferences prefs;
 
     SQLiteDatabase database;
     DBHelper dbHelper;
@@ -78,6 +85,7 @@ public class PhoneCallStateListener extends PhoneStateListener {
         rejectedCallsDAO =  new RejectedCallsDAO(context);
         unknownDAO = new UnknownDAO(context);
         blacklistDAO = new BlacklistDAO(context);
+     //   prefs = PreferenceManager.getDefaultSharedPreferences(context);
     }
 
 
@@ -85,13 +93,13 @@ public class PhoneCallStateListener extends PhoneStateListener {
     public void onCallStateChanged(int state, String phoneNumber) {
         super.onCallStateChanged(state, number);
 //        pm = CustomPreferenceManager.getInstance();
-        pm.init(context, "settings");
+        pm.init(context);
         enabled = pm.getState("block_enabled");
         all = pm.getState("all_numbers");
         international = pm.getState("international");
         notContacts = pm.getState("not_contacts");
         hidden = pm.getState("hidden");
-        SharedPreferences preference = context.getSharedPreferences("settings", Context.MODE_PRIVATE);
+     //   SharedPreferences preference = context.getSharedPreferences("settings", Context.MODE_PRIVATE);
 
 
         am.setStreamMute(AudioManager.STREAM_RING, false);
@@ -99,95 +107,147 @@ public class PhoneCallStateListener extends PhoneStateListener {
         switch (state) {
             case TelephonyManager.CALL_STATE_RINGING:
                 number = phoneNumber;
-                if (number != null && !contactExists(context, number)) sendUnknown(context, number);
-                if (number == null) sendUnknown(context, "unknown");
+                if (number != null) {
+                    if (!contactExists(context, number)) sendUnknown(context, number);
+                } else sendUnknown(context, "unknown");
                 blockList = blacklistDAO.getAllBlacklist();
 
 
+                String currentDay = "";
+
+                switch (calendar.get(Calendar.DAY_OF_WEEK)) {
+                    case Calendar.MONDAY:
+                        currentDay = "Monday";
+                        break;
+                    case Calendar.TUESDAY:
+                        currentDay = "Tuesday";
+                        break;
+                    case Calendar.WEDNESDAY:
+                        currentDay = "Wednesday";
+                        break;
+                    case Calendar.THURSDAY:
+                        currentDay = "Thursday";
+                        break;
+                    case Calendar.FRIDAY:
+                        currentDay = "Friday";
+                        break;
+                    case Calendar.SATURDAY:
+                        currentDay = "Saturday";
+                        break;
+                    case Calendar.SUNDAY:
+                        currentDay = "Sunday";
+                        break;
+                }
+                boolean isDayFilter = pm.getState("calendar");
+                Set<String> days = pm.getStringSet("day_of_week");
 
 
-                if (preference.getBoolean("block_enabled", false)){
-                    if (number != null) {
+                if (pm.getState("block_enabled")) {
+
+                    if (!isDayFilter || days.contains(currentDay)) {
+
+                        if (number != null) {
 
 
+                            if (pm.getState("all_numbers")) {
+                                if (number != null) {
+                                    if (number.equals("")){
+                                        if (rejectedCallsDAO != null)
+                                            rejectedCallsDAO.create(new RejectedCall("1", null, "hidden"));
+                                        else {
+                                            rejectedCallsDAO = new RejectedCallsDAO(context);
+                                            rejectedCallsDAO.create(new RejectedCall("1", null, "hidden"));
+                                        }
+                                    } else
+                                        blockCall(context, "all_numbers");
+                                } else {
+                                    if (rejectedCallsDAO != null)
+                                        rejectedCallsDAO.create(new RejectedCall("1", null, "hidden"));
+                                    else {
+                                        rejectedCallsDAO = new RejectedCallsDAO(context);
+                                        rejectedCallsDAO.create(new RejectedCall("1", null, "hidden"));
+                                    }
+                                }
+                                break;
+                            }
 
-                        if (pm.getState("all_numbers")) {
-                            blockCall(context, "all_numbers");
-                            break;
-                        }
 
-
-                        if (pm.getState("international")) {
-                            countryID = tm.getSimCountryIso().toUpperCase();
-                            String[] rl = context.getResources().getStringArray(R.array.CountryCodes);
-                            for (int j = 0; j < rl.length; j++) {
-                                String[] g = rl[j].split(",");
-                                if (g[1].trim().equals(countryID.trim())) {
-                                    zipCode = g[0];
+                            if (pm.getState("international")) {
+                                countryID = tm.getSimCountryIso().toUpperCase();
+                                String[] rl = context.getResources().getStringArray(R.array.CountryCodes);
+                                for (int j = 0; j < rl.length; j++) {
+                                    String[] g = rl[j].split(",");
+                                    if (g[1].trim().equals(countryID.trim())) {
+                                        zipCode = g[0];
+                                        break;
+                                    }
+                                }
+                                if (!number.substring(0, zipCode.length() + 1).contains(zipCode)) {
+                                    blockCall(context, "international");
                                     break;
                                 }
                             }
-                            if (!number.substring(0, zipCode.length() + 1).contains(zipCode)) {
-                                blockCall(context, "international");
-                                break;
-                            }
-                        }
 
 
-                        if (blockList.contains(new Blacklist(number, ""))) {
-                            for (Blacklist blacklist : blockList) {
-                                if (blacklist.equals(new Blacklist(number, ""))) {
-                                    blockCall(context, "blacklist");
-                                    break;
-                                }
-                            }
-
-                            break;
-                        }
-
-                        //if (pm.getState("not_contacts")) {
-                        if (preference.getBoolean("not_contacts", false)){
-                            if (!contactExists(context, number)) {
-                                blockCall(context, "not_contacts");
-                                break;
-                            }
-                        }
-                    } else {
-                        if (pm.getState("hidden")) {
-                            if (rejectedCallsDAO == null)
-                                am.setRingerMode(AudioManager.RINGER_MODE_SILENT);
-                            disconnectPhoneItelephony(context);
-                            am.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
-                            rejectedCallsDAO.create(new RejectedCall("1", null, "hidden"));
-                    }
-                    }
-
-
-                    for (Blacklist blacklist : blockList) {
-                        if (blacklist.phoneNumber.contains("x")) {
-                            String pNum = blacklist.phoneNumber.replace("x", "");
-                            if (number != null) {
-                                if (number.contains("+")) {
-                                    if (number.substring(0, (pNum.length() + 3)).contains(pNum)) {
+                            if (blockList.contains(new Blacklist(number, ""))) {
+                                for (Blacklist blacklist : blockList) {
+                                    if (blacklist.equals(new Blacklist(number, ""))) {
                                         blockCall(context, "blacklist");
                                         break;
                                     }
-                                } else if (number.substring(0, (pNum.length() + 1)).contains(pNum)) {
-                                    blockCall(context, "blacklist");
+                                }
+
+                                break;
+                            }
+
+                            //if (pm.getState("not_contacts")) {
+                            if (pm.getState("not_contacts")) {
+                                if (!contactExists(context, number)) {
+                                    blockCall(context, "not_contacts");
                                     break;
                                 }
                             }
+                        } else {
+                            if (pm.getState("hidden")) {
+                                am.setRingerMode(AudioManager.RINGER_MODE_SILENT);
+                                if (!pm.getState("mute_only"))
+                                    disconnectPhoneItelephony(context);
+                                am.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
+                                if (rejectedCallsDAO != null)
+                                    rejectedCallsDAO.create(new RejectedCall("1", null, "hidden"));
+                                else {
+                                    rejectedCallsDAO = new RejectedCallsDAO(context);
+                                    rejectedCallsDAO.create(new RejectedCall("1", null, "hidden"));
+                                }
+                            }
                         }
+
+
+                        for (Blacklist blacklist : blockList) {
+                            if (blacklist.phoneNumber.contains("x")) {
+                                String pNum = blacklist.phoneNumber.replace("x", "");
+                                if (number != null) {
+                                    if (number.contains("+")) {
+                                        if (number.substring(0, (pNum.length() + 3)).contains(pNum)) {
+                                            blockCall(context, "blacklist");
+                                            break;
+                                        }
+                                    } else if (number.substring(0, (pNum.length() + 1)).contains(pNum)) {
+                                        blockCall(context, "blacklist");
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+
+
                     }
-
-
-
-
                 }
-                break;
-            case TelephonyManager.CALL_STATE_IDLE:
-                am.setStreamMute(AudioManager.STREAM_RING, false);
-                break;
+                    break;
+                    case TelephonyManager.CALL_STATE_IDLE:
+                        am.setStreamMute(AudioManager.STREAM_RING, false);
+                        break;
+
         }
 
 
@@ -264,18 +324,20 @@ public class PhoneCallStateListener extends PhoneStateListener {
 
     public boolean contactExists(Context context, String number) {
 /// number is the phone number
-        Uri lookupUri = Uri.withAppendedPath(
-                ContactsContract.PhoneLookup.CONTENT_FILTER_URI,
-                Uri.encode(number));
-        String[] mPhoneNumberProjection = { ContactsContract.PhoneLookup._ID, ContactsContract.PhoneLookup.NUMBER, ContactsContract.PhoneLookup.DISPLAY_NAME };
-        Cursor cur = context.getContentResolver().query(lookupUri,mPhoneNumberProjection, null, null, null);
-        try {
-            if (cur.moveToFirst()) {
-                return true;
+        if (!number.equals("")) {
+            Uri lookupUri = Uri.withAppendedPath(
+                    ContactsContract.PhoneLookup.CONTENT_FILTER_URI,
+                    Uri.encode(number));
+            String[] mPhoneNumberProjection = {ContactsContract.PhoneLookup._ID, ContactsContract.PhoneLookup.NUMBER, ContactsContract.PhoneLookup.DISPLAY_NAME};
+            Cursor cur = context.getContentResolver().query(lookupUri, mPhoneNumberProjection, null, null, null);
+            try {
+                if (cur.moveToFirst()) {
+                    return true;
+                }
+            } finally {
+                if (cur != null)
+                    cur.close();
             }
-        } finally {
-            if (cur != null)
-                cur.close();
         }
         return false;
     }
@@ -283,7 +345,7 @@ public class PhoneCallStateListener extends PhoneStateListener {
     private void blockCall(Context context, String type) {
         am = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
         am.setStreamMute(AudioManager.STREAM_RING, true);
-        disconnectPhoneItelephony(context);
+        if (!pm.getState("mute_only")) disconnectPhoneItelephony(context);
 
 
         int inc = 0;
@@ -318,8 +380,7 @@ public class PhoneCallStateListener extends PhoneStateListener {
             rejectedCallsDAO.create(new RejectedCall(number, name, type));
             MainActivity.rejectedCalls = rejectedCallsDAO.getAllRejectedCalls();
 
-            am = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
-            am.setStreamMute(AudioManager.STREAM_RING, false);
+            if (!pm.getState("mute_only")) am.setStreamMute(AudioManager.STREAM_RING, false);
         }
     }
 

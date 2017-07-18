@@ -5,6 +5,10 @@ package com.pcallblocker.callblocker.util;
  */
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Crafted by veek on 22.12.15 with love ♥
@@ -29,9 +33,18 @@ public class CustomPreferenceManager {
         preferences = context.getSharedPreferences(username, Context.MODE_PRIVATE);
     }
 
+    public void init (Context context){
+        this.context = context;
+        preferences = PreferenceManager.getDefaultSharedPreferences(context);
+    }
+
     public String getString(String prefKey) {
         String result = preferences.getString(prefKey, "");
         return result;
+    }
+
+    public Set<String> getStringSet(String key){
+        return preferences.getStringSet(key, new HashSet<String>());
     }
 
     public boolean getState(String prefkey) {

@@ -2,14 +2,12 @@ package com.pcallblocker.callblocker;
 
 
 import android.Manifest;
-import android.content.ActivityNotFoundException;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
+import android.content.*;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
@@ -19,24 +17,23 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
-
 import com.crashlytics.android.Crashlytics;
 import com.dpizarro.pinview.library.PinView;
-import com.pcallblocker.callblocker.db.UnknownDAO;
-import com.pcallblocker.callblocker.service.SyncService;
-import com.stephentuso.welcome.WelcomeScreenHelper;
 import com.pcallblocker.callblocker.db.BlacklistDAO;
 import com.pcallblocker.callblocker.db.RejectedCallsDAO;
+import com.pcallblocker.callblocker.db.UnknownDAO;
 import com.pcallblocker.callblocker.fragment.MainFragment;
 import com.pcallblocker.callblocker.model.Blacklist;
 import com.pcallblocker.callblocker.model.RejectedCall;
 import com.pcallblocker.callblocker.service.NotifyService;
+import com.pcallblocker.callblocker.service.SyncService;
 import com.pcallblocker.callblocker.util.BlacklistAdapter;
 import com.pcallblocker.callblocker.util.CustomFragmentManager;
 import com.pcallblocker.callblocker.util.CustomPreferenceManager;
-
+import com.stephentuso.welcome.WelcomeScreenHelper;
 import io.fabric.sdk.android.Fabric;
 
+import java.util.Calendar;
 import java.util.List;
 
 
@@ -44,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
 
     CustomFragmentManager fragmentManager = CustomFragmentManager.getInstance();
     CustomPreferenceManager preferenceManager = CustomPreferenceManager.getInstance();
+    SharedPreferences prefs;
 
     public static AlertDialog alertManual;
     public static AlertDialog alertAdd;
@@ -60,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
 
     WelcomeScreenHelper welcomeScreen;
 
+    Calendar calendar = Calendar.getInstance();
 
 
     InputMethodManager imm;
@@ -67,12 +66,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        prefs  = PreferenceManager.getDefaultSharedPreferences(this);
         Fabric.with(this, new Crashlytics());
         setContentView(R.layout.activity_main);
         fragmentManager.init(this, R.id.cLay);
         preferenceManager.init(this, "settings");
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+       if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS) !=
                     PackageManager.PERMISSION_GRANTED ||
                     ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) !=
@@ -102,6 +102,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+
     void initContent(){
         if (preferenceManager.getState("notification_on")){
             startService(new Intent(this, NotifyService.class));
@@ -113,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
             welcomeScreen.forceShow();
         } else {
             startService(new Intent(this, SyncService.class));
-            if (!preferenceManager.getState("password_on")) {
+            if (!prefs.getBoolean("password_on", false)) {
                 fragmentManager.setFragment(new MainFragment(), false);
             } else {
                 pinCheckingDialog();
@@ -263,12 +264,11 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == MY_REQUEST){
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED &&
                     grantResults[1] == PackageManager.PERMISSION_GRANTED){
-                Toast.makeText(this, "Permission granted", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this, "Permission granted", Toast.LENGTH_SHORT).show();
                 initContent();
             } else {
-//
-//                        Toast.makeText(this, "Permission not granted", Toast.LENGTH_SHORT).show();
-//                        finish()
+                        Toast.makeText(this, "Permission not granted", Toast.LENGTH_SHORT).show();
+                        finish();
             }
         }
 
